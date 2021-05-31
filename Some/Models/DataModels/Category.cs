@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using CourseProject.Attributes;
 
 namespace CourseProject.Models.DataModels
@@ -8,5 +9,8 @@ namespace CourseProject.Models.DataModels
     {
         [DisplayName("Category")]
         public string Name { get; set; }
+
+        [ForeignKey("BaseId")]
+        public Category BaseCategory { get; set; }
     }
 }
