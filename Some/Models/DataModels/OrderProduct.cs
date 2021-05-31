@@ -9,6 +9,7 @@ namespace CourseProject.Models.DataModels
     public class OrderProduct: Product
     {
         public int Quantity { get; set; }
+        public decimal CurrentPrice { get; set; }
     }
 
 

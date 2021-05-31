@@ -19,7 +19,7 @@
         @foreach (var product in order.Products)
         {
             <p>
-                @(product.Title + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
+                @(product.Name + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
             </p>
         }
         <div>

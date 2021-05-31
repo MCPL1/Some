@@ -2,8 +2,11 @@
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Man")]
+    [TableName("Manufacturer")]
     public class Manufacturer
     {
+        public string Name { get; set; }
+
+        public string Country { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace CourseProject.Identity
             cancellationToken.ThrowIfCancellationRequested();
             if (user == null) throw new ArgumentNullException(nameof(user));
             if (user.Id == 0)
-                return (await _userRepository.Get(u => u.UserName, user.UserName)).Id.ToString();
+                return (await _userRepository.Get(u => u.Name, user.Name)).Id.ToString();
             return await Task.FromResult(user.Id.ToString());
         }
 
@@ -41,24 +41,24 @@ namespace CourseProject.Identity
             cancellationToken.ThrowIfCancellationRequested();
             if (user == null) throw new ArgumentNullException(nameof(user));
 
-            return Task.FromResult(user.UserName);
+            return Task.FromResult(user.Name);
         }
 
         public Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            user.UserName = userName;
+            user.Name = userName;
             return Task.FromResult(1);
         }
 
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.UserName.ToLowerInvariant());
+            return Task.FromResult(user.Name.ToLowerInvariant());
         }
 
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
         {
-            user.NormalizedUserName = normalizedName;
+            user.NormalizedName = normalizedName;
             return Task.FromResult(1);
         }
 
@@ -66,8 +66,8 @@ namespace CourseProject.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             await _userRepository.Create(user);
-            if ((await _userRepository.Get(x => x.NormalizedUserName, user.NormalizedUserName)).NormalizedUserName ==
-                user.NormalizedUserName)
+            if ((await _userRepository.Get(x => x.NormalizedName, user.NormalizedName)).NormalizedName ==
+                user.NormalizedName)
                 return IdentityResult.Success;
             return IdentityResult.Failed();
         }
@@ -91,7 +91,7 @@ namespace CourseProject.Identity
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var user = await _userRepository.Get(user => user.UserName, normalizedUserName);
+            var user = await _userRepository.Get(user => user.Name, normalizedUserName);
 
             return user;
         }
