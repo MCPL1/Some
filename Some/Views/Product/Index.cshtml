@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CourseProject.Models.DataModels.Product>
+
+@{
+    ViewData["Title"] = "Main";
+}
+
+<h1>Index</h1>
+
+<a class="btn btn-primary" asp-controller="Product" asp-action="Create" >Add Product</a>
+
+@foreach (var item in Model)
+{
+    <div class="card">
+        <img
+            src="..."
+            class="card-img-top"
+            alt="..." width="50"/>
+        <div class="card-body">
+            <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Title)</h5>
+            <p class="card-text">
+                @Html.DisplayFor(modelItem => item.Description)
+            </p>
+            <p class="card-text">
+                Price @Html.DisplayFor(modelItem => item.Price)
+            </p>
+            <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+            <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
+            <p class="mate"></p>
+        </div>
+    </div>
+}

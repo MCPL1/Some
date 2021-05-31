@@ -1,0 +1,43 @@
+﻿@model CourseProject.Models.ViewModels.CartViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@if (Model.Items.Count!=0)
+{
+    <div>
+        <h2>Amount</h2>
+        @Html.DisplayFor(modelItem => Model.Amount)
+    </div>
+
+    @for (var i = 0; i < Model.Items.Count; i++)
+    {
+        <div>
+            <div>
+                <p>
+                    @Model.Items[i].Product.Title
+                </p>
+                <p>
+                    @Model.Items[i].Product.Price
+                </p>
+                <p>
+                    Quantity:
+                    @Model.Items[i].Quantity
+                </p>
+            </div>
+            <td>
+                <a class="btn btn-danger" asp-controller="Cart" asp-action="Delete" asp-route-position="@i">Delete Item</a>
+            </td>
+        </div>
+    }
+}
+else
+{
+    <h5> Empty Cart</h5>
+}
+
+<div class="container">
+    <a class="btn btn-success" asp-controller="Order" asp-action="Create">Create Order</a>
+</div>

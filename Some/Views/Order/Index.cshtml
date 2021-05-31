@@ -1,0 +1,33 @@
+﻿@model IEnumerable<CourseProject.Models.DataModels.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+@foreach (var order in Model)
+{
+    <div>
+        <p>
+            @Html.DisplayFor(modelItem => order.Address_)
+        </p>
+        <p>
+            @Html.DisplayFor(modelItem => order.Id)
+        </p>
+        @foreach (var product in order.Products)
+        {
+            <p>
+                @(product.Title + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
+            </p>
+        }
+        <div>
+            @*<a class="btn" asp-controller="Order" asp-action="Details">Details</a>*@
+        </div>
+
+    </div>
+    
+}
+
+<a class="btn" asp-controller="User" asp-action="Index">Back</a>
