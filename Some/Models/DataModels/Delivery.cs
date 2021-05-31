@@ -7,7 +7,8 @@ namespace CourseProject.Models.DataModels
 {
     public class Delivery
     {
+        public string Adress { get; set; }
 
-
+        public DateTime Date { get; set; }
     }
 }
