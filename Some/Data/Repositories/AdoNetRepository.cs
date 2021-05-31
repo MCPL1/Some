@@ -219,7 +219,7 @@ namespace CourseProject.Data.Repositories
         private async Task<List<TEntity>> ExecuteSelect(string selectCommand)
         {
             var resultEntities = new List<TEntity>();
-            //File.AppendAllText(@"C:\Users\Max\Desktop\temp\text.txt", selectCommand + "\n");
+            File.AppendAllText(@"C:\Инфа\log.txt", selectCommand + "\n");
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand();
             await connection.OpenAsync();
@@ -238,7 +238,10 @@ namespace CourseProject.Data.Repositories
                 for (var i = 0; i < _tableInfo.TableColumns.Length; i++)
                 {
                     var propertyValue = reader.GetValue(i);
-
+                    if (propertyValue.GetType() == typeof(DBNull))
+                    {
+                        continue;
+                    }
                     if (_tableInfo.EntityType.GetProperty(_tableInfo.EntityColumns[i])
                         .GetCustomAttributes<ForeignKeyAttribute>().Any())
                     {

@@ -3,7 +3,7 @@
 namespace CourseProject.Models.DataModels
 {
     [TableName("Manufacturer")]
-    public class Manufacturer
+    public class Manufacturer : Entity
     {
         public string Name { get; set; }
 

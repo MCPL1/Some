@@ -4,13 +4,14 @@ using CourseProject.Attributes;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Categories")]
+    [TableName("Category")]
     public class Category : Entity
     {
-        [DisplayName("aaaaaaa")] 
+        [DisplayName("Login")] 
         public string Name { get; set; }
 
-        [ForeignKey("BaseId")] 
+        [ForeignKey("base_Id")] 
         public Category BaseCategory { get; set; }
+
     }
 }

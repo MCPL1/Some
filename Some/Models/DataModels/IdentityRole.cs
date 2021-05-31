@@ -5,7 +5,7 @@ using CourseProject.Models.DataModels;
 
 namespace CourseProject.Identity.Models
 {
-    [TableName("Roles")]
+    [TableName("Role")]
     public class Role :Entity
     {
         public string Name { get; set; }

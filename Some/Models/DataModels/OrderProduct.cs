@@ -2,10 +2,10 @@
 
 namespace CourseProject.Models.DataModels
 {
-    [RelatedTableName("Products")]
+    [RelatedTableName("Product")]
     [RelatedEntityType("Product")]
-    [MasterEntityName("Order")]
-    [TransitionTableName("OrderProducts")]
+    [MasterEntityName("Order_")]
+    [TransitionTableName("Order_product")]
     public class OrderProduct: Product
     {
         public int Quantity { get; set; }

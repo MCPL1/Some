@@ -1,0 +1,5 @@
+﻿Настроить иннициализацию primary key in Order_product
+Replace email to login
+delete email
+create register/login page with login 
+system of image-storaging/adding/updating ^)

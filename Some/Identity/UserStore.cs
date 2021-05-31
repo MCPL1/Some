@@ -179,7 +179,6 @@ namespace CourseProject.Identity
 
         public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken)
         {
-            user.NormalizedEmail = normalizedEmail;
             return Task.FromResult(1);
         }
 

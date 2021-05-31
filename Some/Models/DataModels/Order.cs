@@ -6,10 +6,10 @@ using System;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Orders")]
+    [TableName("Order_")]
     public class Order : Entity
     {
-        [ForeignKey("UserId")]
+        [ForeignKey("user_Id")]
         public User User { get; set; }
 
         public string Status { get; set; }
