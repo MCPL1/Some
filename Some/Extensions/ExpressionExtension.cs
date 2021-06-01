@@ -17,7 +17,7 @@ namespace CourseProject.Extensions
             var memberTypeName = member?.Expression.Type.Name;
             if (memberTypeName == tableInfo.EntityType.Name)
                 return propertyName ?? string.Empty;
-            return memberTypeName + "Id";
+            return memberTypeName + "_Id";
         }
     }
 }

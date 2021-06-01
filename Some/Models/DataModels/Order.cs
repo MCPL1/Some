@@ -2,26 +2,30 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using CourseProject.Attributes;
 using CourseProject.Identity.Models;
+using System;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Orders")]
+    [TableName("Order")]
     public class Order : Entity
     {
-        public string Address_ { get; set; }
-
-        [ForeignKey("UserId")]
+        [ForeignKey("user_Id")]
         public User User { get; set; }
 
-        public string Status { get; set; }
+        [ForeignKey("status_id")]
+        public Status Status { get; set; }
+
+        public DateTime Date  { get; set; }
 
         [ForeignKeyToMany("Product")] 
         public List<OrderProduct> Products { get; set; }
+
 
         public Order()
         {
             User = new User();
             Products = new List<OrderProduct>();
+            Status = new Status();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model CourseProject.Models.DataModels.Order
+﻿@model CourseProject.Models.ViewModels.OrderCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -12,11 +12,20 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <select class="form-select" asp-for="Delivery.DeliveryProvider.Id"
+                    asp-items="@(new SelectList(Model.DeliveryProviders, "Id", "Name"))">
+                <option>Please select one</option>
+            </select>
+            <select class="form-select" asp-for="Delivery.DeliveryType.Id"
+                    asp-items="@(new SelectList(Model.DeliveryTypes, "Id", "Name"))">
+                <option>Please select one</option>
+            </select>
             <div class="form-group">
-                <label asp-for="Address_" class="control-label"></label>
-                <input asp-for="Address_" class="form-control" />
-                <span asp-validation-for="Address_" class="text-danger"></span>
+                <label asp-for="Delivery.Address" class="control-label"></label>
+                <input asp-for="Delivery.Address" class="form-control" />
+                <span asp-validation-for="Delivery.Address" class="text-danger"></span>
             </div>
+            <div>@Model.DeliveryProviders.</div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -11,7 +11,7 @@
 {
     <div>
         <p>
-            @Html.DisplayFor(modelItem => order.Address_)
+            @Html.DisplayFor(modelItem => order.Date)
         </p>
         <p>
             @Html.DisplayFor(modelItem => order.Id)
@@ -19,7 +19,7 @@
         @foreach (var product in order.Products)
         {
             <p>
-                @(product.Title + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
+                @(product.Name + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
             </p>
         }
         <div>

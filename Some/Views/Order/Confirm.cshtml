@@ -7,8 +7,7 @@
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">UserName</th>
-            <th scope="col">Address</th>
+            <th scope="col">UserUserName</th>
             <th scope="col">Amount</th>
             <th scope="col">Manage</th>
         </tr>
@@ -19,8 +18,7 @@
     {
         <tr>
             <th scope="row">@(i + 1)</th>
-            <td>@(Model[i].User.UserName)</td>
-            <td>@Model[i].Address_</td>
+            <td>@(Model[i].User.Name)</td>
             <td>@Model[i].Products.Sum(p =>(decimal) p.Quantity * p.Price)</td>
             <td><a class="btn btn-outline-warning" asp-controller="Order" asp-action="Confirm" asp-route-id="@Model[i].Id"></a></td>
         </tr>

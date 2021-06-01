@@ -14,11 +14,14 @@ namespace CourseProject.Controllers
     {
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Manufacturer> _manufacturerRepository;
 
-        public ProductController(IRepository<Product> productRepository, IRepository<Category> categoryRepository)
+        public ProductController(IRepository<Product> productRepository, IRepository<Category> categoryRepository,
+            IRepository<Manufacturer> manufacturerRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _manufacturerRepository = manufacturerRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -37,7 +40,13 @@ namespace CourseProject.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return View(new ProductCreateViewModel() {Categories = (await _categoryRepository.GetAll()).ToList()});
+            var model =
+                new ProductCreateViewModel()
+                {
+                    Categories = (await _categoryRepository.GetAll()).ToList(),
+                    Manufacturers = (await _manufacturerRepository.GetAll()).ToList()
+                };
+            return View(model);
         }
 
         [HttpPost]
@@ -52,7 +61,7 @@ namespace CourseProject.Controllers
         {
             var product = await _productRepository.GetById(id);
             var categories = await _categoryRepository.GetAll();
-            return View(new ProductUpdateViewModel(){Product = product,Categories = categories.ToList()});
+            return View(new ProductUpdateViewModel() {Product = product, Categories = categories.ToList()});
         }
 
         [HttpPost]

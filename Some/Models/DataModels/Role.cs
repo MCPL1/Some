@@ -5,7 +5,7 @@ using CourseProject.Models.DataModels;
 
 namespace CourseProject.Identity.Models
 {
-    [TableName("Roles")]
+    [TableName("Role")]
     public class Role :Entity
     {
         public string Name { get; set; }
@@ -13,7 +13,7 @@ namespace CourseProject.Identity.Models
         public Role()
         {
             Id = Guid.NewGuid().GetHashCode();
-            Id = 3;
+            Id = 1;
         }
 
         public Role(string name) : this()

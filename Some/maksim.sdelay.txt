@@ -1,0 +1,5 @@
+﻿DONE Replace email to login
+DONE delete email
+DONE create register/login page with login 
+Настроить иннициализацию primary key in Order_product
+system of image-storaging/adding/updating ^)

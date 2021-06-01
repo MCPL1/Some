@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Cors;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Products")]
+    [TableName("Product")]
     public class Product : Entity
     {
-        [StringLength(8, ErrorMessage = "Name length can't be more than 8.")]
-        [DisplayName("Title")]
-        public string Title { get; set; }
+        [StringLength(8, ErrorMessage = "UserName length can't be more than 8.")]
+        [DisplayName("Name")]
+        public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
         [DisplayName("Description")]
@@ -21,6 +21,19 @@ namespace CourseProject.Models.DataModels
         [DisplayName("Price")]
         public decimal Price { get; set; }
 
-        [ForeignKey("CategoryId")] public Category Category { get; set; }
+        [ForeignKey("category_id")] 
+        public Category Category { get; set; }
+
+        public int Quantity { get; set; }
+
+        [ForeignKey("manufacturer_id")] 
+        public Manufacturer Manufacturer { get; set; }
+
+        public Product()
+        {
+            Manufacturer = new Manufacturer();
+            Category = new Category();
+        }
+
     }
 }

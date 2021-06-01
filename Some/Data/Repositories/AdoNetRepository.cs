@@ -44,7 +44,7 @@ namespace CourseProject.Data.Repositories
                 ? $"INSERT INTO \"{_tableInfo.TableName}\"({_tableInfo.NonReadOnlyTableColumnsDefinition}) " +
                   $"OUTPUT INSERTED.ID " +
                   $" VALUES ({string.Join(',', values)});"
-                : $"INSERT INTO \"{_tableInfo.TableName}\"({_tableInfo.MasterEntityName}Id,{_tableInfo.RelatedEntityName}Id,{_tableInfo.TransitionalTableColumnsDefinition}) " +
+                : $"INSERT INTO \"{_tableInfo.TableName}\"({_tableInfo.MasterEntityName}_Id,{_tableInfo.RelatedEntityName}_Id,{_tableInfo.TransitionalTableColumnsDefinition}) " +
                   $" VALUES ({masterId}, {entity.Id}, {string.Join(',', values)});";
             var createdEntityId = await ExecuteNonQuery(createCommand);
 
@@ -77,7 +77,7 @@ namespace CourseProject.Data.Repositories
         {
             var propertyName = propertyExpression.GetTablePropertyName(_tableInfo);
             var selectCommand =
-                $"SELECT TOP 1 {_tableInfo.TableColumnsDefinition} FROM \"{_tableInfo.TableName}\" WHERE {propertyName}='{value}'";
+                $"SELECT  {_tableInfo.TableColumnsDefinition} FROM \"{_tableInfo.TableName}\" WHERE {propertyName}='{value}'";
 
             return await ExecuteSelect(selectCommand);
         }
@@ -86,10 +86,10 @@ namespace CourseProject.Data.Repositories
         {
             var selectCommand = !_tableInfo.IsTransitional
                 ? $"SELECT {_tableInfo.TableColumnsDefinition} FROM \"{_tableInfo.TableName}\""
-                : $"SELECT {_tableInfo.TableColumnsDefinition} FROM \"{_tableInfo.TableName}\" " +
+                : $"SELECT {_tableInfo.TransitionalTableColumnsDefinition} FROM \"{_tableInfo.TableName}\" " +
                   $"JOIN {_tableInfo.RelatedTableName} " +
-                  $"ON {_tableInfo.RelatedTableName}.Id = {_tableInfo.TableName}.{_tableInfo.RelatedEntityName}Id " +
-                  $"WHERE {_tableInfo.MasterEntityName}Id='{masterId}'";
+                  $"ON {_tableInfo.RelatedTableName}.Id = {_tableInfo.TableName}.{_tableInfo.RelatedEntityName}_Id " +
+                  $"WHERE {_tableInfo.MasterEntityName}_Id='{masterId}'";
 
             return await ExecuteSelect(selectCommand);
         }
@@ -171,7 +171,7 @@ namespace CourseProject.Data.Repositories
 
         private async Task<int> ExecuteNonQuery(string commandText)
         {
-            //File.AppendAllText(@"C:\Users\Max\Desktop\temp\text.txt", commandText + "\n");
+            // File.AppendAllText(@"C:\Users\Max\Desktop\temp\text.txt", commandText + "\n");
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand();
             await connection.OpenAsync();
@@ -187,7 +187,8 @@ namespace CourseProject.Data.Repositories
             else await command.ExecuteNonQueryAsync();
             transaction.Commit();
             await connection.CloseAsync();
-            if (_tableInfo.HasToManyRelation&& !(new CultureInfo("ru").CompareInfo.IndexOf(commandText, "update", CompareOptions.IgnoreCase) >= 0))
+            if (_tableInfo.HasToManyRelation &&
+                !(new CultureInfo("ru").CompareInfo.IndexOf(commandText, "update", CompareOptions.IgnoreCase) >= 0))
             {
                 foreach (var relatedEntity in (IEnumerable<Entity>) _tableInfo.EntityType
                     .GetProperty(_tableInfo.EntityType
@@ -219,7 +220,7 @@ namespace CourseProject.Data.Repositories
         private async Task<List<TEntity>> ExecuteSelect(string selectCommand)
         {
             var resultEntities = new List<TEntity>();
-            //File.AppendAllText(@"C:\Users\Max\Desktop\temp\text.txt", selectCommand + "\n");
+            //File.AppendAllText(@"C:\Инфа\log.txt", selectCommand + "\n");
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand();
             await connection.OpenAsync();
@@ -228,16 +229,33 @@ namespace CourseProject.Data.Repositories
 
             var transaction = connection.BeginTransaction();
             command.Transaction = transaction;
-            var reader = await command.ExecuteReaderAsync();
+            SqlDataReader reader;
+            try
+            {
+                reader = await command.ExecuteReaderAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(selectCommand);
+            }
+
 
             while (await reader.ReadAsync())
             {
                 var resultEntity = new TEntity();
 
 
-                for (var i = 0; i < _tableInfo.TableColumns.Length; i++)
+                for (var i = 0;
+                    i < (_tableInfo.IsTransitional
+                        ? _tableInfo.TransitionalTableColumns.Length
+                        : _tableInfo.TableColumns.Length);
+                    i++)
                 {
                     var propertyValue = reader.GetValue(i);
+                    if (propertyValue.GetType() == typeof(DBNull))
+                    {
+                        continue;
+                    }
 
                     if (_tableInfo.EntityType.GetProperty(_tableInfo.EntityColumns[i])
                         .GetCustomAttributes<ForeignKeyAttribute>().Any())
