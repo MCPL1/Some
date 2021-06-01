@@ -228,7 +228,16 @@ namespace CourseProject.Data.Repositories
 
             var transaction = connection.BeginTransaction();
             command.Transaction = transaction;
-            var reader = await command.ExecuteReaderAsync();
+            SqlDataReader reader;
+            try
+            {
+                reader = await command.ExecuteReaderAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(selectCommand);
+            }
+            
 
             while (await reader.ReadAsync())
             {

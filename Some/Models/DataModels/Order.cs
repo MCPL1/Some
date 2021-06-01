@@ -19,6 +19,7 @@ namespace CourseProject.Models.DataModels
         [ForeignKeyToMany("Product")] 
         public List<OrderProduct> Products { get; set; }
 
+        [ForeignKey("delivery_id")]
         public Delivery Delivery { get; set; }
 
         public Order()
