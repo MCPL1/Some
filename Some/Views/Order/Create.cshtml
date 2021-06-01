@@ -4,18 +4,18 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1 class="text-center mb-3">Create order</h1>
 
-<h4>Order</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
+    <div class="col-md-6 m-auto">
+        <form asp-action="Create" class="d-flex flex-column">
+            <label class="control-label">Provider</label>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <select class="form-select" asp-for="Delivery.DeliveryProvider.Id"
                     asp-items="@(new SelectList(Model.DeliveryProviders, "Id", "Name"))">
                 <option>Please select one</option>
             </select>
+            <label class="control-label">Delivery type</label>
             <select class="form-select" asp-for="Delivery.DeliveryType.Id"
                     asp-items="@(new SelectList(Model.DeliveryTypes, "Id", "Name"))">
                 <option>Please select one</option>
@@ -25,9 +25,8 @@
                 <input asp-for="Delivery.Address" class="form-control" />
                 <span asp-validation-for="Delivery.Address" class="text-danger"></span>
             </div>
-            <div>@Model.DeliveryProviders.</div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" style="width: 100%;" class="btn btn-success">Create order</button>
             </div>
         </form>
     </div>
