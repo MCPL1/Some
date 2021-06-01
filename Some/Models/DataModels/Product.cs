@@ -24,7 +24,7 @@ namespace CourseProject.Models.DataModels
         [ForeignKey("category_id")] 
         public Category Category { get; set; }
 
-        public int Number { get; set; }
+        public int Quantity { get; set; }
 
         [ForeignKey("manufacturer_id")] 
         public Manufacturer Manufacturer { get; set; }

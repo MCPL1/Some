@@ -34,7 +34,16 @@ namespace Some
 
             services.Configure<Settings>(Configuration.GetSection("ConnectionStrings"));
 
-            services.AddIdentity<User, Role>()
+            services.AddIdentity<User, Role>(options =>
+                    {
+                        options.Password.RequiredLength = 1;
+                        options.Password.RequireDigit = false;
+                        options.Password.RequireNonAlphanumeric = false;
+                        options.Password.RequireLowercase = false;
+                        options.Password.RequireUppercase = false;
+                    }
+
+                    )
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
 
