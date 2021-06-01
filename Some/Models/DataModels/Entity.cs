@@ -5,7 +5,7 @@ namespace CourseProject.Models.DataModels
     public abstract class Entity
     {
         [ReadOnlyProperty] 
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         protected Entity()
         {

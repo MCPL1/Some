@@ -6,27 +6,26 @@ using System;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Order_")]
+    [TableName("Order")]
     public class Order : Entity
     {
         [ForeignKey("user_Id")]
         public User User { get; set; }
 
-        public string Status { get; set; }
+        [ForeignKey("status_id")]
+        public Status Status { get; set; }
 
         public DateTime Date  { get; set; }
 
         [ForeignKeyToMany("Product")] 
         public List<OrderProduct> Products { get; set; }
 
-        [ForeignKey("delivery_id")]
-        public Delivery Delivery { get; set; }
 
         public Order()
         {
             User = new User();
             Products = new List<OrderProduct>();
-            Delivery = new Delivery();
+            Status = new Status();
         }
     }
 }

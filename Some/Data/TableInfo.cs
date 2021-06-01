@@ -63,7 +63,7 @@ namespace CourseProject.Data
                         ? x.GetCustomAttributes<ForeignKeyAttribute>().First().Name
                         : x.Name).ToArray();
             TransitionalTableColumnsDefinition = 
-                string.Join(',', TransitionalTableColumns.Select(x => $"\"{x}\""));
+                string.Join(',', TransitionalTableColumns.Select(x => $"{TableName}.{x}"));
 
             
         }

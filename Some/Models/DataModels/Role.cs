@@ -13,7 +13,8 @@ namespace CourseProject.Identity.Models
         public Role()
         {
             Id = Guid.NewGuid().GetHashCode();
-            Id = 1011;
+            Id = 1;
+            //Id = 1011;
         }
 
         public Role(string name) : this()
