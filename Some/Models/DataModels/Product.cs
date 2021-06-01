@@ -21,9 +21,13 @@ namespace CourseProject.Models.DataModels
         [DisplayName("Price")]
         public decimal Price { get; set; }
 
-        [ForeignKey("category_id")] public Category Category { get; set; }
+        [ForeignKey("category_id")] 
+        public Category Category { get; set; }
 
-        [ForeignKey("manufacturer_id")] public Manufacturer Manufacturer { get; set; }
+        public int Number { get; set; }
+
+        [ForeignKey("manufacturer_id")] 
+        public Manufacturer Manufacturer { get; set; }
 
         public Product()
         {

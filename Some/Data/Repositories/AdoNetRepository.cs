@@ -219,7 +219,7 @@ namespace CourseProject.Data.Repositories
         private async Task<List<TEntity>> ExecuteSelect(string selectCommand)
         {
             var resultEntities = new List<TEntity>();
-            File.AppendAllText(@"C:\Инфа\log.txt", selectCommand + "\n");
+            //File.AppendAllText(@"C:\Инфа\log.txt", selectCommand + "\n");
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand();
             await connection.OpenAsync();
