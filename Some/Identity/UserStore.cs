@@ -11,7 +11,6 @@ namespace CourseProject.Identity
 {
     public class UserStore : IUserPasswordStore<User>,
         IUserRoleStore<User>,
-        IUserEmailStore<User>,
         IUserPhoneNumberStore<User>
     {
         private readonly IRepository<User> _userRepository;
@@ -41,24 +40,24 @@ namespace CourseProject.Identity
             cancellationToken.ThrowIfCancellationRequested();
             if (user == null) throw new ArgumentNullException(nameof(user));
 
-            return Task.FromResult(user.Name);
+            return Task.FromResult(user.UserName);
         }
 
         public Task SetUserNameAsync(User user, string userName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            user.Name = userName;
+            user.UserName = userName;
             return Task.FromResult(1);
         }
 
         public Task<string> GetNormalizedUserNameAsync(User user, CancellationToken cancellationToken)
         {
-            return Task.FromResult(user.Name.ToLowerInvariant());
+            return Task.FromResult(user.UserName.ToLowerInvariant());
         }
 
         public Task SetNormalizedUserNameAsync(User user, string normalizedName, CancellationToken cancellationToken)
         {
-            user.NormalizedName = normalizedName;
+            user.UserName = normalizedName;
             return Task.FromResult(1);
         }
 
@@ -66,10 +65,10 @@ namespace CourseProject.Identity
         {
             cancellationToken.ThrowIfCancellationRequested();
             await _userRepository.Create(user);
-            if ((await _userRepository.Get(x => x.NormalizedName, user.NormalizedName)).NormalizedName ==
-                user.NormalizedName)
-                return IdentityResult.Success;
-            return IdentityResult.Failed();
+            return (await _userRepository.Get(x => x.UserName, user.UserName))
+                   .UserName == user.UserName 
+                ? IdentityResult.Success 
+                : IdentityResult.Failed();
         }
 
         public async Task<IdentityResult> UpdateAsync(User user, CancellationToken cancellationToken)
@@ -91,7 +90,7 @@ namespace CourseProject.Identity
         public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var user = await _userRepository.Get(user => user.Name, normalizedUserName);
+            var user = await _userRepository.Get(user => user.UserName, normalizedUserName);
 
             return user;
         }
@@ -146,43 +145,7 @@ namespace CourseProject.Identity
             throw new NotImplementedException();
         }
 
-        public Task SetEmailAsync(User user, string email, CancellationToken cancellationToken)
-        {
-            user.Email = email;
-            return Task.FromResult(1);
-        }
-
-        public Task<string> GetEmailAsync(User user, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(user.Email);
-        }
-
-        public Task<bool> GetEmailConfirmedAsync(User user, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(true);
-        }
-
-        public Task SetEmailConfirmedAsync(User user, bool confirmed, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
-        {
-            return await _userRepository.Get(u => u.Email, normalizedEmail);
-        }
-
-        public Task<string> GetNormalizedEmailAsync(User user, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(user.Email.ToLowerInvariant());
-        }
-
-        public Task SetNormalizedEmailAsync(User user, string normalizedEmail, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(1);
-        }
-
-        public Task SetPhoneNumberAsync(User user, string phoneNumber, CancellationToken cancellationToken)
+       public Task SetPhoneNumberAsync(User user, string phoneNumber, CancellationToken cancellationToken)
         {
             user.PhoneNumber = phoneNumber;
             return Task.FromResult(1);
