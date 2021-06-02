@@ -2,12 +2,14 @@
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using CourseProject.Models.DataModels;
+using Microsoft.AspNetCore.Http;
 
 namespace CourseProject.Models.ViewModels
 {
     public class ProductCreateViewModel
     {
         public Product Product { get; set; }
+        public IFormFile Image { get; set; }
         public List<Category> Categories { get; set; }
         public List<Manufacturer> Manufacturers { get; set; }
 

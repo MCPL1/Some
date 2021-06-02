@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CourseProject.Data.Repositories;
 using CourseProject.Models;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CourseProject.Controllers
 {
@@ -16,12 +18,15 @@ namespace CourseProject.Controllers
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Manufacturer> _manufacturerRepository;
 
+        IWebHostEnvironment _appEnvironment;
+
         public ProductController(IRepository<Product> productRepository, IRepository<Category> categoryRepository,
-            IRepository<Manufacturer> manufacturerRepository)
+            IRepository<Manufacturer> manufacturerRepository, IWebHostEnvironment appEnvironment)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
             _manufacturerRepository = manufacturerRepository;
+            _appEnvironment = appEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -65,9 +70,20 @@ namespace CourseProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(ProductCreateViewModel model)
         {
-            await _productRepository.Create(product);
+            var createdProduct = model.Product;
+            if (model.Image != null)
+            {
+                var path = "/Images/" + model.Image.FileName;
+                await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
+                await model.Image.CopyToAsync(fileStream);
+                fileStream.Close();
+                createdProduct.Image = path;
+            }
+            
+
+            await _productRepository.Create(createdProduct);
             return RedirectToAction("Index");
         }
 

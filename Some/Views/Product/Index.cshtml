@@ -27,7 +27,7 @@
         @foreach (var item in Model.Products)
         {
             <div class="card mb-3" style="width: 15rem;">
-                <img src="https://d1uz88p17r663j.cloudfront.net/original/4274048cd5f17c49dfee280f77a3739d_Cheese-Pizza_HB-2.jpg" class="card-img-top" alt="...">
+                <img src="@item.Image" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                     <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
