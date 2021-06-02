@@ -1,23 +1,24 @@
 ﻿.image {
     width: 600px;
+    max-width: 100px !important;
+    max-height: 100px !important;
     height: 500px;
-    object-fit: cover;
+    object-fit:fill;
 }
-
-.treeview {
+.card-img-top {
+    max-width: 300px;
+    max-height: 150px;
+}
+    .treeview {
     padding: 0;
     clear: both;
     font-family: Arial, sans-serif;
     width: 100%;
 }
 
-a {
-    text-decoration: none;
-}
+a { text-decoration: none; }
 
-.treeview * {
-    font-size: 100.1%;
-}
+.treeview * { font-size: 100.1%; }
 
 .treeview ul {
     overflow: hidden;
@@ -27,53 +28,49 @@ a {
     list-style-type: none;
 }
 
-    .treeview ul ul {
-        overflow: visible;
-        width: auto;
-        margin: 0;
-        padding: 0 0 0 0.75em;
-    }
-
-    .treeview ul.l {
-        border-left: 1px solid;
-        margin-left: -1px;
-    }
-
-.treeview li.cl ul {
-    display: none;
+.treeview ul ul {
+    overflow: visible;
+    width: auto;
+    margin: 0;
+    padding: 0 0 0 0.75em;
 }
+
+.treeview ul.l {
+    border-left: 1px solid;
+    margin-left: -1px;
+}
+
+.treeview li.cl ul { display: none; }
 
 .treeview li {
     margin: 0;
     padding: 0;
 }
 
-    .treeview li li {
-        margin: 0 0 0 0.5em;
-        border-left: 1px dotted;
-        padding: 0;
-    }
+.treeview li li {
+    margin: 0 0 0 0.5em;
+    border-left: 1px dotted;
+    padding: 0;
+}
 
-    .treeview li div {
-        position: relative;
-        height: 1.5em;
-        min-height: 16px;
-    }
+.treeview li div {
+    position: relative;
+    height: 1.5em;
+    min-height: 16px;
+}
 
-    .treeview li li div {
-        border-bottom: 1px dotted;
-    }
+.treeview li li div { border-bottom: 1px dotted; }
 
-    .treeview li p {
-        position: absolute;
-        z-index: 1;
-        top: 0.8em;
-        left: 1.75em;
-        width: 100%;
-        margin: 0;
-        border-bottom: 1px dashed;
-        padding: 0;
-    }
+.treeview li p {
+    position: absolute;
+    z-index: 1;
+    top: 0.8em;
+    left: 1.75em;
+    width: 100%;
+    margin: 0;
+    border-bottom: 1px dashed;
+    padding: 0;
+}
 
 .treeview a {
     padding: 0.1em 0.2em;
@@ -98,31 +95,17 @@ a {
 
 .treeview li p,
 .treeview img.i,
-.treeview .sc {
-    background: #fff;
-}
+.treeview .sc { background: #fff; }
 
 .treeview ul.l,
 .treeview li p,
-.treeview img.i {
-    border-color: #fff;
-}
+.treeview img.i { border-color: #fff; }
 
 .treeview ul li li,
-.treeview ul li li div {
-    border-color: #999999;
-}
+.treeview ul li li div { border-color: #999999; }
 
 .treeview a,
 .treeview a.sc,
-.treeview a.sc:hover {
-    color: #000000;
-}
+.treeview a.sc:hover { color: #000000; }
 
-    .treeview a:hover {
-        color: #cc0000;
-    }
-
-
-
-
+.treeview a:hover { color: #cc0000; }

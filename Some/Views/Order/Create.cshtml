@@ -11,12 +11,12 @@
         <form asp-action="Create" class="d-flex flex-column">
             <label class="control-label">Provider</label>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <select class="form-select" asp-for="Delivery.DeliveryProvider.Id"
+            <select class="form-control" asp-for="Delivery.DeliveryProvider.Id"
                     asp-items="@(new SelectList(Model.DeliveryProviders, "Id", "Name"))">
                 <option>Please select one</option>
             </select>
             <label class="control-label">Delivery type</label>
-            <select class="form-select" asp-for="Delivery.DeliveryType.Id"
+            <select class="form-control" asp-for="Delivery.DeliveryType.Id"
                     asp-items="@(new SelectList(Model.DeliveryTypes, "Id", "Name"))">
                 <option>Please select one</option>
             </select>
