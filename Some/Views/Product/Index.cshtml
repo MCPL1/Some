@@ -21,6 +21,102 @@
             </ul>
         </div>
     </div>
+
+    @*------------------------------------------------------------------------------------------------------------*@
+    <div class="treeview">
+        <ul>
+            <li>
+                <div>
+                    <p>
+                        <a href="#" class="sc" onclick="return UnHide(this)">&#9660;</a>
+                        <a href="#">Programs</a>
+                    </p>
+                </div>
+                <ul>
+                    <li class="cl">
+                        <div>
+                            <p>
+                                <a href="#" class="sc" onclick="return UnHide(this)">&#9658;</a>
+                                <a href="#">Adobe CS2</a>
+                            </p>
+                        </div>
+                        <ul>
+                            <li>
+                                <div>
+                                    <p>
+                                        Photoshop
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p>
+                                        Illustrator
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p>
+                                        InDesign
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="cl">
+                        <div>
+                            <p>
+                                <a href="#" class="sc" onclick="return UnHide(this)">&#9658;</a>
+                                <a href="#">Microsoft Office</a>
+                            </p>
+                        </div>
+                        <ul>
+                            <li>
+                                <div>
+                                    <p>
+                                        Word
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <p>
+                                        Excel
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                Internet Explorer
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                Mozilla Firefox
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <p>
+                                Opera
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    @*------------------------------------------------------------------------------------------------------------*@
+
+
+
     @*<a class="btn btn-close" asp-action="GetByCategory" asp-controller="Product" asp-route-categoryId="1">alo</a>*@
 
     <div class="col-6">
@@ -35,13 +131,16 @@
                     <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
                 </div>
             </div>
-            
+
         }
     </div>
 </div>
 
 
 <script>
+
+
+
 
     (function($) {
 
