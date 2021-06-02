@@ -1,37 +1,39 @@
 ﻿@model CourseProject.Models.ViewModels.CategoryViewModel
 
 
-<li class="treeview-animated-items">
-    <div class="treeview-animated-items-header">
-        <i class="fas fa-plus-circle"></i>
-        <div>
-            <i class="far fa-envelope-open ic-w mx-1"></i>@Model.Name
-        </div>
-        <div>
-           
-        </div>
-    </div>
 
-    @if (Model.SubCategories != null && Model.SubCategories.Any())
+<div>
+    <p>
+        <a href="#" class="sc" onclick="return UnHide(this)">&#9660;</a>
+        <a asp-controller="Product" asp-action="GetByCategory" asp-route-categoryId="@Model.Id">@Model.Name</a>
+    </p>
+</div>
+
+@if (Model.SubCategories != null && Model.SubCategories.Any())
+{
+<ul>
+    @foreach (var category in Model.SubCategories)
     {
-        <ul class="nested">
-            @foreach (var category in Model.SubCategories)
-            {
-                @if (category.SubCategories != null && category.SubCategories.Any())
-                {
-                    <li>
+        @if (category.SubCategories != null && category.SubCategories.Any())
+        {
+            <li class="cl">
+
                         @await Html.PartialAsync("CategoryTreePartial", category)
-                    </li>
-                }
-                else
-                {
-                    <li>
-                        <div class="treeview-animated-element">
-                            <i class="far fa-address-book ic-w mr-1"></i>@category.Name
-                        </div>
-                    </li>
-                }
-            }
-        </ul>
+
+            </li>
+        }
+        else
+        {
+            <li>
+                <div>
+                    <p>
+                       <a asp-controller="Product" asp-action="GetByCategory" asp-route-categoryId="@category.Id">@category.Name</a>
+                    </p>
+                </div>
+
+            </li>
+           
+        }
     }
-</li>
+</ul>
+}

@@ -3,13 +3,3 @@
 
 // Write your JavaScript code.
 
-function UnHide(elem) {
-    if (elem.innerHTML.charCodeAt(0) === 9658) {
-        elem.innerHTML = '&#9660;'
-        elem.parentNode.parentNode.parentNode.className = '';
-    } else {
-        elem.innerHTML = '&#9658;'
-        elem.parentNode.parentNode.parentNode.className = 'cl';
-    }
-    return false;
-}
