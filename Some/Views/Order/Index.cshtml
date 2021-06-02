@@ -13,16 +13,13 @@
     <p>
        Order date: @Html.DisplayFor(modelItem => order.Date)
     </p>
-    <p>
-       Order id: @Html.DisplayFor(modelItem => order.Id)
-    </p>
     
     <div class="d-flex justify-content-between flex-wrap">
         @foreach (var product in order.Products)
         {
             <div class="card mb-3" style="width: 15rem;">
                 <div class="card-body">
-                    <h5 class="card-title">Title: @(product.Id)</h5>
+                    <h5 class="card-title">Title: @(product.Name)</h5>
                     <p class="card-text">Price: @(product.Price)</p>
                     <p class="card-text">Quantity: @(product.Quantity)</p>
                     <p class="card-text">Amount: @(product.Price * product.Quantity)</p>
