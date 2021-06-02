@@ -67,7 +67,7 @@ namespace CourseProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.UseName, model.Password, true, false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Product");

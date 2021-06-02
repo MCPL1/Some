@@ -16,6 +16,7 @@ namespace CourseProject.Models.DataModels
 
         public DateTime Date { get; set; }
 
+        // not
         public int Parcel_number { get; set; }
 
         [ForeignKey("provider_id")] public DeliveryProvider DeliveryProvider { get; set; }

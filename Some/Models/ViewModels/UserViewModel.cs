@@ -15,7 +15,7 @@ namespace CourseProject.Models.ViewModels
 
     public class UserLoginViewModel
     {
-        [Required] public string UseName { get; set; }
+        [Required] public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

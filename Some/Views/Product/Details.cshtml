@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Product details</h1>
 
 <div>
     <h4>Product</h4>
@@ -48,3 +48,46 @@
         <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
     }
 </div>
+    <div class="d-flex align-items-center justify-content-around">
+        <img class="image" src="https://d1uz88p17r663j.cloudfront.net/original/4274048cd5f17c49dfee280f77a3739d_Cheese-Pizza_HB-2.jpg" alt="Alternate Text" />
+        <div class="d-flex flex-column ml-5">
+            <dl class="row">
+                <dt class="col-sm-2">
+                    Title:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Description):
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Price):
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Price)
+                </dd>
+                <dt class="col-sm-2">
+                    Category:
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+            </dl>
+            // Пример admin
+            <div>
+                @Html.ActionLink("Add To Cart", "AddItem", "Cart", new { id = Model.Id }, new { @class = "btn btn-danger" })
+                @if (User.IsInRole("anon"))
+                {
+                    <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
