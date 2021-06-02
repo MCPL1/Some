@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace CourseProject.Models.DataModels
     [TableName("Delivery")]
     public class Delivery : Entity
     {
+        [DisplayName("Адреса доставки")]
         public string Address { get; set; }
 
         public DateTime Date { get; set; }

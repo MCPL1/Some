@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CourseProject.Models.DataModels.Product>
+﻿@model CourseProject.Models.ViewModels.ProductIndexViewModel
 
 @{
     ViewData["Title"] = "Main";
@@ -6,26 +6,85 @@
 
 <h1>Index</h1>
 
-<a class="btn btn-primary" asp-controller="Product" asp-action="Create" >Add Product</a>
+<div class="row">
 
-@foreach (var item in Model)
-{
-    <div class="card">
-        <img
-            src="..."
-            class="card-img-top"
-            alt="..." width="50"/>
-        <div class="card-body">
-            <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Name)</h5>
-            <p class="card-text">
-                @Html.DisplayFor(modelItem => item.Description)
-            </p>
-            <p class="card-text">
-                Price @Html.DisplayFor(modelItem => item.Price)
-            </p>
-            <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
-            <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
-            <p class="mate"></p>
+
+    <div class="col-2">
+        <div class="treeview-animated w-auto border border-secondary mx-4 my-4">
+            <h6 class="pt-3 pl-3">Categories</h6>
+            <hr>
+            <ul class="treeview-animated-list mb-3">
+                @foreach (var cat in Model.Categories)
+                {
+                    @await Html.PartialAsync("CategoryTreePartial", cat)
+                }
+            </ul>
         </div>
     </div>
-}
+    @*<a class="btn btn-close" asp-action="GetByCategory" asp-controller="Product" asp-route-categoryId="1">alo</a>*@
+
+    <div class="col-6">
+        @foreach (var item in Model.Products)
+        {
+            <div class="card">
+                <img src="..."
+                     class="card-img-top"
+                     alt="..." width="50"/>
+                <div class="card-body">
+                    <h5 class="card-title"> @Html.DisplayFor(modelItem => item.Name)</h5>
+                    <p class="card-text">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+                    <p class="card-text">
+                        Price @Html.DisplayFor(modelItem => item.Price)
+                    </p>
+                    <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script>
+
+    (function($) {
+
+        let $allPanels = $('.nested').hide();
+        let $elements = $('.treeview-animated-element');
+
+        $('.treeview-animated-items-header').click(function() {
+            $this = $(this);
+            $target = $this.siblings('.nested');
+            $pointerPlus = $this.children('.fa-plus-circle');
+            $pointerMinus = $this.children('.fa-minus-circle');
+
+            $pointerPlus.removeClass('fa-plus-circle');
+            $pointerPlus.addClass('fa-minus-circle');
+            $pointerMinus.removeClass('fa-minus-circle');
+            $pointerMinus.addClass('fa-plus-circle');
+            $this.toggleClass('open');
+            if (!$target.hasClass('active')) {
+                $target.addClass('active').slideDown();
+            } else {
+                $target.removeClass('active').slideUp();
+            }
+
+            return false;
+        });
+        $elements.click(function() {
+            $this = $(this);
+
+            if ($this.hasClass('opened')) {
+
+                $elements.removeClass('opened');
+            } else {
+
+                $elements.removeClass('opened');
+                $this.addClass('opened');
+            }
+        })
+    })(jQuery);
+</script>

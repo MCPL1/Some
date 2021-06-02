@@ -6,9 +6,16 @@
 @inject UserManager<User> UserManager
 <div class="container">
     <a asp-action="Index" asp-controller="Order"
-       asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check"> Orders</a>
+       asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
+        Orders
+    </a>
 
-    <a asp-action="ConfirmIndex" asp-controller="Order"
-        class="btn btn-outline-danger">All Orders</a>
+
+    @*@if (User.IsInRole("administrator"))
+    {*@
+    <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+    <a asp-action="ConfirmIndex" asp-controller="Order"class="btn waves-effect waves-purple">All Orders</a>
+
+    }
 </div>
 <p>Hi</p>

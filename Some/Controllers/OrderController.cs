@@ -19,14 +19,23 @@ namespace CourseProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<Status> _statusRepository;
         private readonly IRepository<Delivery> _deliveryRepository;
+        private readonly IRepository<DeliveryType> _deliveryTypeRepository;
+        private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
 
-        public OrderController(UserManager<User> userManager, IRepository<Order> orderRepository,
-            IRepository<Delivery> deliveryRepository)
+        public OrderController(UserManager<User> userManager,
+            IRepository<Order> orderRepository,
+            IRepository<Delivery> deliveryRepository,
+            IRepository<DeliveryType> deliveryTypeRepository,
+            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository)
         {
-            this._userManager = userManager;
+            _userManager = userManager;
             _orderRepository = orderRepository;
             _deliveryRepository = deliveryRepository;
+            _deliveryTypeRepository = deliveryTypeRepository;
+            _deliveryProviderRepository = deliveryProviderRepository;
+            _statusRepository = statusRepository;
         }
 
         public async Task<IActionResult> Index(int id)
@@ -36,28 +45,32 @@ namespace CourseProject.Controllers
         }
 
         [Authorize(Roles = "admin, anon, user")]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            if (GetCart().Items.Count == 0)
+                return RedirectToAction("Index", "Cart");
+            var model = new OrderCreateViewModel()
+            {
+                Delivery = new Delivery() {Date = DateTime.Now},
+                DeliveryProviders = (await _deliveryProviderRepository.GetAll()).ToList(),
+                DeliveryTypes = (await _deliveryTypeRepository.GetAll()).ToList()
+            };
+
+            return View(model);
         }
 
         [Authorize(Roles = "admin, anon, user")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Delivery model)
+        public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
             var order = new Order
             {
-                Status = {Id = 1004},
+                Status = {Id = 1}, //забыл, да, харе уже!
                 User = {Id = int.Parse(_userManager.GetUserId(User))},
                 Date = DateTime.Now
             };
-            var savedData = HttpContext.Session.GetString("cart");
-            CartViewModel data;
-            if ((savedData != null) && (savedData.Any()))
-                data = JsonSerializer.Deserialize<CartViewModel>(savedData);
-            else
-                data = new CartViewModel();
+            var data = GetCart();
             if (data.Items.Count == 0) return RedirectToAction("Index", "Cart");
             foreach (var item in data.Items)
             {
@@ -65,36 +78,59 @@ namespace CourseProject.Controllers
                     {Id = item.Product.Id});
             }
 
+            var parcelNum = new Random().Next(10000000, 99999999);
             var delivery = new Delivery
             {
                 Date = DateTime.Now,
-                DeliveryProvider = {Id = 1002},
-                DeliveryType = {Id = 1002},
-                Address = model.Address,
-                Parcel_number = 34
+                DeliveryProvider = model.Delivery.DeliveryProvider,
+                DeliveryType = model.Delivery.DeliveryType,
+                Address = model.Delivery.Address,
+                Parcel_number = parcelNum
             };
 
             var orderId = await _orderRepository.Create(order);
             delivery.Order = new Order() {Id = orderId};
             await _deliveryRepository.Create(delivery);
-            HttpContext.Session.SetString("cart", JsonSerializer.Serialize(new CartViewModel()));
-            return RedirectToAction("Index","User");
+            RemoveCart();
+            return RedirectToAction("Index", "User");
         }
 
         [Authorize(Roles = "administrator, anon, user")]
-        public async Task<IActionResult> ConfirmIndex()
+        public async Task<IActionResult> ConfirmIndex(int id=1)
         {
-            return View("Confirm", (await _orderRepository
-                .GetMany(order => order.Status.Id, 1)).ToList());
+            var model = new OrderConfirmViewModel()
+            {
+                Orders = (await _orderRepository.GetMany(order => order.Status.Id, id)).ToList(),
+                StatusList = (await _statusRepository.GetAll()).ToList()
+            };
+            return View("Confirm", model);
         }
 
         [Authorize(Roles = "admin, anon, user")]
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 2;
+            order.Status.Id = 2;//ага, попавсь!
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }
+
+        public CartViewModel GetCart()
+        {
+            var savedData = Request.Cookies["cart"];
+            CartViewModel data;
+            if (savedData != null && savedData.Any())
+                data = JsonSerializer.Deserialize<CartViewModel>(savedData);
+            else
+                data = new CartViewModel();
+            return data;
+        }
+
+        public void RemoveCart()
+        {
+            Response.Cookies.Delete("cart");
+        }
+
+       
     }
 }

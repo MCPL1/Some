@@ -27,9 +27,24 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Index()
         {
             var products = await _productRepository.GetAll();
-            return View(products);
+            var categories = await _categoryRepository.GetAll();
+            var model = new ProductIndexViewModel(categories)
+            {
+                Products = products.ToList(),
+            };
+            return View(model);
         }
 
+        public async Task<IActionResult> GetByCategory(int categoryId)
+        {
+            var products = await _productRepository.GetMany(p=>p.Category.Id,categoryId);
+            var categories = await _categoryRepository.GetAll();
+            var model = new ProductIndexViewModel(categories)
+            {
+                Products = products.ToList(),
+            };
+            return View("Index", model);
+        }
 
         public async Task<IActionResult> Details(int id)
         {

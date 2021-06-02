@@ -11,7 +11,6 @@ namespace CourseProject.Models.ViewModels
         public decimal Amount { get;  set; }
         public List<CartItemViewModel> Items { get; set; }
         
-
         public void AddItem(CartItemViewModel item)
         {
             Items.Add(item);

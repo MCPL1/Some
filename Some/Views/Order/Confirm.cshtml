@@ -1,26 +1,44 @@
-﻿@model List<CourseProject.Models.DataModels.Order>
+﻿@model CourseProject.Models.ViewModels.OrderConfirmViewModel
 @{
 }
 
-
-<table class="table table-success table-striped table-hover">
+@foreach (var status in Model.StatusList)
+{
+    <a class="btn btn-outline-warning"
+       asp-controller="Order" asp-action="ConfirmIndex" asp-route-id="@status.Id">
+        @status.Name
+    </a>
+}
+@if (Model.Orders[0].Status.Name == "inProgress")
+{
+}
+<table class="table details @(@Model.Orders[0].Status.Name == "inProgress" ? "table-success" : "table-dark")  table-striped table-hover">
     <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">UserUserName</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Manage</th>
-        </tr>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">UserUserName</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Manage</th>
+    </tr>
     </thead>
 
     <tbody>
-    @for (var i = 0; i < Model.Count(); i++)
+    @for (var i = 0; i < Model.Orders.Count(); i++)
     {
         <tr>
             <th scope="row">@(i + 1)</th>
-            <td>@(Model[i].User.Name)</td>
-            <td>@Model[i].Products.Sum(p =>(decimal) p.Quantity * p.Price)</td>
-            <td><a class="btn btn-outline-warning" asp-controller="Order" asp-action="Confirm" asp-route-id="@Model[i].Id"></a></td>
+            <td>@(Model.Orders[i].User.Name)</td>
+            <td>@Model.Orders[i].Products.Sum(p => (decimal) p.Quantity * p.Price)</td>
+
+            <td>
+                @if (Model.Orders[i].Status.Name == "inProgress")
+                {
+                    <a class="btn btn-outline-warning"
+                       asp-controller="Order" asp-action="Confirm" asp-route-id="@Model.Orders[i].Id">
+                        Confirm
+                    </a>
+                }
+            </td>
         </tr>
     }
     </tbody>

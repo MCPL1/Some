@@ -5,7 +5,7 @@
 }
 
 
-@if (Model.Items.Count!=0)
+@if (Model.Items.Count != 0)
 {
     <div>
         <h2>Все решено, мама я гей</h2>
@@ -27,9 +27,9 @@
                     @Model.Items[i].Quantity
                 </p>
             </div>
-            <td>
+            <span>
                 <a class="btn btn-danger" asp-controller="Cart" asp-action="Delete" asp-route-position="@i">Delete Item</a>
-            </td>
+            </span>
         </div>
     }
 }
@@ -37,7 +37,9 @@ else
 {
     <h5> Empty Cart</h5>
 }
-
-<div class="container">
-    <a class="btn btn-success" asp-controller="Order" asp-action="Create">Create Order</a>
-</div>
+@if (Model.Items.Count > 0)
+{
+    <div class="container">
+        <a class="btn btn-success" asp-controller="Order" asp-action="Create">Create Order</a>
+    </div>
+}

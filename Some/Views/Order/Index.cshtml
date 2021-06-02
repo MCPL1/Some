@@ -9,25 +9,30 @@
 
 @foreach (var order in Model)
 {
-    <div>
-        <p>
-            @Html.DisplayFor(modelItem => order.Date)
-        </p>
-        <p>
-            @Html.DisplayFor(modelItem => order.Id)
-        </p>
-        @foreach (var product in order.Products)
-        {
-            <p>
-                @(product.Name + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+                @Html.DisplayFor(modelItem => order.Date)
             </p>
-        }
-        <div>
-            @*<a class="btn" asp-controller="Order" asp-action="Details">Details</a>*@
+            <p class="card-text">
+                @Html.DisplayFor(modelItem => order.Id)
+            </p>
+            <p>
+                <label>@Html.DisplayNameFor(modelItem => order.Status.Name)</label>
+                @Html.DisplayFor(modelItem => order.Status.Name)
+            </p>
+            @foreach (var product in order.Products)
+            {
+                <p class="card-text">
+                    @(product.Name + "\tPrice: " + product.Price * product.Quantity + "\tQuantity" + product.Quantity)
+                </p>
+            }
+            <div>
+                @*<a class="btn" asp-controller="Order" asp-action="Details">Details</a>*@
+            </div>
         </div>
-
     </div>
-    
 }
 
 <a class="btn" asp-controller="User" asp-action="Index">Back</a>
