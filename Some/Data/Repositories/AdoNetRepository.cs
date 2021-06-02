@@ -171,7 +171,7 @@ namespace CourseProject.Data.Repositories
 
         private async Task<int> ExecuteNonQuery(string commandText)
         {
-            File.AppendAllText(@"C:\Users\Max\Desktop\temp\text.txt", commandText + "\n");
+           // File.AppendAllText(@"C:\Users\Max\Desktop\temp\text.txt", commandText + "\n");
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand();
             await connection.OpenAsync();

@@ -48,7 +48,7 @@ namespace CourseProject.Controllers
         {
             var order = new Order
             {
-                Status = {Id = 1},
+                Status = {Id = 1004},
                 User = {Id = int.Parse(_userManager.GetUserId(User))},
                 Date = DateTime.Now
             };
@@ -68,8 +68,8 @@ namespace CourseProject.Controllers
             var delivery = new Delivery
             {
                 Date = DateTime.Now,
-                DeliveryProvider = {Id = 1},
-                DeliveryType = {Id = 1},
+                DeliveryProvider = {Id = 1002},
+                DeliveryType = {Id = 1002},
                 Address = model.Address,
                 Parcel_number = 34
             };
@@ -81,7 +81,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("Index","User");
         }
 
-        [Authorize(Roles = "admin, anon, user")]
+        [Authorize(Roles = "administrator, anon, user")]
         public async Task<IActionResult> ConfirmIndex()
         {
             return View("Confirm", (await _orderRepository
