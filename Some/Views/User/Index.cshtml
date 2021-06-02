@@ -11,8 +11,8 @@
     </a>
 
 
-    @*@if (User.IsInRole("administrator"))
-    {*@
+    @if (User.IsInRole("administrator"))
+    {
     <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
     <a asp-action="ConfirmIndex" asp-controller="Order"class="btn waves-effect waves-purple">All Orders</a>
 
