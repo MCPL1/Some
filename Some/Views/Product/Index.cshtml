@@ -7,24 +7,21 @@
 <h1>Products</h1>
 
 <div class="row">
-<div class="treeview">
+<div class="treeview col-2">
     <ul>
-
         @foreach (var cat in Model.Categories)
         {
-            
             <li>
                 @await Html.PartialAsync("CategoryTreePartial", cat)
             </li>
         }
-        
     </ul>
 </div>
 
-    <div class="col-6">
+    <div class="col-10 d-flex justify-content-start align-items-center flex-wrap">
     @foreach (var item in Model.Products)
     {
-        <div class="card mb-3" style="width: 15rem;">
+        <div class="card m-4" style="width: 15rem;">
             <img src="@item.Image" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
