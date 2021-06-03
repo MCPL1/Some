@@ -29,12 +29,8 @@ namespace CourseProject.Models.DataModels
 
         public string Image { get; set; }
 
-        [ForeignKey("manufacturer_id")] 
-        public Manufacturer Manufacturer { get; set; }
-
         public Product()
         {
-            Manufacturer = new Manufacturer();
             Category = new Category();
         }
 

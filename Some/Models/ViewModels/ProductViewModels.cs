@@ -11,13 +11,11 @@ namespace CourseProject.Models.ViewModels
         public Product Product { get; set; }
         public IFormFile Image { get; set; }
         public List<Category> Categories { get; set; }
-        public List<Manufacturer> Manufacturers { get; set; }
 
         public ProductCreateViewModel()
         {
             Product = new Product();
             Categories = new List<Category>();
-            Manufacturers = new List<Manufacturer>();
         }
     }
 
@@ -40,20 +38,11 @@ namespace CourseProject.Models.ViewModels
                 select new CategoryViewModel()
                 {
                     Id = fc.Id,
-                    Name = fc.Name,
-                    BaseCategoryId = fc.BaseCategory?.Id ?? 0
+                    Name = fc.Name
                 }).ToList();
 
-            var lookup = categories.Where(c => c.BaseCategoryId != 0).ToLookup(c => c.BaseCategoryId);
 
-
-            foreach (var c in categories)
-            {
-                if (lookup.Contains(c.Id))
-                    c.SubCategories = lookup[c.Id].ToList();
-            }
-
-            Categories = categories.Where(c => c.BaseCategoryId == 0).ToList();
+            Categories = categories;
         }
     }
 }

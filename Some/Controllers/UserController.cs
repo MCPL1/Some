@@ -9,6 +9,7 @@ using CourseProject.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using CourseProject.Data;
 
 namespace CourseProject.Controllers
 {
@@ -41,7 +42,7 @@ namespace CourseProject.Controllers
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.UserName, Name = model.Name, Surname = model.SurName,PhoneNumber = "new"};
-                
+                await _userManager.AddToRoleAsync(user, RoleConst.Admin);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

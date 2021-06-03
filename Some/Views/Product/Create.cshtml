@@ -38,12 +38,6 @@
                     <option>Please select one</option>
                 </select>
             </div>
-            <div class="form-group">
-                <select class="form-control" style="width: 100%" asp-for="Product.Manufacturer.Id"
-                        asp-items="@(new SelectList(Model.Manufacturers, "Id", "Name"))">
-                    <option>Please select one</option>
-                </select>
-            </div>
 
             <div class="form-group">
                 <input type="file" class="form-control-file" asp-for="Image" />

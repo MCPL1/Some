@@ -21,14 +21,13 @@ namespace CourseProject.Controllers
 
         public async Task<IActionResult> Create()
         {
-            var cats = await _categoryRepository.GetAll();
-            return View(new CategoryCreateViewModel(cats){ Category = new CategoryViewModel()});
+            return View(new CategoryCreateViewModel(){ Category = new CategoryViewModel()});
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
-            var category = new Category() {Name = model.Category.Name, BaseCategory = new Category() {Id = model.Category.Id}};
+            var category = new Category() {Name = model.Category.Name};
             await _categoryRepository.Create(category);
             return RedirectToAction("Index", "User");
         }

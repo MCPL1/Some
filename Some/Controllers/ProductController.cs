@@ -19,16 +19,13 @@ namespace CourseProject.Controllers
     {
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
-        private readonly IRepository<Manufacturer> _manufacturerRepository;
 
         IWebHostEnvironment _appEnvironment;
 
-        public ProductController(IRepository<Product> productRepository, IRepository<Category> categoryRepository,
-            IRepository<Manufacturer> manufacturerRepository, IWebHostEnvironment appEnvironment)
+        public ProductController(IRepository<Product> productRepository, IRepository<Category> categoryRepository, IWebHostEnvironment appEnvironment)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
-            _manufacturerRepository = manufacturerRepository;
             _appEnvironment = appEnvironment;
         }
 
@@ -63,18 +60,6 @@ namespace CourseProject.Controllers
             return View("Index", model);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> GetByPrice([FromBody] (int minPrice, int maxPrice) tuple)
-        {
-            var products = await _productRepository.GetAll();
-            var categories = await _categoryRepository.GetAll();
-            var model = new ProductIndexViewModel(categories)
-            {
-                Products = products.Where(p => p.Price > 50 /*&& p.Price < maxPrice*/).ToList(),
-            };
-            return View("Index", model);
-        }
-
         public async Task<IActionResult> Details(int id)
         {
             var product = await _productRepository.GetById(id);
@@ -87,8 +72,7 @@ namespace CourseProject.Controllers
             var model =
                 new ProductCreateViewModel()
                 {
-                    Categories = (await _categoryRepository.GetAll()).ToList(),
-                    Manufacturers = (await _manufacturerRepository.GetAll()).ToList()
+                    Categories = (await _categoryRepository.GetAll()).ToList()
                 };
             return View(model);
         }

@@ -22,7 +22,7 @@
         <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
 </div>
-<table class="table details @(@Model.Orders[0].Status.Name == "inProgress" ? "table-success" : "table-dark")  table-striped table-hover">
+<table class="table details @(@Model.Orders[0].Status.Name == "in progress" ? "success" : "table-dark")  table-striped table-hover">
     <thead>
     <tr>
         <th scope="col">#</th>
@@ -41,7 +41,7 @@
             <td>@Model.Orders[i].Products.Sum(p => (decimal) p.Quantity * p.Price)</td>
 
             <td>
-                @if (Model.Orders[i].Status.Name == "inProgress")
+                @if (Model.Orders[i].Status.Name == "in progress")
                 {
                     <a class="btn btn-outline-warning"
                        asp-controller="Order" asp-action="Confirm" asp-route-id="@Model.Orders[i].Id">

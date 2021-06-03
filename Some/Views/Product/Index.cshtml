@@ -8,43 +8,15 @@
 <h1>Products</h1>
 
 <div class="row">
-<div class="treeview col-2">
+<div class="col-2">
     <ul>
         @foreach (var cat in Model.Categories)
         {
             <li>
-                @await Html.PartialAsync("CategoryTreePartial",
-                    new CategoryTreeViewModel() {Action = "GetByCategory", Controller = "Product", Category = cat})
+                <a asp-action="GetByCategory" asp-route-categoryId="@cat.Id">@cat.Name</a>
             </li>
         }
     </ul>
-   
-    @*<div class="container">
-
-        <div class="row">
-            <div class="col-sm-12">
-                <div id="slider-range"></div>
-            </div>
-        </div>
-        <div class="row slider-labels">
-            <div class="col-xs-6 caption">
-                <strong>Min:</strong> <span runat="server" id="slider-range-value1"></span>
-            </div>
-            <div class="col-xs-6 text-right caption">
-                <strong>Max:</strong> <span runat="server" id="slider-range-value2"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <form>
-                    <input type="hidden" name="min-value" value="">
-                    <input type="hidden" name="max-value" value="">
-                </form>
-            </div>
-        </div>
-        <a class="btn btn-primary" asp-action="GetByPrice" asp-route-minPrice="25" asp-route-maxPrice="450">|_|</a>
-        <a class="btn btn-primary" id ="btnPrice" >alo</a>
-    </div>*@
 
     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
     <div class="dropdown-menu">

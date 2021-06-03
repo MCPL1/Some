@@ -8,7 +8,6 @@
 <h1>Product details</h1>
 
 <div>
-    @Html.ActionLink("Add To Cart", "AddItem", "Cart", new { id = Model.Id }, new { @class = "btn btn-danger" })
     @if (User.IsInRole("administrator"))
     {
         <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
