@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using CourseProject.Data.Repositories;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace CourseProject.Controllers
 {
+    [AllowAnonymous]
     public class CartController : Controller
     {
         private readonly IRepository<Product> _repository;

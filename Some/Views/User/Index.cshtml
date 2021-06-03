@@ -4,6 +4,8 @@
 }
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+
+
 <div class="container">
     <a asp-action="Index" asp-controller="Order"
        asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
@@ -13,9 +15,22 @@
 
     @if (User.IsInRole("administrator"))
     {
-    <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
-    <a asp-action="ConfirmIndex" asp-controller="Order"class="btn waves-effect waves-purple">All Orders</a>
-
+        <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+        <a asp-action="ConfirmIndex" asp-controller="Order"class="btn btn-outline-danger">All Orders</a>
+        <a class="btn btn-outline-danger"asp-controller="Order" asp-action="ConfirmIndex">Confirm</a>
     }
 </div>
-<p>Hi</p>
+
+
+<script>
+    var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'));
+    triggerTabList.forEach(function(triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl);
+
+        triggerEl.addEventListener('click',
+            function(event) {
+                event.preventDefault();
+                tabTrigger.show();
+            })
+    })
+</script>

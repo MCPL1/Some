@@ -113,6 +113,19 @@ namespace CourseProject.Data.Repositories
             await ExecuteNonQuery(deleteCommand);
         }
 
+        public async Task ExecuteRawSql(string commandText)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand();
+            await connection.OpenAsync();
+            command.Connection = connection;
+            command.CommandText = commandText;
+
+            var transaction = connection.BeginTransaction();
+            command.Transaction = transaction;
+
+        }
+
         public async Task<SqlTransaction> CreateTransactionAsync()
         {
             var connection = new SqlConnection(_connectionString);

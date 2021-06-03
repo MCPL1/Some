@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CourseProject.Data;
 using CourseProject.Data.Repositories;
 using CourseProject.Models;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 
 namespace CourseProject.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private readonly IRepository<Product> _productRepository;
@@ -29,10 +32,19 @@ namespace CourseProject.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        public async Task<IActionResult> Index()
+        
+        public async Task<IActionResult> Index(string sortOrder = "price_normal")
         {
             var products = await _productRepository.GetAll();
             var categories = await _categoryRepository.GetAll();
+            products = sortOrder switch
+            {
+                "price_desc" => products.OrderByDescending(s => s.Price),
+                "price_asc" => products.OrderBy(s => s.Price),
+                "price_normal"=> products,
+                _ => products
+            };
+
             var model = new ProductIndexViewModel(categories)
             {
                 Products = products.ToList(),
@@ -57,7 +69,7 @@ namespace CourseProject.Controllers
             return View(product);
         }
 
-
+        [Authorize(Roles = RoleConst.ADMIN)]
         public async Task<IActionResult> Create()
         {
             var model =
@@ -69,6 +81,7 @@ namespace CourseProject.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = RoleConst.ADMIN)]
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateViewModel model)
         {
@@ -87,6 +100,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = RoleConst.ADMIN)]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -95,6 +109,7 @@ namespace CourseProject.Controllers
             return View(new ProductUpdateViewModel() {Product = product, Categories = categories.ToList()});
         }
 
+        [Authorize(Roles = RoleConst.ADMIN)]
         [HttpPost]
         public async Task<IActionResult> Edit(ProductUpdateViewModel model)
         {

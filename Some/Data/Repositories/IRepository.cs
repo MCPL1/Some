@@ -21,6 +21,8 @@ namespace CourseProject.Data.Repositories
         Task Update<TProperty>(TEntity entity, Expression<Func<TEntity, TProperty>> propertyExpression, TProperty value);
 
         Task Delete<TProperty>(Expression<Func<TEntity, TProperty>> propertyExpression, TProperty value);
+
+        Task ExecuteRawSql(string command);
     }
 
 

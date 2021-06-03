@@ -10,11 +10,13 @@ using CourseProject.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Principal;
+using CourseProject.Data;
 using CourseProject.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CourseProject.Controllers
 {
+    [Authorize(Roles = RoleConst.ALL)]
     public class OrderController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -44,7 +46,7 @@ namespace CourseProject.Controllers
             return View(orders);
         }
 
-        [Authorize(Roles = "admin, anon, user")]
+        
         public async Task<IActionResult> Create()
         {
             if (GetCart().Items.Count == 0)
@@ -59,7 +61,6 @@ namespace CourseProject.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = "admin, anon, user")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
@@ -95,7 +96,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("Index", "User");
         }
 
-        [Authorize(Roles = "administrator, anon, user")]
+        [Authorize(Roles = RoleConst.ADMIN)]
         public async Task<IActionResult> ConfirmIndex(int id=1)
         {
             var model = new OrderConfirmViewModel()
@@ -106,11 +107,20 @@ namespace CourseProject.Controllers
             return View("Confirm", model);
         }
 
-        [Authorize(Roles = "admin, anon, user")]
+        [Authorize(Roles = RoleConst.ADMIN)]
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
             order.Status.Id = 2;//ага, попавсь!
+            await _orderRepository.Update(order, o => o.Id, id);
+            return RedirectToAction("ConfirmIndex");
+        }
+
+        [Authorize(Roles = RoleConst.ADMIN)]
+        public async Task<IActionResult> Reject(int id)
+        {
+            var order = await _orderRepository.GetById(id);
+            order.Status.Id = 3;//ага, попавсь!
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }
