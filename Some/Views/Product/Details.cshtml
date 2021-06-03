@@ -1,4 +1,6 @@
 ﻿@using CourseProject.Models.ViewModels
+@using CourseProject.Identity.Models
+@using CourseProject.Data
 @model CourseProject.Models.DataModels.Product
 
 @{
@@ -9,7 +11,7 @@
 
 <div>
     @Html.ActionLink("Add To Cart", "AddItem", "Cart", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    @if (User.IsInRole("administrator"))
+    @if (User.IsInRole(RoleConst.Admin))
     {
         <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
     }
