@@ -67,7 +67,7 @@ namespace CourseProject.Controllers
         {
             var order = new Order
             {
-                Status = {Id = 1}, //забыл, да, харе уже!
+                Status = {Id = 1004}, 
                 User = {Id = int.Parse(_userManager.GetUserId(User))},
                 Date = DateTime.Now
             };
@@ -111,7 +111,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 2;//ага, попавсь!
+            order.Status.Id = 1003;
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }
@@ -120,7 +120,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Reject(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 3;//ага, попавсь!
+            order.Status.Id = 1005;
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }

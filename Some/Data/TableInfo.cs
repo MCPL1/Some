@@ -126,8 +126,8 @@ namespace CourseProject.Data
                     var destination = Activator.CreateInstance(prop.PropertyType);
                     var innerProp = destination.GetType().GetProperty("Id");
                     var value = source.GetType().GetProperty(innerProp.Name).GetValue(source, null);
-
                     propertyValue = value.ToString();
+
                 }
 
                 values[i] = $"\"{NonReadOnlyTableColumns[i]}\"='{propertyValue}'";

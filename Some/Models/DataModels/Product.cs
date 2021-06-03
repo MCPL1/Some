@@ -10,7 +10,7 @@ namespace CourseProject.Models.DataModels
     [TableName("Product")]
     public class Product : Entity
     {
-        [StringLength(8, ErrorMessage = "UserName length can't be more than 8.")]
+        [StringLength(50, ErrorMessage = "Name length can't be more than 50.")]
         [DisplayName("Name")]
         public string Name { get; set; }
 

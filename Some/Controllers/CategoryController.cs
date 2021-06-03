@@ -42,7 +42,15 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Category category)
         {
-            await _categoryRepository.Update(category, cat => cat.Id, category.Id);
+            try
+            {
+                await _categoryRepository.Update(category, cat => cat.Id, category.Id);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
             return RedirectToAction("Index", "Product");
         }
     }

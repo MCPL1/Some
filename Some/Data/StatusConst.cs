@@ -7,6 +7,6 @@ namespace CourseProject.Data
 {
     public class StatusConst
     {
-        public const String First = "inProgress";
+        public const String First = "unconfirmed";
     }
 }
