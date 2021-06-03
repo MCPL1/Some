@@ -32,7 +32,7 @@ namespace CourseProject.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        
+
         public async Task<IActionResult> Index(string sortOrder = "price_normal")
         {
             var products = await _productRepository.GetAll();
@@ -41,7 +41,7 @@ namespace CourseProject.Controllers
             {
                 "price_desc" => products.OrderByDescending(s => s.Price),
                 "price_asc" => products.OrderBy(s => s.Price),
-                "price_normal"=> products,
+                "price_normal" => products,
                 _ => products
             };
 
@@ -54,11 +54,23 @@ namespace CourseProject.Controllers
 
         public async Task<IActionResult> GetByCategory(int categoryId)
         {
-            var products = await _productRepository.GetMany(p=>p.Category.Id,categoryId);
+            var products = await _productRepository.GetMany(p => p.Category.Id, categoryId);
             var categories = await _categoryRepository.GetAll();
             var model = new ProductIndexViewModel(categories)
             {
                 Products = products.ToList(),
+            };
+            return View("Index", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetByPrice([FromBody] (int minPrice, int maxPrice) tuple)
+        {
+            var products = await _productRepository.GetAll();
+            var categories = await _categoryRepository.GetAll();
+            var model = new ProductIndexViewModel(categories)
+            {
+                Products = products.Where(p => p.Price > 50 /*&& p.Price < maxPrice*/).ToList(),
             };
             return View("Index", model);
         }
@@ -69,7 +81,7 @@ namespace CourseProject.Controllers
             return View(product);
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         public async Task<IActionResult> Create()
         {
             var model =
@@ -81,7 +93,7 @@ namespace CourseProject.Controllers
             return View(model);
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateViewModel model)
         {
@@ -94,13 +106,13 @@ namespace CourseProject.Controllers
                 fileStream.Close();
                 createdProduct.Image = path;
             }
-            
+
 
             await _productRepository.Create(createdProduct);
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -109,7 +121,7 @@ namespace CourseProject.Controllers
             return View(new ProductUpdateViewModel() {Product = product, Categories = categories.ToList()});
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         [HttpPost]
         public async Task<IActionResult> Edit(ProductUpdateViewModel model)
         {

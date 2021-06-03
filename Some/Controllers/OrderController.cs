@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CourseProject.Controllers
 {
-    [Authorize(Roles = RoleConst.ALL)]
+    [Authorize(Roles = RoleConst.All)]
     public class OrderController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -96,7 +96,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("Index", "User");
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         public async Task<IActionResult> ConfirmIndex(int id=1)
         {
             var model = new OrderConfirmViewModel()
@@ -107,7 +107,7 @@ namespace CourseProject.Controllers
             return View("Confirm", model);
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
@@ -116,7 +116,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("ConfirmIndex");
         }
 
-        [Authorize(Roles = RoleConst.ADMIN)]
+        [Authorize(Roles = RoleConst.Admin)]
         public async Task<IActionResult> Reject(int id)
         {
             var order = await _orderRepository.GetById(id);

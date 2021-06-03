@@ -7,7 +7,7 @@ namespace CourseProject.Models.DataModels
     [TableName("Category")]
     public class Category : Entity
     {
-        [DisplayName("UserName")] 
+        [DisplayName("Caregory NAe")] 
         public string Name { get; set; }
 
         [ForeignKey("base_Id")] 

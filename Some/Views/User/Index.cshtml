@@ -1,5 +1,6 @@
 ﻿@using CourseProject.Models.DataModels
 @using Microsoft.AspNetCore.Identity
+@using CourseProject.Data
 @{
 }
 @inject SignInManager<User> SignInManager
@@ -7,18 +8,30 @@
 
 
 <div class="container">
-    <a asp-action="Index" asp-controller="Order"
-       asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
-        Orders
-    </a>
+    <div class="container">
+        <a asp-action="Index" asp-controller="Order"
+           asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
+            Orders
+        </a>
+    </div>
 
-
-    @if (User.IsInRole("administrator"))
-    {
-        <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
-        <a asp-action="ConfirmIndex" asp-controller="Order"class="btn btn-outline-danger">All Orders</a>
-        <a class="btn btn-outline-danger"asp-controller="Order" asp-action="ConfirmIndex">Confirm</a>
-    }
+    <div class="container">
+        @if (User.IsInRole(RoleConst.Admin))
+        {
+            <div>
+                <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+            </div>
+            <div>
+                <a class="btn btn-outline-danger" asp-action="ConfirmIndex" asp-controller="Order">All Orders</a>
+            </div>
+            <div>
+                <a class="btn btn-outline-danger" asp-controller="Order" asp-action="ConfirmIndex">Confirm</a>
+            </div>
+            <div>
+                <a class="btn btn-outline-danger" asp-controller="Category" asp-action="Create">Add Category</a>
+            </div>
+        }
+    </div>
 </div>
 
 

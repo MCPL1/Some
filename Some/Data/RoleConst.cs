@@ -8,9 +8,9 @@ namespace CourseProject.Data
     public class RoleConst
     {
 
-        public const string ADMIN = "admin";
-        public const string USER = "user";
+        public const string Admin = "admin";
+        public const string User = "user";
 
-        public const string ALL = "admin, user";
+        public const string All = "admin, user";
     }
 }
