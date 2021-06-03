@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using CourseProject.Attributes;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 
 namespace CourseProject.Models.DataModels
 {
@@ -25,6 +26,8 @@ namespace CourseProject.Models.DataModels
         public Category Category { get; set; }
 
         public int Quantity { get; set; }
+
+        public string Image { get; set; }
 
         [ForeignKey("manufacturer_id")] 
         public Manufacturer Manufacturer { get; set; }

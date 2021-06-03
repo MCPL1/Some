@@ -113,6 +113,19 @@ namespace CourseProject.Data.Repositories
             await ExecuteNonQuery(deleteCommand);
         }
 
+        public async Task ExecuteRawSql(string commandText)
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand();
+            await connection.OpenAsync();
+            command.Connection = connection;
+            command.CommandText = commandText;
+
+            var transaction = connection.BeginTransaction();
+            command.Transaction = transaction;
+
+        }
+
         public async Task<SqlTransaction> CreateTransactionAsync()
         {
             var connection = new SqlConnection(_connectionString);
@@ -182,9 +195,17 @@ namespace CourseProject.Data.Repositories
             command.Transaction = transaction;
 
             var result = 0;
-            if (new CultureInfo("ru").CompareInfo.IndexOf(commandText, "output", CompareOptions.IgnoreCase) >= 0)
-                result = (int) await command.ExecuteScalarAsync();
-            else await command.ExecuteNonQueryAsync();
+            try
+            {
+                if (new CultureInfo("ru").CompareInfo.IndexOf(commandText, "output", CompareOptions.IgnoreCase) >= 0)
+                    result = (int) await command.ExecuteScalarAsync();
+                else await command.ExecuteNonQueryAsync();
+            }
+            catch (SqlException e)
+            {
+                throw new Exception(commandText + "\n" + e.Message);
+            }
+
             transaction.Commit();
             await connection.CloseAsync();
             if (_tableInfo.HasToManyRelation &&
@@ -236,7 +257,7 @@ namespace CourseProject.Data.Repositories
             }
             catch (Exception e)
             {
-                throw new Exception(selectCommand);
+                throw new Exception(selectCommand + "\n" + e.Message);
             }
 
 

@@ -4,47 +4,217 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Some</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/site.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="~/css/StyleSheet.css" rel="stylesheet" />
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <style>
+               /* This line can be removed it was just for display on CodePen: */
+
+
+               .slider-labels {
+                   margin-top: 10px;
+               }
+
+               /* Functional styling;
+        * These styles are required for noUiSlider to function.
+        * You don't need to change these rules to apply your design.
+        */
+               .noUi-target, .noUi-target * {
+                   -webkit-touch-callout: none;
+                   -webkit-user-select: none;
+                   -ms-touch-action: none;
+                   touch-action: none;
+                   -ms-user-select: none;
+                   -moz-user-select: none;
+                   user-select: none;
+                   -moz-box-sizing: border-box;
+                   box-sizing: border-box;
+               }
+
+               .noUi-target {
+                   position: relative;
+                   direction: ltr;
+               }
+
+               .noUi-base {
+                   width: 100%;
+                   height: 100%;
+                   position: relative;
+                   z-index: 1;
+                   /* Fix 401 */
+               }
+
+               .noUi-origin {
+                   position: absolute;
+                   right: 0;
+                   top: 0;
+                   left: 0;
+                   bottom: 0;
+               }
+
+               .noUi-handle {
+                   position: relative;
+                   z-index: 1;
+               }
+
+               .noUi-stacking .noUi-handle {
+                   /* This class is applied to the lower origin when
+          its values is > 50%. */
+                   z-index: 10;
+               }
+
+               .noUi-state-tap .noUi-origin {
+                   -webkit-transition: left 0.3s,top .3s;
+                   transition: left 0.3s,top .3s;
+               }
+
+               .noUi-state-drag * {
+                   cursor: inherit !important;
+               }
+
+               /* Painting and performance;
+        * Browsers can paint handles in their own layer.
+        */
+               .noUi-base, .noUi-handle {
+                   -webkit-transform: translate3d(0,0,0);
+                   transform: translate3d(0,0,0);
+               }
+
+               /* Slider size and handle placement;
+        */
+               .noUi-horizontal {
+                   height: 4px;
+               }
+
+                   .noUi-horizontal .noUi-handle {
+                       width: 18px;
+                       height: 18px;
+                       border-radius: 50%;
+                       left: -7px;
+                       top: -7px;
+                       background-color: #345DBB;
+                   }
+
+               /* Styling;
+        */
+               .noUi-background {
+                   background: #D6D7D9;
+               }
+
+               .noUi-connect {
+                   background: #345DBB;
+                   -webkit-transition: background 450ms;
+                   transition: background 450ms;
+               }
+
+               .noUi-origin {
+                   border-radius: 2px;
+               }
+
+               .noUi-target {
+                   border-radius: 2px;
+               }
+
+
+               /* Handles and cursors;
+        */
+               .noUi-draggable {
+                   cursor: w-resize;
+               }
+
+               .noUi-vertical .noUi-draggable {
+                   cursor: n-resize;
+               }
+
+               .noUi-handle {
+                   cursor: default;
+                   -webkit-box-sizing: content-box !important;
+                   -moz-box-sizing: content-box !important;
+                   box-sizing: content-box !important;
+               }
+
+                   .noUi-handle:active {
+                       border: 8px solid #345DBB;
+                       border: 8px solid rgba(53,93,187,0.38);
+                       -webkit-background-clip: padding-box;
+                       background-clip: padding-box;
+                       left: -14px;
+                       top: -14px;
+                   }
+
+               /* Disabled state;
+        */
+               [disabled].noUi-connect, [disabled] .noUi-connect {
+                   background: #B8B8B8;
+               }
+
+               [disabled].noUi-origin, [disabled] .noUi-handle {
+                   cursor: not-allowed;
+               }
+    </style>
+
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">Some</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Home</a>
-                    </li>
-                </ul>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">Some</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Home</a>
+                        </li>
+                    </ul>
 
-                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
-                    <img src="Images/shopping-cart.png" alt="..." width="25" height="25"/>
-                </a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+                        <img src="/Images/shopping-cart.png" alt="..." width="25" height="25" /> <span id="cart-badge" class=" badge"></span>
+                    </a>
 
-                <partial name="_LoginPartial"/>
+                    <partial name="_LoginPartial" />
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main">
-        @RenderBody()
-    </main>
-</div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-@await RenderSectionAsync("Scripts", required: false)
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - Some - <a asp-area="" asp-controller="Product" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        var cartBadge = document.getElementById("cart-badge");
+
+        let cart = JSON.parse(getCookie("cart"));
+        console.log(cartBadge.innerHTML);
+        console.log(cart["Items"].length);
+        if (cart["Items"].length > 0) {
+            cartBadge.isVisible = true;
+            cartBadge.innerHTML = cart["Items"].length;
+        }
+        else
+            cartBadge.isVisible = false;
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

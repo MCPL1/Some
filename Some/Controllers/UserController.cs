@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace CourseProject.Controllers
 {
+    [AllowAnonymous]
     public class UserController : Controller
     {
         private readonly UserManager<User> _userManager;

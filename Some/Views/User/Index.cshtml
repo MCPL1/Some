@@ -1,14 +1,49 @@
 ﻿@using CourseProject.Models.DataModels
 @using Microsoft.AspNetCore.Identity
+@using CourseProject.Data
 @{
 }
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
-<div class="container">
-    <a asp-action="Index" asp-controller="Order"
-       asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check"> Orders</a>
 
-    <a asp-action="ConfirmIndex" asp-controller="Order"
-        class="btn btn-outline-danger">All Orders</a>
+
+<div class="container">
+    <div class="container">
+        <a asp-action="Index" asp-controller="Order"
+           asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
+            Orders
+        </a>
+    </div>
+
+    <div class="container">
+        @if (User.IsInRole(RoleConst.Admin))
+        {
+            <div>
+                <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+            </div>
+            <div>
+                <a class="btn btn-outline-danger" asp-action="ConfirmIndex" asp-controller="Order">All Orders</a>
+            </div>
+            <div>
+                <a class="btn btn-outline-danger" asp-controller="Order" asp-action="ConfirmIndex">Confirm</a>
+            </div>
+            <div>
+                <a class="btn btn-outline-danger" asp-controller="Category" asp-action="Create">Add Category</a>
+            </div>
+        }
+    </div>
 </div>
-<p>Hi</p>
+
+
+<script>
+    var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'));
+    triggerTabList.forEach(function(triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl);
+
+        triggerEl.addEventListener('click',
+            function(event) {
+                event.preventDefault();
+                tabTrigger.show();
+            })
+    })
+</script>
