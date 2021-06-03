@@ -9,7 +9,7 @@
 
 <div class="row">
 <div class="col-2">
-    <ul>
+    <ul class="filter-box">
         @foreach (var cat in Model.Categories)
         {
             <li>
@@ -25,7 +25,7 @@
         </p>
         <p class="dropdown-item" >
             <a class="link-dark" asp-action="Index" asp-route-sortOrder="@("price_asc")">Price higher</a>
-        </p>
+        </p>s
         <p class="dropdown-item" >
             <a class="link-dark" asp-action="Index" asp-route-sortOrder="@("price_desc")">Price lower</a>
         </p>
@@ -40,8 +40,9 @@
             <img src="@item.Image" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                <p class="card-text">Price: @Html.DisplayFor(modelItem => item.Price)</p>
                 <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-light" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
             </div>
         </div>
