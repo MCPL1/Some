@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CourseProject.Data;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
@@ -40,11 +41,13 @@ namespace CourseProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.UserName, Name = model.Name, Surname = model.SurName,PhoneNumber = "new"};
-                
+                var user = new User
+                    {UserName = model.UserName, Name = model.Name, Surname = model.SurName, PhoneNumber = "new"};
+                await _userManager.AddToRoleAsync(user, RoleConst.User );
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
                     await _signInManager.SignInAsync(user, false);
                     return RedirectToAction("Index", "Product");
                 }
@@ -54,8 +57,8 @@ namespace CourseProject.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-            return View(model);
 
+            return View(model);
         }
 
         [HttpGet]
@@ -80,6 +83,7 @@ namespace CourseProject.Controllers
                     return View();
                 }
             }
+
             return View();
         }
     }
