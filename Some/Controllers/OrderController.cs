@@ -23,6 +23,7 @@ namespace CourseProject.Controllers
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Status> _statusRepository;
         private readonly IRepository<Delivery> _deliveryRepository;
+        private readonly IRepository<Product> _productRepository;
         private readonly IRepository<DeliveryType> _deliveryTypeRepository;
         private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
 
@@ -30,7 +31,7 @@ namespace CourseProject.Controllers
             IRepository<Order> orderRepository,
             IRepository<Delivery> deliveryRepository,
             IRepository<DeliveryType> deliveryTypeRepository,
-            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository)
+            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository, IRepository<Product> productRepository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;
@@ -38,6 +39,7 @@ namespace CourseProject.Controllers
             _deliveryTypeRepository = deliveryTypeRepository;
             _deliveryProviderRepository = deliveryProviderRepository;
             _statusRepository = statusRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<IActionResult> Index(int id)
@@ -46,7 +48,7 @@ namespace CourseProject.Controllers
             return View(orders);
         }
 
-        
+
         public async Task<IActionResult> Create()
         {
             if (GetCart().Items.Count == 0)
@@ -102,7 +104,7 @@ namespace CourseProject.Controllers
         }
 
         [Authorize(Roles = RoleConst.Admin)]
-        public async Task<IActionResult> ConfirmIndex(int id=1)
+        public async Task<IActionResult> ConfirmIndex(int id = 1)
         {
             var model = new OrderConfirmViewModel()
             {
@@ -116,7 +118,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 2;//ага, попавсь!
+            order.Status.Id = 2; //ага, попавсь!
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }
@@ -125,8 +127,30 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Reject(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 3;//ага, попавсь!
+            order.Status.Id = 3; //ага, попавсь!
             await _orderRepository.Update(order, o => o.Id, id);
+            return RedirectToAction("ConfirmIndex");
+        }
+
+        [Authorize(Roles = RoleConst.Admin)]
+        public async Task<IActionResult> Details(int id)
+        {
+            var order = await _orderRepository.GetById(id);
+            for (var i = 0; i < order.Products.Count; i++)
+            {
+                var orderProduct = await _productRepository.GetById(order.Products[i].Id);
+                order.Products[i] = new OrderProduct()
+                {
+                    Id = orderProduct.Id,
+                    Name = orderProduct.Name,
+                    Category = orderProduct.Category,
+                    Description = orderProduct.Description,
+                    Image = orderProduct.Image,
+                    Quantity = order.Products[i].Quantity,
+                    Price = order.Products[i].Price
+                };
+            }
+
             return RedirectToAction("ConfirmIndex");
         }
 
@@ -145,7 +169,5 @@ namespace CourseProject.Controllers
         {
             Response.Cookies.Delete("cart");
         }
-
-       
     }
 }
