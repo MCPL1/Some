@@ -1,4 +1,7 @@
-﻿@model CourseProject.Models.ViewModels.CartViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using CourseProject.Models.DataModels
+@model CourseProject.Models.ViewModels.CartViewModel
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Index";
@@ -12,9 +15,16 @@
     <div class="d-flex justify-content-between">
         <div>
             <a class="btn btn-outline-info" asp-controller="Product" asp-action="Index">Home</a>
-            </div>
+        </div>
         <div class="d-flex align-items-center justify-content-right mb-5">
-            <a class="btn btn-success" asp-controller="Order" asp-action="Create">Create Order</a>
+            @if(SignInManager.IsSignedIn(User))
+            {
+                <a class="btn btn-success" asp-controller="Order"  asp-action="Create">Create Order</a>
+            }
+            else
+            {
+                <a class="btn btn-success"  onclick=" alert('Authorize to create order');">Create Order</a>
+            }
             <span style="margin-left: 30px" class="align-bottom">Price of order: @Html.DisplayFor(modelItem => Model.Amount)</span>
         </div>
     </div>

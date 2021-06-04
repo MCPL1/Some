@@ -1,13 +1,11 @@
 ﻿.image {
-    width: 600px;
-    max-width: 100px !important;
-    max-height: 100px !important;
-    height: 500px;
-    object-fit:fill;
+    width: 400px!important;
+    height: 300px!important;
+    object-fit:cover;
 }
 .card-img-top {
     max-width: 300px;
-    max-height: 150px;
+    height: 230px;
 }
     .treeview {
     padding: 0;
