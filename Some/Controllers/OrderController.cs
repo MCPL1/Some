@@ -145,7 +145,7 @@ namespace CourseProject.Controllers
         }
 
         
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var order = await _orderRepository.Get(order => order.Id, id);
             var model = new Order()
@@ -158,8 +158,6 @@ namespace CourseProject.Controllers
             };
             return View("Details", model);
         }
-
-
 
         public CartViewModel GetCart()
         {

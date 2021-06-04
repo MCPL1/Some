@@ -17,13 +17,10 @@
     <p>
         Status: @Html.DisplayFor(modelItem => order.Status.Name)
     </p>
-    <p>
-        Тут должна быть общая цена
-    </p>
 
-    @*<p>
-        Amount: @Html.DisplayFor(modelItem => order.Products.Sum(p => p.Price * p.Quantity))
-    </p>*@
+    <p>
+        Amount: @order.Products.Sum(p => p.Price * p.Quantity)
+    </p>
 
 
     @*<div class="d-flex justify-content-between flex-wrap ">
@@ -41,7 +38,7 @@
             }
         </div>*@
     <a class="btn btn-outline-light"
-       asp-controller="Order" asp-action="GetById" asp-route-id="@order.Id">
+       asp-controller="Order" asp-action="Details" asp-route-id="@order.Id">
         View details
     </a>
 
