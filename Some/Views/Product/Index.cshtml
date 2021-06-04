@@ -9,31 +9,38 @@
 
 <div class="row">
     <div class="col-2">
-        <ul class="filter-box">
-            @foreach (var cat in Model.Categories)
-            {
-            <li>
-                <a asp-action="GetByCategory" asp-route-categoryId="@cat.Id">@cat.Name</a>
-                @if(User.IsInRole("admin"))
-                {
-                    <a class="alert-danger alert" asp-controller="Category" asp-action="Edit" asp-route-id="@cat.Id">edit</a>
-                }
-            </li>
-            }
-        </ul>
 
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
         <div class="dropdown-menu">
+            <h6 class="dropdown-header">By price</h6>
             <p class="dropdown-item" asp-action="Index">
                 <a class="link-dark" asp-action="Index">Default</a>
             </p>
             <p class="dropdown-item">
                 <a class="link-dark" asp-action="Index" asp-route-sortOrder="@("price_asc")">Price higher</a>
-            </p>s
+            </p>
             <p class="dropdown-item">
                 <a class="link-dark" asp-action="Index" asp-route-sortOrder="@("price_desc")">Price lower</a>
             </p>
         </div>
+
+        <ul class="filter-box">
+            @foreach (var cat in Model.Categories)
+            {
+                <li>
+                    <a asp-action="GetByCategory" asp-route-categoryId="@cat.Id">@cat.Name</a>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a class="alert-danger alert" asp-controller="Category" asp-action="Edit" asp-route-id="@cat.Id">edit</a>
+                    }
+                </li>
+            }
+        </ul>
+
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Filter
+        </button>
+
 
     </div>
 
@@ -41,12 +48,13 @@
         @foreach (var item in Model.Products)
         {
             <div class="card m-4" style="width: 15rem;">
-                <img src="@item.Image" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
-                    <p class="card-text">Price: @Html.DisplayFor(modelItem => item.Price)</p>
-                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                    <a class="btn btn-light" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+                    <img src="@item.Image" class="card-img-top" alt="...">
+                </a>
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                        <p class="card-text">Price: @Html.DisplayFor(modelItem => item.Price)</p>
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
                     <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
                 </div>
             </div>
