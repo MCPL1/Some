@@ -57,7 +57,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> SortBy()
         {
             var products = await _repository.GetAll();
-            products = products.OrderBy(prod => prod.Name);
+            products = products.OrderBy(prod => prod.Title);
             return View("Index", products);
         }
 

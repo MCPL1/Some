@@ -13,7 +13,7 @@ namespace CourseProject.Models.DataModels
         public User User { get; set; }
 
         [ForeignKey("status_id")]
-        public Status Status { get; set; }
+        public OrderStatus Status { get; set; }
 
         public DateTime Date  { get; set; }
 
@@ -25,7 +25,7 @@ namespace CourseProject.Models.DataModels
         {
             User = new User();
             Products = new List<OrderProduct>();
-            Status = new Status();
+            Status = new OrderStatus();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace CourseProject.Models.DataModels
     {
         [StringLength(8, ErrorMessage = "UserName length can't be more than 8.")]
         [DisplayName("Name")]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         [DataType(DataType.MultilineText)]
         [DisplayName("Description")]

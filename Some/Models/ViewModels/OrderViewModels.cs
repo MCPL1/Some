@@ -13,6 +13,6 @@ namespace CourseProject.Models.ViewModels
     public class OrderConfirmViewModel
     {
         public List<Order> Orders { get; set; }
-        public List<Status> StatusList { get; set; }
+        public List<OrderStatus> StatusList { get; set; }
     }
 }

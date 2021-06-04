@@ -21,7 +21,7 @@ namespace CourseProject.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly IRepository<Order> _orderRepository;
-        private readonly IRepository<Status> _statusRepository;
+        private readonly IRepository<OrderStatus> _statusRepository;
         private readonly IRepository<Delivery> _deliveryRepository;
         private readonly IRepository<DeliveryType> _deliveryTypeRepository;
         private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
@@ -30,7 +30,7 @@ namespace CourseProject.Controllers
             IRepository<Order> orderRepository,
             IRepository<Delivery> deliveryRepository,
             IRepository<DeliveryType> deliveryTypeRepository,
-            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository)
+            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<OrderStatus> statusRepository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;

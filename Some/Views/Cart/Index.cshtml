@@ -1,4 +1,7 @@
-﻿@model CourseProject.Models.ViewModels.CartViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@using CourseProject.Models.DataModels
+@model CourseProject.Models.ViewModels.CartViewModel
+@inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "Index";
@@ -10,7 +13,14 @@
 <div>
     <h2 class="mb-2">Cart</h2>
     <div class="d-flex align-items-center justify-content-between mb-5">
-        <a class="btn btn-success" asp-controller="Order" asp-action="Create">Create Order</a>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a class="btn btn-success" asp-controller="Order" asp-action="Create">Create Order</a>
+        }
+        else
+        {
+            <a class="btn btn-success" onclick=" alert('Authorize to create order');">Create Order</a>
+        }
         <p>Amount: @Html.DisplayFor(modelItem => Model.Amount)</p>
     </div>
 </div>
@@ -22,7 +32,7 @@
         <div class="card mb-3" style="width: 15rem;">
             <img src="https://d1uz88p17r663j.cloudfront.net/original/4274048cd5f17c49dfee280f77a3739d_Cheese-Pizza_HB-2.jpg" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">@Model.Items[i].Product.Name</h5>
+                <h5 class="card-title">@Model.Items[i].Product.Title</h5>
                 <p class="card-text">Price: @Model.Items[i].Product.Price</p>
                 <p class="card-text">Quantity: @Model.Items[i].Quantity</p>
                 <a class="btn btn-danger" asp-controller="Cart" asp-action="Delete" asp-route-position="@i">Delete Item</a>
