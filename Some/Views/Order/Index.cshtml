@@ -9,29 +9,42 @@
 
 @foreach (var order in Model)
 {
-<div>
+<div class=" @(order.Status.Name == "unconfirmed"? "bg-warning":order.Status.Name == "confirmed"? "bg-success":"bg-danger" ) 
+         justify-content-between text-white" style="padding: 30px; opacity: 0.85;">
     <p>
         Order date: @Html.DisplayFor(modelItem => order.Date)
     </p>
     <p>
         Status: @Html.DisplayFor(modelItem => order.Status.Name)
     </p>
+    <p>
+        Тут должна быть общая цена
+    </p>
 
-    <div class="d-flex justify-content-between flex-wrap">
-        @foreach (var product in order.Products)
-        {
-            <div class="card mb-3 text-white  @(order.Status.Name == "unconfirmed"? "bg-warning":order.Status.Name == "confirmed"? "bg-success":"bg-danger" )" style="width: 15rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Title: @(product.Name)</h5>
-                    <p class="card-text">Price: @(product.Price)</p>
-                    <p class="card-text">Quantity: @(product.Quantity)</p>
-                    <p class="card-text">Amount: @(product.Price * product.Quantity)</p>
+    @*<p>
+        Amount: @Html.DisplayFor(modelItem => order.Products.Sum(p => p.Price * p.Quantity))
+    </p>*@
 
+
+    @*<div class="d-flex justify-content-between flex-wrap ">
+            @foreach (var product in order.Products)
+            {
+                <div class="card mb-3 " style="width: 15rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Title: @(product.Name)</h5>
+                        <p class="card-text">Price: @(product.Price)</p>
+                        <p class="card-text">Quantity: @(product.Quantity)</p>
+                        <p class="card-text">Amount: @(product.Price * product.Quantity)</p>
+
+                    </div>
                 </div>
-            </div>
-        }
-    </div>
-   
+            }
+        </div>*@
+    <a class="btn btn-outline-light"
+       asp-controller="Order" asp-action="GetById" asp-route-id="@order.Id">
+        View details
+    </a>
+
     <div>
         @*<a class="btn" asp-controller="Order" asp-action="Details">Details</a>*@
     </div>

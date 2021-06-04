@@ -176,7 +176,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Home</a>
                         </li>
                     </ul>
-                    <span class="align-bottom">Hello, @User.Identity.Name!</span>
+                    @if (@User.Identity.Name != null)
+                    {
+                        <span class="align-bottom">Hello, @User.Identity.Name!</span>
+                    }
                     <div class="d-flex justify-content-between">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
                             <img src="/Images/shopping-cart.png" alt="..." width="25" height="25" /> <span id="cart-badge" class=" badge"></span>

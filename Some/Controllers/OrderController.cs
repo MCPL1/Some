@@ -65,7 +65,7 @@ namespace CourseProject.Controllers
             return View(orders);
         }
 
-        
+
         public async Task<IActionResult> Create()
         {
             if (GetCart().Items.Count == 0)
@@ -143,6 +143,23 @@ namespace CourseProject.Controllers
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }
+
+        
+        public async Task<IActionResult> GetById(int id)
+        {
+            var order = await _orderRepository.Get(order => order.Id, id);
+            var model = new Order()
+            {
+                Date = order.Date,
+                Id = order.Id,
+                Products = order.Products,
+                Status = order.Status,
+                User = order.User
+            };
+            return View("Details", model);
+        }
+
+
 
         public CartViewModel GetCart()
         {

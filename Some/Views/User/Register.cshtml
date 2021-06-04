@@ -38,7 +38,11 @@
 </div>
 
 <div class="text-center">
-    <a asp-action="Index">Home</a>
+    <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a>
+</div>
+
+<div class="text-center">
+    <a asp-controller="Product" asp-action="Index">Home</a>
 </div>
 
 @section Scripts {

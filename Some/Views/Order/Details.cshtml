@@ -1,0 +1,68 @@
+﻿@model CourseProject.Models.DataModels.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <p>@Html.DisplayNameFor(model => model.Date)</p>
+    <p>Тут должно быть Delivery</p>
+    <table class ="table table-info">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Products)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+            <td> @(item.Price * item.Quantity)</td>
+        </tr>
+    }
+    </tbody>
+    </table>
+</div>
+
+
+@*<dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <div class="col-10 d-flex justify-content-start align-items-center flex-wrap">
+                @foreach (var item in Model.Products)
+                {
+                    <div class="card bg-light m-4" style="width: 15rem;">
+                        <img src="@item.Image" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+                            <h3 class="card-text">@Html.DisplayFor(modelItem => item.Price)</h3>
+                            <a class="btn btn-outline-info" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a class="btn btn-outline-dark" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </dl>*@
+
+

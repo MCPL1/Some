@@ -28,8 +28,9 @@
 </div>
 
 <div class="text-center">
-    <a asp-action="Index">Home</a>
+    <a asp-controller = "Product" asp-action="Index">Home</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
