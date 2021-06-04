@@ -65,35 +65,40 @@ namespace CourseProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
-            var order = new Order
+            if (ModelState.IsValid)
             {
-                Status = {Id = 1}, //забыл, да, харе уже!
-                User = {Id = int.Parse(_userManager.GetUserId(User))},
-                Date = DateTime.Now
-            };
-            var data = GetCart();
-            if (data.Items.Count == 0) return RedirectToAction("Index", "Cart");
-            foreach (var item in data.Items)
-            {
-                order.Products.Add(new OrderProduct(item.Quantity, item.Quantity * item.Product.Price)
-                    {Id = item.Product.Id});
+                var order = new Order
+                {
+                    Status = {Id = 1}, //забыл, да, харе уже!
+                    User = {Id = int.Parse(_userManager.GetUserId(User))},
+                    Date = DateTime.Now
+                };
+                var data = GetCart();
+                if (data.Items.Count == 0) return RedirectToAction("Index", "Cart");
+                foreach (var item in data.Items)
+                {
+                    order.Products.Add(new OrderProduct(item.Quantity, item.Quantity * item.Product.Price)
+                        {Id = item.Product.Id});
+                }
+
+                var parcelNum = new Random().Next(10000000, 99999999);
+                var delivery = new Delivery
+                {
+                    Date = DateTime.Now,
+                    DeliveryProvider = model.Delivery.DeliveryProvider,
+                    DeliveryType = model.Delivery.DeliveryType,
+                    Address = model.Delivery.Address,
+                    Parcel_number = parcelNum
+                };
+
+                var orderId = await _orderRepository.Create(order);
+                delivery.Order = new Order() {Id = orderId};
+                await _deliveryRepository.Create(delivery);
+                RemoveCart();
+                return RedirectToAction("Index", "User");
             }
 
-            var parcelNum = new Random().Next(10000000, 99999999);
-            var delivery = new Delivery
-            {
-                Date = DateTime.Now,
-                DeliveryProvider = model.Delivery.DeliveryProvider,
-                DeliveryType = model.Delivery.DeliveryType,
-                Address = model.Delivery.Address,
-                Parcel_number = parcelNum
-            };
-
-            var orderId = await _orderRepository.Create(order);
-            delivery.Order = new Order() {Id = orderId};
-            await _deliveryRepository.Create(delivery);
-            RemoveCart();
-            return RedirectToAction("Index", "User");
+            return RedirectToAction("Create");
         }
 
         [Authorize(Roles = RoleConst.Admin)]

@@ -47,7 +47,7 @@ namespace CourseProject.Controllers
 
             var model = new ProductIndexViewModel(categories)
             {
-                Products = products.ToList(),
+                Products = products.Where(p=>p.Quantity>0).ToList()
             };
             return View(model);
         }
@@ -119,8 +119,13 @@ namespace CourseProject.Controllers
             var product = await _productRepository.GetById(id);
             var categories = await _categoryRepository.GetAll();
             var mans = await _manufacturerRepository.GetAll();
-            return View(new ProductUpdateViewModel()
-                {Product = product, Categories = categories.ToList(), Manufacturers = mans.ToList()});
+            var model = new ProductUpdateViewModel()
+            {
+                Product = product,
+                Categories = categories.ToList(),
+                Manufacturers = mans.ToList()
+            };
+            return View(model);
         }
 
         [Authorize(Roles = RoleConst.Admin)]
