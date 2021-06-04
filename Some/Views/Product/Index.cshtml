@@ -69,8 +69,8 @@
             <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                 <h3 class="card-text">@Html.DisplayFor(modelItem => item.Price)</h3>
-                <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
+                <a class="btn btn-outline-info" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-outline-dark" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
             </div>
         </div>
     }

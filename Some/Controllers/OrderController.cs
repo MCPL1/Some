@@ -25,12 +25,13 @@ namespace CourseProject.Controllers
         private readonly IRepository<Delivery> _deliveryRepository;
         private readonly IRepository<DeliveryType> _deliveryTypeRepository;
         private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
+        private readonly IRepository<Product> _productRepository;
 
         public OrderController(UserManager<User> userManager,
             IRepository<Order> orderRepository,
             IRepository<Delivery> deliveryRepository,
             IRepository<DeliveryType> deliveryTypeRepository,
-            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository)
+            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository, IRepository<Product> productRepository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;
@@ -38,11 +39,29 @@ namespace CourseProject.Controllers
             _deliveryTypeRepository = deliveryTypeRepository;
             _deliveryProviderRepository = deliveryProviderRepository;
             _statusRepository = statusRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<IActionResult> Index(int id)
         {
             var orders = await _orderRepository.GetMany(order => order.User.Id, id);
+            //foreach (var order in orders)
+            //{
+            //    for(var i = 0; i < order.Products.Count; i++)
+            //    {
+            //        var orderProduct = await _productRepository.GetById(order.Products[i].Id);
+            //        order.Products[i] = new OrderProduct()
+            //        {
+            //            Id = orderProduct.Id, 
+            //            Name = orderProduct.Name, 
+            //            Category = orderProduct.Category, 
+            //            Description = orderProduct.Description, 
+            //            Image = orderProduct.Image,
+            //            Quantity = order.Products[i].Quantity,
+            //            Price =  order.Products[i].Price
+            //        };
+            //    }
+            //}
             return View(orders);
         }
 
