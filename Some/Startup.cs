@@ -1,7 +1,6 @@
 using System;
 using CourseProject.Data.Repositories;
 using CourseProject.Identity;
-using CourseProject.Identity.Models;
 using CourseProject.Models;
 using CourseProject.Models.DataModels;
 using Kursach.Models;
@@ -85,7 +84,7 @@ namespace Some
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Product}/{action=Index}/{id?}");
+                    pattern: "{controller=Item}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

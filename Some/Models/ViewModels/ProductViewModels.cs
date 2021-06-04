@@ -6,35 +6,33 @@ using Microsoft.AspNetCore.Http;
 
 namespace CourseProject.Models.ViewModels
 {
-    public class ProductCreateViewModel
+    public class ItemCreateViewModel
     {
-        public Product Product { get; set; }
+        public Item Item { get; set; }
         public IFormFile Image { get; set; }
         public List<Category> Categories { get; set; }
-        public List<Manufacturer> Manufacturers { get; set; }
 
-        public ProductCreateViewModel()
+        public ItemCreateViewModel()
         {
-            Product = new Product();
+            Item = new Item();
             Categories = new List<Category>();
-            Manufacturers = new List<Manufacturer>();
         }
     }
 
-    public class ProductUpdateViewModel : ProductCreateViewModel
+    public class ItemUpdateViewModel : ItemCreateViewModel
     {
-        public ProductUpdateViewModel() : base()
+        public ItemUpdateViewModel() : base()
         {
         }
     }
 
 
-    public class ProductIndexViewModel
+    public class ItemIndexViewModel
     {
-        public List<Product> Products { get; set; }
+        public List<Item> Items { get; set; }
         public List<CategoryViewModel> Categories { get; }
 
-        public ProductIndexViewModel(IEnumerable<Category> flatCategories)
+        public ItemIndexViewModel(IEnumerable<Category> flatCategories)
         {
             var categories = (from fc in flatCategories
                 select new CategoryViewModel()

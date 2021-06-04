@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using CourseProject.Attributes;
-using CourseProject.Identity.Models;
 
 namespace CourseProject.Models.DataModels
 

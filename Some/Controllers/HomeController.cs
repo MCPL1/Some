@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CourseProject.Data.Repositories;
-using CourseProject.Identity.Models;
 using CourseProject.Models;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
@@ -20,14 +19,14 @@ namespace CourseProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IRepository<Product> _repository;
+        private readonly IRepository<Item> _repository;
         private readonly IRepository<Role> _roleRepository;
         private readonly IRepository<Order> _orderRepository;
 
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, IRepository<Product> repository,
+        public HomeController(ILogger<HomeController> logger, IRepository<Item> repository,
             SignInManager<User> signInManager, UserManager<User> userManager, IRepository<Role> role,
              IRepository<Order> orderRepository)
         {
@@ -83,8 +82,8 @@ namespace CourseProject.Controllers
             }
 
             var product = await _repository.GetById(id);
-            if (data.Items.Any(p => p.Product.Id == product.Id))
-                data.Items.Where(i => i.Product.Id == product.Id).ToList().ForEach(i => i.Quantity++);
+            if (data.Items.Any(p => p.Item.Id == product.Id))
+                data.Items.Where(i => i.Item.Id == product.Id).ToList().ForEach(i => i.Quantity++);
             else
             {
                 data.AddItem(new CartItemViewModel(product));

@@ -7,34 +7,29 @@ using Microsoft.AspNetCore.Http;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Product")]
-    public class Product : Entity
+    [TableName("Item")]
+    public class Item : Entity
     {
-        [StringLength(8, ErrorMessage = "UserName length can't be more than 8.")]
-        [DisplayName("Name")]
+        [DisplayName("Назва")]
         public string Name { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [DisplayName("Description")]
+        [DisplayName("Опис")]
         public string Description { get; set; }
 
         [DataType(DataType.Currency)]
-        [DisplayName("Price")]
+        [DisplayName("Ціна")]
         public decimal Price { get; set; }
 
         [ForeignKey("category_id")] 
         public Category Category { get; set; }
 
-        public int Quantity { get; set; }
+        public decimal PriceModifier { get; set; }
 
-        public string Image { get; set; }
+        public string ImageLink { get; set; }
 
-        [ForeignKey("manufacturer_id")] 
-        public Manufacturer Manufacturer { get; set; }
-
-        public Product()
+        public Item()
         {
-            Manufacturer = new Manufacturer();
             Category = new Category();
         }
 

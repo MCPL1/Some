@@ -43,13 +43,13 @@ namespace CourseProject.Controllers
             {
                 var user = new User
                     {UserName = model.UserName, Name = model.Name, Surname = model.SurName, PhoneNumber = "new"};
-                await _userManager.AddToRoleAsync(user, RoleConst.User );
+                await _userManager.AddToRoleAsync(user, Const.User );
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Product");
+                    return RedirectToAction("Index", "Item");
                 }
 
                 foreach (var error in result.Errors)
@@ -75,7 +75,7 @@ namespace CourseProject.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, true, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Product");
+                    return RedirectToAction("Index", "Item");
                 }
                 else
                 {

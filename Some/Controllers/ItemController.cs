@@ -15,50 +15,48 @@ using Microsoft.AspNetCore.Hosting;
 namespace CourseProject.Controllers
 {
     [AllowAnonymous]
-    public class ProductController : Controller
+    public class ItemController : Controller
     {
-        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Item> _itemRepository;
         private readonly IRepository<Category> _categoryRepository;
-        private readonly IRepository<Manufacturer> _manufacturerRepository;
+
 
         IWebHostEnvironment _appEnvironment;
 
-        public ProductController(IRepository<Product> productRepository, IRepository<Category> categoryRepository,
-            IRepository<Manufacturer> manufacturerRepository, IWebHostEnvironment appEnvironment)
+        public ItemController(IRepository<Item> itemRepository, IRepository<Category> categoryRepository, IWebHostEnvironment appEnvironment)
         {
-            _productRepository = productRepository;
+            _itemRepository = itemRepository;
             _categoryRepository = categoryRepository;
-            _manufacturerRepository = manufacturerRepository;
             _appEnvironment = appEnvironment;
         }
 
 
         public async Task<IActionResult> Index(string sortOrder = "price_normal")
         {
-            var products = await _productRepository.GetAll();
+            var items = await _itemRepository.GetAll();
             var categories = await _categoryRepository.GetAll();
-            products = sortOrder switch
+            items = sortOrder switch
             {
-                "price_desc" => products.OrderByDescending(s => s.Price),
-                "price_asc" => products.OrderBy(s => s.Price),
-                "price_normal" => products,
-                _ => products
+                "price_desc" => items.OrderByDescending(s => s.Price),
+                "price_asc" => items.OrderBy(s => s.Price),
+                "price_normal" => items,
+                _ => items
             };
 
-            var model = new ProductIndexViewModel(categories)
+            var model = new ItemIndexViewModel(categories)
             {
-                Products = products.Where(p=>p.Quantity>0).ToList()
+                Items = items.ToList()
             };
             return View(model);
         }
 
         public async Task<IActionResult> GetByCategory(int categoryId)
         {
-            var products = await _productRepository.GetMany(p => p.Category.Id, categoryId);
+            var items = await _itemRepository.GetMany(p => p.Category.Id, categoryId);
             var categories = await _categoryRepository.GetAll();
-            var model = new ProductIndexViewModel(categories)
+            var model = new ItemIndexViewModel(categories)
             {
-                Products = products.ToList(),
+                Items = items.ToList(),
             };
             return View("Index", model);
         }
@@ -66,71 +64,68 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> GetByPrice([FromBody] (int minPrice, int maxPrice) tuple)
         {
-            var products = await _productRepository.GetAll();
+            var items = await _itemRepository.GetAll();
             var categories = await _categoryRepository.GetAll();
-            var model = new ProductIndexViewModel(categories)
+            var model = new ItemIndexViewModel(categories)
             {
-                Products = products.Where(p => p.Price > 50 /*&& p.Price < maxPrice*/).ToList(),
+                Items = items.Where(p => p.Price > 50 /*&& p.Price < maxPrice*/).ToList(),
             };
             return View("Index", model);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var product = await _productRepository.GetById(id);
-            return View(product);
+            var item = await _itemRepository.GetById(id);
+            return View(item);
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         public async Task<IActionResult> Create()
         {
             var model =
-                new ProductCreateViewModel()
+                new ItemCreateViewModel()
                 {
                     Categories = (await _categoryRepository.GetAll()).ToList(),
-                    Manufacturers = (await _manufacturerRepository.GetAll()).ToList()
                 };
             return View(model);
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         [HttpPost]
-        public async Task<IActionResult> Create(ProductCreateViewModel model)
+        public async Task<IActionResult> Create(ItemCreateViewModel model)
         {
-            var createdProduct = model.Product;
+            var item = model.Item;
             if (model.Image != null)
             {
                 var path = "/Images/" + model.Image.FileName;
                 await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
                 await model.Image.CopyToAsync(fileStream);
                 fileStream.Close();
-                createdProduct.Image = path;
+                item.ImageLink = path;
             }
 
 
-            await _productRepository.Create(createdProduct);
+            await _itemRepository.Create(item);
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var product = await _productRepository.GetById(id);
+            var item = await _itemRepository.GetById(id);
             var categories = await _categoryRepository.GetAll();
-            var mans = await _manufacturerRepository.GetAll();
-            var model = new ProductUpdateViewModel()
+            var model = new ItemUpdateViewModel()
             {
-                Product = product,
-                Categories = categories.ToList(),
-                Manufacturers = mans.ToList()
+                Item = item,
+                Categories = categories.ToList()
             };
             return View(model);
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         [HttpPost]
-        public async Task<IActionResult> Edit(ProductUpdateViewModel model)
+        public async Task<IActionResult> Edit(ItemUpdateViewModel model)
         {
             if (model.Image != null)
             {
@@ -138,11 +133,11 @@ namespace CourseProject.Controllers
                 await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
                 await model.Image.CopyToAsync(fileStream);
                 fileStream.Close();
-                model.Product.Image = path;
+                model.Item.ImageLink = path;
             }
 
-            await _productRepository.Update(model.Product, x => x.Id, model.Product.Id);
-            return RedirectToAction("Details", model.Product);
+            await _itemRepository.Update(model.Item, x => x.Id, model.Item.Id);
+            return RedirectToAction("Details", model.Item);
         }
     }
 }

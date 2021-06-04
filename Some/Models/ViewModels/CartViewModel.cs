@@ -14,7 +14,7 @@ namespace CourseProject.Models.ViewModels
         public void AddItem(CartItemViewModel item)
         {
             Items.Add(item);
-            Amount += item.Quantity * item.Product.Price;
+            Amount += item.Quantity * item.Item.Price;
         }
 
         public CartViewModel(List<CartItemViewModel> items)
@@ -31,13 +31,13 @@ namespace CourseProject.Models.ViewModels
     [Serializable]
     public class CartItemViewModel
     {
-        public Product Product { get; set; }
+        public Item Item { get; set; }
 
         public int Quantity { get; set; }
 
-        public CartItemViewModel(Product product)
+        public CartItemViewModel(Item item)
         {
-            Product = product;
+            Item = item;
             Quantity = 1;
         }
     }

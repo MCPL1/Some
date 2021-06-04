@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CourseProject.Data.Repositories;
-using CourseProject.Identity.Models;
 using CourseProject.Models.DataModels;
 using Microsoft.AspNetCore.Identity;
 

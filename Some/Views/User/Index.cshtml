@@ -16,10 +16,10 @@
     </div>
 
     <div class="container">
-        @if (User.IsInRole(RoleConst.Admin))
+        @if (User.IsInRole(Const.Admin))
         {
             <div>
-                <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+                <a class="btn btn-primary" asp-controller="Item" asp-action="Create">Додати послугу</a>
             </div>
             <div>
                 <a class="btn btn-outline-danger" asp-action="ConfirmIndex" asp-controller="Order">All Orders</a>

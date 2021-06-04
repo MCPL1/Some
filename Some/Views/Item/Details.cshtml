@@ -1,7 +1,6 @@
 ﻿@using CourseProject.Models.ViewModels
-@using CourseProject.Identity.Models
 @using CourseProject.Data
-@model CourseProject.Models.DataModels.Product
+@model CourseProject.Models.DataModels.Item
 
 @{
     ViewData["Title"] = "Details";
@@ -11,13 +10,13 @@
 
 <div>
     @Html.ActionLink("Add To Cart", "AddItem", "Cart", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    @if (User.IsInRole(RoleConst.Admin))
+    @if (User.IsInRole(Const.Admin))
     {
         <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
     }
 </div>
     <div class="d-flex align-items-center justify-content-around">
-        <img class="image" src="@Model.Image" alt="Alternate Text" />
+        <img class="image" src="@Model.ImageLink" alt="Alternate Text" />
         <div class="d-flex flex-column ml-5">
             <dl class="row">
                 <dt class="col-sm-2">

@@ -39,7 +39,7 @@
         <tr>
             <th scope="row">@(i + 1)</th>
             <td>@(Model.Orders[i].User.Name)</td>
-            <td>@Model.Orders[i].Products.Sum(p => (decimal) p.Quantity * p.Price)</td>
+            <td>@Model.Orders[i].Items.Sum(p => (decimal) p.Quantity * p.Price)</td>
 
             <td>
                 @if (Model.Orders[i].Status.Name == StatusConst.First)

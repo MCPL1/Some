@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using CourseProject.Identity.Models;
 using CourseProject.Models.DataModels;
 using CourseProject.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -16,30 +15,27 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CourseProject.Controllers
 {
-    [Authorize(Roles = RoleConst.All)]
+    [Authorize(Roles = Const.All)]
     public class OrderController : Controller
     {
         private readonly UserManager<User> _userManager;
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Status> _statusRepository;
-        private readonly IRepository<Delivery> _deliveryRepository;
-        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Item> _itemRepository;
         private readonly IRepository<DeliveryType> _deliveryTypeRepository;
         private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
 
         public OrderController(UserManager<User> userManager,
             IRepository<Order> orderRepository,
-            IRepository<Delivery> deliveryRepository,
             IRepository<DeliveryType> deliveryTypeRepository,
-            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository, IRepository<Product> productRepository)
+            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository, IRepository<Item> itemRepository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;
-            _deliveryRepository = deliveryRepository;
             _deliveryTypeRepository = deliveryTypeRepository;
             _deliveryProviderRepository = deliveryProviderRepository;
             _statusRepository = statusRepository;
-            _productRepository = productRepository;
+            _itemRepository = itemRepository;
         }
 
         public async Task<IActionResult> Index(int id)
@@ -55,7 +51,7 @@ namespace CourseProject.Controllers
                 return RedirectToAction("Index", "Cart");
             var model = new OrderCreateViewModel()
             {
-                Delivery = new Delivery() {Date = DateTime.Now},
+                Order = new Order() { Date = DateTime.Now },
                 DeliveryProviders = (await _deliveryProviderRepository.GetAll()).ToList(),
                 DeliveryTypes = (await _deliveryTypeRepository.GetAll()).ToList()
             };
@@ -73,29 +69,25 @@ namespace CourseProject.Controllers
                 {
                     Status = {Id = 1}, //забыл, да, харе уже!
                     User = {Id = int.Parse(_userManager.GetUserId(User))},
-                    Date = DateTime.Now
+                    CheckoutDate = DateTime.Now,
+                    Date = model.Order.Date,
+                    DeliveryProvider = model.Order.DeliveryProvider,
+                    DeliveryType = model.Order.DeliveryType,
+                    Address = model.Order.Address
                 };
                 var data = GetCart();
                 if (data.Items.Count == 0) return RedirectToAction("Index", "Cart");
                 foreach (var item in data.Items)
                 {
-                    order.Products.Add(new OrderProduct(item.Quantity, item.Quantity * item.Product.Price)
-                        {Id = item.Product.Id});
+                    order.Items.Add(new OrderItem(item.Quantity, item.Quantity * item.Item.Price)
+                        {Id = item.Item.Id});
                 }
 
                 var parcelNum = new Random().Next(10000000, 99999999);
-                var delivery = new Delivery
-                {
-                    Date = DateTime.Now,
-                    DeliveryProvider = model.Delivery.DeliveryProvider,
-                    DeliveryType = model.Delivery.DeliveryType,
-                    Address = model.Delivery.Address,
-                    Parcel_number = parcelNum
-                };
+                
+
 
                 var orderId = await _orderRepository.Create(order);
-                delivery.Order = new Order() {Id = orderId};
-                await _deliveryRepository.Create(delivery);
                 RemoveCart();
                 return RedirectToAction("Index", "User");
             }
@@ -103,7 +95,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("Create");
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         public async Task<IActionResult> ConfirmIndex(int id = 1)
         {
             var model = new OrderConfirmViewModel()
@@ -114,7 +106,7 @@ namespace CourseProject.Controllers
             return View("Confirm", model);
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
@@ -123,7 +115,7 @@ namespace CourseProject.Controllers
             return RedirectToAction("ConfirmIndex");
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         public async Task<IActionResult> Reject(int id)
         {
             var order = await _orderRepository.GetById(id);
@@ -132,22 +124,22 @@ namespace CourseProject.Controllers
             return RedirectToAction("ConfirmIndex");
         }
 
-        [Authorize(Roles = RoleConst.Admin)]
+        [Authorize(Roles = Const.Admin)]
         public async Task<IActionResult> Details(int id)
         {
             var order = await _orderRepository.GetById(id);
-            for (var i = 0; i < order.Products.Count; i++)
+            for (var i = 0; i < order.Items.Count; i++)
             {
-                var orderProduct = await _productRepository.GetById(order.Products[i].Id);
-                order.Products[i] = new OrderProduct()
+                var orderItem = await _itemRepository.GetById(order.Items[i].Id);
+                order.Items[i] = new OrderItem()
                 {
-                    Id = orderProduct.Id,
-                    Name = orderProduct.Name,
-                    Category = orderProduct.Category,
-                    Description = orderProduct.Description,
-                    Image = orderProduct.Image,
-                    Quantity = order.Products[i].Quantity,
-                    Price = order.Products[i].Price
+                    Id = orderItem.Id,
+                    Name = orderItem.Name,
+                    Category = orderItem.Category,
+                    Description = orderItem.Description,
+                    ImageLink = orderItem.ImageLink,
+                    Quantity = order.Items[i].Quantity,
+                    Price = order.Items[i].Price
                 };
             }
 

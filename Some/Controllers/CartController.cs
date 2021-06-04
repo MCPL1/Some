@@ -15,9 +15,9 @@ namespace CourseProject.Controllers
     [AllowAnonymous]
     public class CartController : Controller
     {
-        private readonly IRepository<Product> _repository;
+        private readonly IRepository<Item> _repository;
 
-        public CartController(IRepository<Product> repository)
+        public CartController(IRepository<Item> repository)
         {
             _repository = repository;
         }
@@ -32,22 +32,22 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> AddItem(int id)
         {
             var data = GetModel();
-            if (data.Items.Any(x => x.Product.Id == id))
+            if (data.Items.Any(x => x.Item.Id == id))
             {
-                data.Items.First(x => x.Product.Id == id).Quantity++;
-                data.Amount += data.Items.First(x => x.Product.Id == id).Product.Price;
+                data.Items.First(x => x.Item.Id == id).Quantity++;
+                data.Amount += data.Items.First(x => x.Item.Id == id).Item.Price;
             }
             else
                 data?.AddItem(new CartItemViewModel(await _repository.GetById(id)));
 
             SetModel(data, 30);
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("Index", "Item");
         }
 
         public ActionResult Delete(int position)
         {
             var data = GetModel();
-            data.Amount -= data.Items[position].Product.Price;
+            data.Amount -= data.Items[position].Item.Price;
             if (data.Items[position].Quantity > 1)
                 data.Items[position].Quantity--;
             else

@@ -1,5 +1,5 @@
 ﻿@using CourseProject.Models.ViewModels
-@model CourseProject.Models.ViewModels.ProductIndexViewModel
+@model CourseProject.Models.ViewModels.ItemIndexViewModel
 
 @{
     ViewData["Title"] = "Main";
@@ -14,7 +14,7 @@
         {
             <li>
                 @await Html.PartialAsync("CategoryTreePartial",
-                    new CategoryTreeViewModel() {Action = "GetByCategory", Controller = "Product", Category = cat})
+                    new CategoryTreeViewModel() {Action = "GetByCategory", Controller = "Item", Category = cat})
             </li>
         }
     </ul>
@@ -62,14 +62,14 @@
 </div>
 
     <div class="col-10 d-flex justify-content-start align-items-center flex-wrap">
-    @foreach (var item in Model.Products)
+    @foreach (var item in Model.Items)
     {
         <div class="card m-4" style="width: 15rem;">
-            <img src="@item.Image" class="card-img-top" alt="...">
+            <img src="@item.ImageLink" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
                 <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-primary" asp-controller="Item" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
             </div>
         </div>
@@ -83,7 +83,7 @@
         var min = Number.parseInt(document.getElementById("slider-range-value1").innerText.substr(1));
         var max = Number.parseInt(document.getElementById("slider-range-value2").innerText.substr(1));
         @*$.ajax({
-            url: "@Url.Action("GetByPrice", "Product")",
+            url: "@Url.Action("GetByPrice", "Item")",
             type: "POST",
             data: { minPrice: min, maxPrice: max},
             cache: false,
@@ -124,11 +124,11 @@
             prefix: '$'
         });
         noUiSlider.create(rangeSlider, {
-            start: [@(Model.Products.Any()? Model.Products.Min(p=>p.Price):0), @(Model.Products.Any() ? Model.Products.Max(p => p.Price) : 0)],
+            start: [@(Model.Items.Any()? Model.Items.Min(p=>p.Price):0), @(Model.Items.Any() ? Model.Items.Max(p => p.Price) : 0)],
             step: 1,
             range: {
-                'min': [@(Model.Products.Any()? Model.Products.Min(p=>p.Price):0)],
-                'max': [@(Model.Products.Any() ? Model.Products.Max(p => p.Price) : 0)]
+                'min': [@(Model.Items.Any()? Model.Items.Min(p=>p.Price):0)],
+                'max': [@(Model.Items.Any() ? Model.Items.Max(p => p.Price) : 0)]
             },
             format: moneyFormat,
             connect: true

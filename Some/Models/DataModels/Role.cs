@@ -1,9 +1,8 @@
 ﻿using System;
 using CourseProject.Attributes;
-using CourseProject.Models;
-using CourseProject.Models.DataModels;
+using CourseProject.Data;
 
-namespace CourseProject.Identity.Models
+namespace CourseProject.Models.DataModels
 {
     [TableName("Role")]
     public class Role :Entity
@@ -13,8 +12,7 @@ namespace CourseProject.Identity.Models
         public Role()
         {
             Id = Guid.NewGuid().GetHashCode();
-            Id = 1;//ой пиздец, шо опять??!!
-            //Id = 1011;
+            Id = 1;
         }
 
         public Role(string name) : this()
