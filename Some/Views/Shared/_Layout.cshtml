@@ -11,10 +11,15 @@
     <style>
                /* This line can be removed it was just for display on CodePen: */
 
+        
 
-               .slider-labels {
-                   margin-top: 10px;
-               }
+
+        .user-button {
+            margin-top: 20px;
+        }
+        .slider-labels {
+            margin-top: 10px;
+        }
 
                /* Functional styling;
         * These styles are required for noUiSlider to function.
@@ -159,23 +164,26 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">Some</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">PLANtEST</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Home</a>
                         </li>
                     </ul>
+                    <span class="align-bottom">Hello, @User.Identity.Name!</span>
+                    <div class="d-flex justify-content-between">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
+                            <img src="/Images/shopping-cart.png" alt="..." width="25" height="25" /> <span id="cart-badge" class=" badge"></span>
+                        </a>
 
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">
-                        <img src="/Images/shopping-cart.png" alt="..." width="25" height="25" /> <span id="cart-badge" class=" badge"></span>
-                    </a>
-
-                    <partial name="_LoginPartial" />
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>

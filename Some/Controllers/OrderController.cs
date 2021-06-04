@@ -97,7 +97,7 @@ namespace CourseProject.Controllers
         }
 
         [Authorize(Roles = RoleConst.Admin)]
-        public async Task<IActionResult> ConfirmIndex(int id=1)
+        public async Task<IActionResult> ConfirmIndex(int id=1004)
         {
             var model = new OrderConfirmViewModel()
             {

@@ -7,29 +7,28 @@
 @inject UserManager<User> UserManager
 
 
-<div class="container">
+<div class="container d-flex align-content-between">
     <div class="container">
         <a asp-action="Index" asp-controller="Order"
-           asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
-            Orders
+           asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check btn-light">
+            Show my orders
         </a>
     </div>
 
     <div class="container">
         @if (User.IsInRole(RoleConst.Admin))
         {
+            <div class="d-flex row justify-content-between" style="width: 500px;">
             <div>
-                <a class="btn btn-primary" asp-controller="Product" asp-action="Create">Add Product</a>
+                <a class="user-button btn btn-outline-info" asp-controller="Product" asp-action="Create">Add Product</a>
             </div>
             <div>
-                <a class="btn btn-outline-danger" asp-action="ConfirmIndex" asp-controller="Order">All Orders</a>
+                <a class="user-button btn btn-outline-info" asp-controller="Order" asp-action="ConfirmIndex">Show all orders</a>
             </div>
-            <div>
-                <a class="btn btn-outline-danger" asp-controller="Order" asp-action="ConfirmIndex">Confirm</a>
-            </div>
-            <div>
-                <a class="btn btn-outline-danger" asp-controller="Category" asp-action="Create">Add Category</a>
-            </div>
+                <div>
+                    <a class="user-button btn btn-outline-info" asp-controller="Category" asp-action="Create">Add Category</a>
+                </div>
+                </div>
         }
     </div>
 </div>

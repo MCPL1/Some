@@ -38,16 +38,15 @@ namespace CourseProject.Controllers
             var products = await _productRepository.GetAll();
             var categories = await _categoryRepository.GetAll();
             products = sortOrder switch
-            {
-                "price_desc" => products.OrderByDescending(s => s.Price),
-                "price_asc" => products.OrderBy(s => s.Price),
-                "price_normal" => products,
-                _ => products
+                {
+                    "price_desc" => products.OrderByDescending(s => s.Price),
+                    "price_asc" => products.OrderBy(s => s.Price),
+                    "price_normal" => products, _=> products
             };
 
             var model = new ProductIndexViewModel(categories)
             {
-                Products = products.ToList(),
+                Products = products.Where(p => p.Quantity > 0).ToList()
             };
             return View(model);
         }
@@ -118,13 +117,24 @@ namespace CourseProject.Controllers
         {
             var product = await _productRepository.GetById(id);
             var categories = await _categoryRepository.GetAll();
-            return View(new ProductUpdateViewModel() {Product = product, Categories = categories.ToList()});
+            var mans = await _manufacturerRepository.GetAll();
+            return View(new ProductUpdateViewModel()
+                { Product = product, Categories = categories.ToList(), Manufacturers = mans.ToList() });
         }
 
         [Authorize(Roles = RoleConst.Admin)]
         [HttpPost]
         public async Task<IActionResult> Edit(ProductUpdateViewModel model)
         {
+            if (model.Image != null)
+            {
+                var path = "/Images/" + model.Image.FileName;
+                await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
+                await model.Image.CopyToAsync(fileStream);
+                fileStream.Close();
+                model.Product.Image = path;
+            }
+
             await _productRepository.Update(model.Product, x => x.Id, model.Product.Id);
             return RedirectToAction("Details", model.Product);
         }

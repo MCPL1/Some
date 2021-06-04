@@ -8,7 +8,7 @@
 <h1>Products</h1>
 
 <div class="row">
-<div class="treeview col-2">
+<div class="treeview col-2 ">
     <ul>
         @foreach (var cat in Model.Categories)
         {
@@ -46,7 +46,7 @@
         <a class="btn btn-primary" id ="btnPrice" >alo</a>
     </div>*@
 
-    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort</button>
     <div class="dropdown-menu">
         <p class="dropdown-item" asp-action="Index">
             <a class="link-dark" asp-action="Index">Default</a>
@@ -64,11 +64,11 @@
     <div class="col-10 d-flex justify-content-start align-items-center flex-wrap">
     @foreach (var item in Model.Products)
     {
-        <div class="card m-4" style="width: 15rem;">
+        <div class="card bg-light m-4" style="width: 15rem;">
             <img src="@item.Image" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
-                <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                <h3 class="card-text">@Html.DisplayFor(modelItem => item.Price)</h3>
                 <a class="btn btn-primary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
             </div>

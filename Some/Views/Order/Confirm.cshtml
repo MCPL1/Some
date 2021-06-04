@@ -6,7 +6,7 @@
 
 @foreach (var status in Model.StatusList)
 {
-    <a class="btn btn-outline-warning"
+    <a class="btn btn-outline-info" style="margin-bottom: 20px; margin-left: 10px;"
        asp-controller="Order" asp-action="ConfirmIndex" asp-route-id="@status.Id">
         @status.Name
     </a>
@@ -23,11 +23,13 @@
         <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
     </form>
 </div>
-<table class="table details @(@Model.Orders[0].Status.Name == StatusConst.First ? "table-success" : "table-dark")  table-striped table-hover">
+<table class="table details @(@Model.Orders[0].Status.Name == StatusConst.First ? "table-warning": @Model.Orders[0].Status.Name == "confirmed" ? "table-success" : "table-danger")  table-striped table-hover">
     <thead>
+    
     <tr>
         <th scope="col">#</th>
-        <th scope="col">UserUserName</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
         <th scope="col">Amount</th>
         <th scope="col">Manage</th>
     </tr>
@@ -39,16 +41,17 @@
         <tr>
             <th scope="row">@(i + 1)</th>
             <td>@(Model.Orders[i].User.Name)</td>
+            <td>@(Model.Orders[i].User.Surname)</td>
             <td>@Model.Orders[i].Products.Sum(p => (decimal) p.Quantity * p.Price)</td>
 
             <td>
                 @if (Model.Orders[i].Status.Name == StatusConst.First)
                 {
-                    <a class="btn btn-outline-warning"
+                    <a class="btn btn-success"
                        asp-controller="Order" asp-action="Confirm" asp-route-id="@Model.Orders[i].Id">
                         Confirm
                     </a>
-                    <a class="btn btn-outline-danger"
+                    <a class="btn btn-danger"
                        asp-controller="Order" asp-action="Reject" asp-route-id="@Model.Orders[i].Id">
                         Reject
                     </a>
