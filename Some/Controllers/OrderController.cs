@@ -65,6 +65,7 @@ namespace CourseProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
+            if (!ModelState.IsValid) return RedirectToAction("Create");
             var order = new Order
             {
                 Status = {Id = 1}, //забыл, да, харе уже!
