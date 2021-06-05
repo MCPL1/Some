@@ -28,7 +28,7 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
-            var category = new Category() {Name = model.Category.Name, BaseCategory = new Category() {Id = model.Category.Id}};
+            var category = new Category() {Name = model.Category.Name};
             await _categoryRepository.Create(category);
             return RedirectToAction("Index", "User");
         }

@@ -9,9 +9,5 @@ namespace CourseProject.Models.DataModels
     {
         [DisplayName("Категорія")] 
         public string Name { get; set; }
-
-        [ForeignKey("base_Id")] 
-        public Category BaseCategory { get; set; }
-
     }
 }
