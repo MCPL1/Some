@@ -10,12 +10,12 @@ namespace CourseProject.Models.ViewModels
     {
         public Item Item { get; set; }
         public IFormFile Image { get; set; }
-        public List<ItemType> Categories { get; set; }
+        public List<ItemType> Types { get; set; }
 
         public ItemCreateViewModel()
         {
             Item = new Item();
-            Categories = new List<ItemType>();
+            Types = new List<ItemType>();
         }
     }
 

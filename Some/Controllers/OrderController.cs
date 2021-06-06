@@ -57,16 +57,18 @@ namespace CourseProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
+            if (model.Order.Date <= DateTime.Now)
+            {
+                ModelState.AddModelError("CheckoutDate", "Невірно вказано дату");
+            }
             if (ModelState.IsValid)
             {
                 var order = new Order
                 {
-                    Status = {Id = 1}, //забыл, да, харе уже!
+                    Status = {Id = 1}, 
                     User = {Id = int.Parse(_userManager.GetUserId(User))},
                     CheckoutDate = DateTime.Now,
-                    Date = model.Order.Date,
-                    DeliveryProvider = model.Order.DeliveryProvider,
-                    DeliveryType = model.Order.DeliveryType,
+                    Date =  model.Order.Date,
                     Address = model.Order.Address
                 };
                 var data = GetCart();
@@ -86,7 +88,7 @@ namespace CourseProject.Controllers
                 return RedirectToAction("Index", "User");
             }
 
-            return RedirectToAction("Create");
+            return View("Create",new OrderCreateViewModel(){Order = new Order(){ Date = DateTime.Now}});
         }
 
         [Authorize(Roles = Const.Admin)]
@@ -129,7 +131,7 @@ namespace CourseProject.Controllers
                 {
                     Id = orderItem.Id,
                     Name = orderItem.Name,
-                    Category = orderItem.Category,
+                    Type = orderItem.Type,
                     Description = orderItem.Description,
                     ImageLink = orderItem.ImageLink,
                     Quantity = order.Items[i].Quantity,

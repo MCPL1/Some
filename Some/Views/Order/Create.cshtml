@@ -3,45 +3,30 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1 class="text-center mb-3">Create order</h1>
-
 <div class="row">
-    <div class="col-md-6 m-auto">
-        <form asp-action="Create" class="d-flex flex-column">
-            <label class="control-label">Provider</label>
+
+    <div class=" eight wide column ui left aligned basic segment">
+        <h2 class="ui header">Оформлення замовлення</h2>
+        <form class="ui form" asp-action="Create" asp-controller="Order">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <select class="form-control" asp-for="Order.DeliveryProvider.Id"
-                    asp-items="@(new SelectList(Model.DeliveryProviders, "Id", "Name"))">
-                <option>Please select one</option>
-            </select>
-            <label class="control-label">Delivery type</label>
-            <select class="form-control" asp-for="Order.DeliveryType.Id"
-                    asp-items="@(new SelectList(Model.DeliveryTypes, "Id", "Name"))">
-                <option>Please select one</option>
-            </select>
-            <div class="form-group">
-                <label asp-for="Order.Address" class="control-label"></label>
-                <input asp-for="Order.Address" class="form-control" />
-                <span asp-validation-for="Order.Address" class="text-danger"></span>
+            
+            <div class="field">
+                <label asp-for="Order.Address"></label>
+                <input asp-for="Order.Address" />
+                <span class="ui pointing red basic label" asp-validation-for="Order.Address"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Order.Date" class="control-label"></label>
-                <input asp-for="Order.Date" class="form-control" />
-                <span asp-validation-for="Order.Date" class="text-danger"></span>
+            <div class="field">
+                <label asp-for="Order.Date"></label>
+                <input asp-for="Order.Date" />
+                <span class="ui pointing red basic label" asp-validation-for="Order.Date"></span>
             </div>
-
-            <div class="form-group">
-                <button type="submit" style="width: 100%;" class="btn btn-success">Create order</button>
-            </div>
+            <input class="ui blue submit button" type="submit" value="Замовити" />
         </form>
+        
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {});
-</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

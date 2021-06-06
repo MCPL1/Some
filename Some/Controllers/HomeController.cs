@@ -47,7 +47,7 @@ namespace CourseProject.Controllers
             //var result = await _userManager.CreateAsync(user, "password#4D");
             //await _userManager.AddToRoleAsync(user,"admin");
             var products = await _repository.GetAll();
-            var t = await _repository.Get(product => product.Category.Id, 1);
+            var t = await _repository.Get(product => product.Type.Id, 1);
             var m = await _repository.Get(product => product.Price, 124);
             var order = await _orderRepository.GetAll();
             return View(products);

@@ -10,7 +10,7 @@
     @if (Model.Items.Count != 0)
     {
         <div class=" twelve wide column products d-flex justify-content-between flex-wrap">
-            <h2 class="ui header">Cart</h2>
+            <h2 class="ui header">Кошик</h2>
             <div class="ui three column grid">
 
                 @for (var i = 0; i < Model.Items.Count; i++)
@@ -58,7 +58,7 @@
                     </div>
                 }
 
-                <p>Amount: @Html.DisplayFor(modelItem => Model.Amount)</p>
+                <p>Усього: @Html.DisplayFor(modelItem => Model.Amount)</p>
             </div>
         </div>
     }

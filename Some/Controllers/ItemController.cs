@@ -52,7 +52,7 @@ namespace CourseProject.Controllers
 
         public async Task<IActionResult> GetByCategory(int categoryId)
         {
-            var items = await _itemRepository.GetMany(p => p.Category.Id, categoryId);
+            var items = await _itemRepository.GetMany(p => p.Type.Id, categoryId);
             var categories = await _typeRepository.GetAll();
             var model = new ItemIndexViewModel(categories)
             {
@@ -85,7 +85,7 @@ namespace CourseProject.Controllers
             var model =
                 new ItemCreateViewModel()
                 {
-                    Categories = (await _typeRepository.GetAll()).ToList(),
+                    Types = (await _typeRepository.GetAll()).ToList(),
                 };
             return View(model);
         }
@@ -94,6 +94,7 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ItemCreateViewModel model)
         {
+            if (!ModelState.IsValid) return RedirectToAction("Create");
             var item = model.Item;
             if (model.Image != null)
             {
@@ -118,7 +119,7 @@ namespace CourseProject.Controllers
             var model = new ItemUpdateViewModel()
             {
                 Item = item,
-                Categories = categories.ToList()
+                Types = categories.ToList()
             };
             return View(model);
         }

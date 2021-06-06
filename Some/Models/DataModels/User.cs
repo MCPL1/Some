@@ -4,7 +4,7 @@ using CourseProject.Attributes;
 namespace CourseProject.Models.DataModels
 
 {
-    [TableName("User_")]
+    [TableName("User")]
     public class User:Entity
     {
         public string UserName { get; set; }

@@ -4,7 +4,7 @@ using CourseProject.Attributes;
 
 namespace CourseProject.Models.DataModels
 {
-    [TableName("Category")]
+    [TableName("Type")]
     public class ItemType : Entity
     {
         [DisplayName("Категорія")] 

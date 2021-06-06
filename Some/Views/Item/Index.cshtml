@@ -7,8 +7,55 @@
 
 
 <div class="row">
-    <div class="four wide column ">
+    <div class="thirteen wide column ">
         <h1 class="ui header">Послуги</h1>
+        <div class="ui special cards ui d-flex justify-content-start align-items-center flex-wrap">
+
+            @foreach (var item in Model.Items)
+            {
+                <div class="card">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">
+                                        <a asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">
+                                            Add To Cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="@item.ImageLink">
+                    </div>
+                    <div class="content">
+                        <a asp-controller="Item" asp-action="Details" asp-route-id="@item.Id" class="header">
+                            Details
+                        </a>
+                        <div class="meta">
+                            <span class="date">@item.Type.Name</span>
+                        </div>
+                        <div class="description">
+                            @(item.Description.Length > 25
+                                ? item.Description.Substring(0, 25) + "..."
+                                : item.Description)
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <a>
+                            @*<i class="users icon"></i>
+                            2 Members*@
+                        </a>
+                        <span>
+                            Price:@item.Price
+                        </span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="three wide column ">
+        <h3 class="ui header">Тип</h3>
         <div class="ui link list">
             @foreach (var cat in Model.Categories)
             {
@@ -42,12 +89,12 @@
                         <input type="hidden" name="max-value" value="">
                     </form>
                 </div>
-                
-                    <a class="ui basic button" id="btnPrice">Показати</a>
-                
-                
+
+                <a class="ui basic button" id="btnPrice">Показати</a>
+
+
             </div>
-           
+
         </div>
 
         <div class="ui compact menu">
@@ -63,51 +110,7 @@
         </div>
 
     </div>
-    <div class="twelve wide column ">
-        <div class="ui special cards ui d-flex justify-content-start align-items-center flex-wrap">
-            @foreach (var item in Model.Items)
-            {
-                <div class="card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div class="ui inverted button">
-                                        <a asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">
-                                            Add To Cart
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <img src="@item.ImageLink">
-                    </div>
-                    <div class="content">
-                        <a asp-controller="Item" asp-action="Details" asp-route-id="@item.Id" class="header">
-                            Details
-                        </a>
-                        <div class="meta">
-                            <span class="date">@item.Category.Name</span>
-                        </div>
-                        <div class="description">
-                            @(item.Description.Length > 25
-                                ? item.Description.Substring(0, 25) + "..."
-                                : item.Description)
-                        </div>
-                    </div>
-                    <div class="extra content">
-                        <a>
-                            @*<i class="users icon"></i>
-                                2 Members*@
-                        </a>
-                        <span>
-                            Price:@item.Price
-                        </span>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
+
 </div>
 
 

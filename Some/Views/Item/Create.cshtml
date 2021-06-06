@@ -1,56 +1,101 @@
 ﻿@using CourseProject.Models.DataModels
+@using Microsoft.AspNetCore.Identity
+@using CourseProject.Data
 @model CourseProject.Models.ViewModels.ItemCreateViewModel
-
+@inject UserManager<User> UserManager
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-center mt-5">Create product</h1>
+<div class="row">
+    <div class="eight twelve column">
+        <div class="ui tabular menu">
+            <a asp-controller="User" asp-action="Index" class="item">
+                Інформація
+            </a>
+            <a asp-action="Index" asp-controller="Order"
+               asp-route-id="@UserManager.GetUserId(User)" class="item ">
+                Замовлення
+            </a>
+            @if (User.IsInRole(Const.Admin))
+            {
+                <a class="item active" asp-controller="Item" asp-action="Create">Додати послугу</a>
+                <a class="item" asp-action="ConfirmIndex" asp-controller="Order">Замовлення користувачів</a>
+                <a class="item" asp-controller="Type" asp-action="Create">Додати тип</a>
+            }
+        </div>
+        <div class="container">
+            <h2 class="ui header">Додати Послугу</h2>
+            <form asp-action="Create" class="ui form" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="field">
+                    <label asp-for="Item.Name"></label>
+                    <input asp-for="Item.Name" />
+                    <span class="ui  pointing red basic label" asp-validation-for="Item.Name"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="Item.Description"></label>
+                    <textarea rows="2" asp-for="Item.Description"></textarea>
+                    <span class="ui  pointing red basic label" asp-validation-for="Item.Description"></span>
+                </div>
+                <div class="two fields">
+                    <div class="field">
+                        <label asp-for="Item.PriceModifier"></label>
+                        <input asp-for="Item.PriceModifier" />
+                        <span class="ui pointing red basic label" asp-validation-for="Item.PriceModifier"></span>
+                    </div>
+                    <div class="field">
+                        <label asp-for="Item.MaxQuantity"></label>
+                        <input asp-for="Item.MaxQuantity" />
+                        <span class="ui pointing red basic label" asp-validation-for="Item.MaxQuantity"></span>
+                    </div>
+                </div>
+                <div class="field">
+                    <label asp-for="Item.Price"></label>
+                    <input asp-for="Item.Price" />
+                    <span class="ui pointing red basic label" asp-validation-for="Item.Price"></span>
+                </div>
+                <div class="field">
+                    <label asp-for="Item.Type"></label>
+                    <select class="ui fluid dropdown" asp-for="Item.Type.Id"
+                            asp-items="@(new SelectList(Model.Types, "Id", "Name"))">
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label class="ui icon button">
+                        <i class="file image icon"></i>
+                        Оберіть файл
+                        <input type="file" asp-for="Image" style="display: none" />
+                    </label>
+
+                </div>
+
+                <div class="inline field">
+                    <div class="ui toggle checkbox">
+                        <input asp-for="Item.IsPromotion" tabindex="0" class="hidden">
+                        <label asp-for="Item.IsPromotion"></label>
+                    </div>
+                </div>
+                <div class="ui buttons">
+                    <a class="ui button" asp-controller="User" asp-action="Index">Назад</a>
+                    <div class="or"></div>
+                    <button type="submit" class="ui positive button active">Створити</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
 
 <div class="row">
-    <div class="col-md-4 m-auto">
-        <form asp-action="Create" method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Item.Name" class="control-label"></label>
-                <input asp-for="Item.Name" class="form-control" />
-                <span asp-validation-for="Item.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item.Description" class="control-label"></label>
-                <input asp-for="Item.Description" class="form-control" />
-                <span asp-validation-for="Item.Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Item.Price" class="control-label"></label>
-                <input asp-for="Item.Price" class="form-control" />
-                <span asp-validation-for="Item.Price" class="text-danger"></span>
-            </div>
-
-           
-            <div class="form-group">
-                <select class="ui dropdown" style="width: 100%" asp-for="Item.Category.Id"
-                        asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
-                   </select>
-            </div>
-          
-            <div class="form-group">
-                <input type="file" class="form-control-file" asp-for="Image" />
-            </div>
-            
-            <div class="form-group ">
-                <button type="submit" style="width: 100%;" class="btn btn-primary">Create</button>
-            </div>
-            <div>
-
-            </div>
-        </form>
+    <div class="five wide column">
+       
     </div>
+   
 </div>
 
-<div class="text-center">
-    <a asp-action="Index">Back</a>
-</div>
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

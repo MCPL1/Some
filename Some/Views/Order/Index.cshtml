@@ -1,42 +1,61 @@
-﻿@model IEnumerable<CourseProject.Models.DataModels.Order>
-
+﻿@using CourseProject.Data
+@using CourseProject.Models.DataModels
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<CourseProject.Models.DataModels.Order>
+@inject UserManager<User> UserManager
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Orders</h1>
+<div class="row">
+    <div class="eight twelve column">
+        <div class="ui tabular menu">
+            <a asp-controller="User" asp-action="Index" class="item">
+                Інформація
+            </a>
+            <a asp-action="Index" asp-controller="Order"
+               asp-route-id="@UserManager.GetUserId(User)" class="item active">
+                Замовлення
+            </a>
+            @if (User.IsInRole(Const.Admin))
+            {
+                <a class="item" asp-controller="Item" asp-action="Create">Додати послугу</a>
+                <a class="item" asp-action="ConfirmIndex" asp-controller="Order">Замовлення користувачів</a>
+                <a class="item" asp-controller="Type" asp-action="Create">Додати тип</a>
+            }
+        </div>
+        <div class="container">
+            @foreach (var order in Model)
+            {
+                <div>
+                    <p>
+                        Order date: @Html.DisplayFor(modelItem => order.Date)
+                    </p>
 
+                    <div class="d-flex justify-content-between flex-wrap">
+                        @foreach (var product in order.Items)
+                        {
+                            <div class="card mb-3" style="width: 15rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Title: @(product.Name)</h5>
+                                    <p class="card-text">Price: @(product.Price)</p>
+                                    <p class="card-text">Quantity: @(product.Quantity)</p>
+                                    <p class="card-text">Amount: @(product.Price * product.Quantity)</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div>
+                        @*<a class="btn" asp-controller="Order" asp-action="Details">Details</a>*@
+                    </div>
 
-@foreach (var order in Model)
-{
-<div>
-    <p>
-       Order date: @Html.DisplayFor(modelItem => order.Date)
-    </p>
-    
-    <div class="d-flex justify-content-between flex-wrap">
-        @foreach (var product in order.Items)
-        {
-            <div class="card mb-3" style="width: 15rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Title: @(product.Name)</h5>
-                    <p class="card-text">Price: @(product.Price)</p>
-                    <p class="card-text">Quantity: @(product.Quantity)</p>
-                    <p class="card-text">Amount: @(product.Price * product.Quantity)</p>
                 </div>
-            </div>
-        }
-    </div>
-    <div>
-        @*<a class="btn" asp-controller="Order" asp-action="Details">Details</a>*@
+                <hr />
+            }
+
+        </div>
     </div>
 
 </div>
-    <hr />
-}
 
 
-<div class="d-flex justify-content-between flex-wrap">
-</div>
-
-<a class="btn" asp-controller="User" asp-action="Index">Back</a>

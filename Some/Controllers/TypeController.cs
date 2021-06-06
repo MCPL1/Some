@@ -9,12 +9,12 @@ using CourseProject.Models.ViewModels;
 
 namespace CourseProject.Controllers
 {
-    public class CategoryController : Controller
+    public class TypeController : Controller
     {
 
         private readonly IRepository<Models.DataModels.ItemType> _categoryRepository;
 
-        public CategoryController(IRepository<Models.DataModels.ItemType> categoryRepository)
+        public TypeController(IRepository<Models.DataModels.ItemType> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }

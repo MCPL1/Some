@@ -7,43 +7,37 @@
 @inject UserManager<User> UserManager
 
 
-<div class="container">
-    <div class="container">
-        <a asp-action="Index" asp-controller="Order"
-           asp-route-id="@UserManager.GetUserId(User)" class="btn btn-check">
-            Orders
-        </a>
+
+<div class="row">
+    <div class="twelve wide column">
+        <div class="ui tabular menu">
+            <a class="item active">
+                Інформація
+            </a>
+            <a asp-action="Index" asp-controller="Order"
+               asp-route-id="@UserManager.GetUserId(User)" class="item">
+                Замовлення
+            </a>
+            @if (User.IsInRole(Const.Admin))
+            {
+                <a class="item " asp-controller="Item" asp-action="Create">Додати послугу</a>
+                <a class="item" asp-action="ConfirmIndex" asp-controller="Order">Замовлення користувачів</a>
+                <a class="item" asp-controller="Type" asp-action="Create">Додати тип</a>
+            }
+        </div>
+        <div class="container">
+            <div>
+                <label>Ім'я</label>
+                <p>@UserManager.GetUserName(User)</p>
+            </div>
+
+        </div>
     </div>
 
-    <div class="container">
-        @if (User.IsInRole(Const.Admin))
-        {
-            <div>
-                <a class="btn btn-primary" asp-controller="Item" asp-action="Create">Додати послугу</a>
-            </div>
-            <div>
-                <a class="btn btn-outline-danger" asp-action="ConfirmIndex" asp-controller="Order">All Orders</a>
-            </div>
-            <div>
-                <a class="btn btn-outline-danger" asp-controller="Order" asp-action="ConfirmIndex">Confirm</a>
-            </div>
-            <div>
-                <a class="btn btn-outline-danger" asp-controller="Category" asp-action="Create">Add Category</a>
-            </div>
-        }
-    </div>
 </div>
 
 
 <script>
-    var triggerTabList = [].slice.call(document.querySelectorAll('#myTab a'));
-    triggerTabList.forEach(function(triggerEl) {
-        var tabTrigger = new bootstrap.Tab(triggerEl);
-
-        triggerEl.addEventListener('click',
-            function(event) {
-                event.preventDefault();
-                tabTrigger.show();
-            })
-    })
+  
+    
 </script>

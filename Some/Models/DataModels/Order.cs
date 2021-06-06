@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CourseProject.Attributes;
 using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace CourseProject.Models.DataModels
 {
@@ -13,11 +14,16 @@ namespace CourseProject.Models.DataModels
 
         [ForeignKey("status_id")] public Status Status { get; set; }
 
+        [Required]
+        [DisplayName("Дата виконання")]
+        [DataType(DataType.DateTime)]
         public DateTime CheckoutDate { get; set; }
 
         [ForeignKeyToMany("Item")] public List<OrderItem> Items { get; set; }
 
-        [DisplayName("Адреса доставки")] public string Address { get; set; }
+        [Required]
+        [DisplayName("Адреса доставки")] 
+        public string Address { get; set; }
 
         public DateTime Date { get; set; }
 
