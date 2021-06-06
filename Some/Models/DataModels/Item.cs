@@ -21,16 +21,16 @@ namespace CourseProject.Models.DataModels
         [DisplayName("Ціна")]
         public decimal Price { get; set; }
 
-        [ForeignKey("category_id")] 
-        public Category Category { get; set; }
-
+        [ForeignKey("type_id")] 
+        public ItemType Category { get; set; }
+        public bool IsPromotion { get; set; }
+        public int MaxQuantity { get; set; }
         public decimal PriceModifier { get; set; }
-
         public string ImageLink { get; set; }
 
         public Item()
         {
-            Category = new Category();
+            Category = new ItemType();
         }
 
     }

@@ -3,28 +3,23 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<ul class="navbar-nav">
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        @*<a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.UserName!</a>*@
-        <a class="nav-link text-dark" asp-controller="User" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" 
-               asp-route-returnUrl="@Url.Action("Index", "Item", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+    <a class="ui primary button inverted" asp-controller="User" asp-action="Index" title="Manage">Hello @User.Identity.Name!</a>
+    <div class="item" style="padding: 0;">
+        <form asp-area="Identity" asp-page="/Account/Logout"
+              asp-route-returnUrl="@Url.Action("Index", "Item", new {area = ""})">
+            <button type="submit" class="ui primary button inverted">Вихід</button>
         </form>
-    </li>
+    </div>
+    
 }
 else
 {
-<li class="nav-item">
-    @*<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>*@
-    <a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register</a>
-</li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a>
-    </li>
+
+    <a class="item yellow" asp-controller="User" asp-action="Register">Register</a>
+
+
+    <a class="item yellow" asp-controller="User" asp-action="Login">Login</a>
 }
-</ul>

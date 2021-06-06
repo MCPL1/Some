@@ -57,6 +57,15 @@ namespace CourseProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Add(int position)
+        {
+            var data = GetModel();
+            data.Amount += data.Items[position].Item.Price;
+            data.Items[position].Quantity++;
+            SetModel(data, 30);
+            return RedirectToAction("Index");
+        }
+
 
         public CartViewModel GetModel()
         {

@@ -18,15 +18,15 @@ namespace CourseProject.Controllers
     public class ItemController : Controller
     {
         private readonly IRepository<Item> _itemRepository;
-        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Models.DataModels.ItemType> _typeRepository;
 
 
         IWebHostEnvironment _appEnvironment;
 
-        public ItemController(IRepository<Item> itemRepository, IRepository<Category> categoryRepository, IWebHostEnvironment appEnvironment)
+        public ItemController(IRepository<Item> itemRepository, IRepository<Models.DataModels.ItemType> typeRepository, IWebHostEnvironment appEnvironment)
         {
             _itemRepository = itemRepository;
-            _categoryRepository = categoryRepository;
+            _typeRepository = typeRepository;
             _appEnvironment = appEnvironment;
         }
 
@@ -34,7 +34,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Index(string sortOrder = "price_normal")
         {
             var items = await _itemRepository.GetAll();
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _typeRepository.GetAll();
             items = sortOrder switch
             {
                 "price_desc" => items.OrderByDescending(s => s.Price),
@@ -53,7 +53,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> GetByCategory(int categoryId)
         {
             var items = await _itemRepository.GetMany(p => p.Category.Id, categoryId);
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _typeRepository.GetAll();
             var model = new ItemIndexViewModel(categories)
             {
                 Items = items.ToList(),
@@ -65,7 +65,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> GetByPrice([FromBody] (int minPrice, int maxPrice) tuple)
         {
             var items = await _itemRepository.GetAll();
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _typeRepository.GetAll();
             var model = new ItemIndexViewModel(categories)
             {
                 Items = items.Where(p => p.Price > 50 /*&& p.Price < maxPrice*/).ToList(),
@@ -85,7 +85,7 @@ namespace CourseProject.Controllers
             var model =
                 new ItemCreateViewModel()
                 {
-                    Categories = (await _categoryRepository.GetAll()).ToList(),
+                    Categories = (await _typeRepository.GetAll()).ToList(),
                 };
             return View(model);
         }
@@ -114,7 +114,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             var item = await _itemRepository.GetById(id);
-            var categories = await _categoryRepository.GetAll();
+            var categories = await _typeRepository.GetAll();
             var model = new ItemUpdateViewModel()
             {
                 Item = item,

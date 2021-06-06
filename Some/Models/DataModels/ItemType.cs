@@ -5,7 +5,7 @@ using CourseProject.Attributes;
 namespace CourseProject.Models.DataModels
 {
     [TableName("Category")]
-    public class Category : Entity
+    public class ItemType : Entity
     {
         [DisplayName("Категорія")] 
         public string Name { get; set; }

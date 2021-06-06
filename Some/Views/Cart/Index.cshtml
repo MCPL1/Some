@@ -6,43 +6,64 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="row">
+    @if (Model.Items.Count != 0)
+    {
+        <div class=" twelve wide column products d-flex justify-content-between flex-wrap">
+            <h2 class="ui header">Cart</h2>
+            <div class="ui three column grid">
 
-@if (Model.Items.Count != 0)
-{
-    <div>
-        <h2 class="mb-2">Cart</h2>
-        <div class="d-flex align-items-center justify-content-between mb-5">
-            @if(SignInManager.IsSignedIn(User))
-            {
-                <a class="btn btn-success" asp-controller="Order"  asp-action="Create">Create Order</a>
-            }
-            else
-            {
-                <a class="btn btn-success"  onclick=" alert('Authorize to create order');">Create Order</a>
-            }
+                @for (var i = 0; i < Model.Items.Count; i++)
+                {
+                    <div class="column">
+                        <div class="ui fluid card">
+                            <div class="image">
+                                <img src="@Model.Items[i].Item.ImageLink">
+                            </div>
+                            <div class="content">
+                                <a class="header">@Model.Items[i].Item.Name</a>
+                            </div>
+                            <div class="description">
+                                Ціна: @(Model.Items[i].Item.Price* Model.Items[i].Quantity)
+                            </div>
+                            <div class="extra content">
+                                <span>Кількість:</span>
+                                <a asp-controller="Cart" asp-action="Delete">
+                                    <i class="minus square outline icon"></i>
+                                </a>
+                                <a asp-controller="Cart" asp-action="Add">
+                                    <i class="plus square outline icon"></i>
+                                </a>
 
-            <p>Amount: @Html.DisplayFor(modelItem => Model.Amount)</p>
+                            </div>
+                        </div>
+                    </div>
+                        }
+                    </div>
+                
         </div>
-    </div>
+        <div class="four wide column">
+            <div class="d-flex align-items-center justify-content-between mb-5">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a class="ui button" asp-controller="Order" asp-action="Create">Create Order</a>
+                }
+                else
+                {
+                    <div class="ui animated fade button" tabindex="0">
+                        <div class="visible content">Увійдіть для замовлення</div>
+                        <div class="hidden content">
+                            Замовити
+                        </div>
+                    </div>
+                }
 
-
-    <div class="products d-flex justify-content-between flex-wrap">
-        @for (var i = 0; i < Model.Items.Count; i++)
-        {
-            <div class="card mb-3" style="width: 15rem;">
-                <img src="https://d1uz88p17r663j.cloudfront.net/original/4274048cd5f17c49dfee280f77a3739d_Cheese-Pizza_HB-2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">@Model.Items[i].Item.Name</h5>
-                    <p class="card-text">Price: @Model.Items[i].Item.Price</p>
-                    <p class="card-text">Quantity: @Model.Items[i].Quantity</p>
-                    <a class="btn btn-danger" asp-controller="Cart" asp-action="Delete" asp-route-position="@i">Delete Item</a>
-                </div>
+                <p>Amount: @Html.DisplayFor(modelItem => Model.Amount)</p>
             </div>
-        }
-    </div>
-}
-else
-{
-    <h5 class="text-center">Empty Cart</h5>
-}
-
+        </div>
+    }
+    else
+    {
+        <h4 class="ui header">Empty Cart</h4>
+    }
+</div>

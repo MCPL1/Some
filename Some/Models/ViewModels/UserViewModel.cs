@@ -11,6 +11,9 @@ namespace CourseProject.Models.ViewModels
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNum { get; set; }
     }
 
     public class UserLoginViewModel

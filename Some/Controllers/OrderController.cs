@@ -22,18 +22,14 @@ namespace CourseProject.Controllers
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Status> _statusRepository;
         private readonly IRepository<Item> _itemRepository;
-        private readonly IRepository<DeliveryType> _deliveryTypeRepository;
-        private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
+
 
         public OrderController(UserManager<User> userManager,
             IRepository<Order> orderRepository,
-            IRepository<DeliveryType> deliveryTypeRepository,
-            IRepository<DeliveryProvider> deliveryProviderRepository, IRepository<Status> statusRepository, IRepository<Item> itemRepository)
+            IRepository<Status> statusRepository, IRepository<Item> itemRepository)
         {
             _userManager = userManager;
             _orderRepository = orderRepository;
-            _deliveryTypeRepository = deliveryTypeRepository;
-            _deliveryProviderRepository = deliveryProviderRepository;
             _statusRepository = statusRepository;
             _itemRepository = itemRepository;
         }
@@ -51,9 +47,7 @@ namespace CourseProject.Controllers
                 return RedirectToAction("Index", "Cart");
             var model = new OrderCreateViewModel()
             {
-                Order = new Order() { Date = DateTime.Now },
-                DeliveryProviders = (await _deliveryProviderRepository.GetAll()).ToList(),
-                DeliveryTypes = (await _deliveryTypeRepository.GetAll()).ToList()
+                Order = new Order() { Date = DateTime.Now }
             };
 
             return View(model);

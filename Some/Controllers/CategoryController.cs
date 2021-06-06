@@ -12,9 +12,9 @@ namespace CourseProject.Controllers
     public class CategoryController : Controller
     {
 
-        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Models.DataModels.ItemType> _categoryRepository;
 
-        public CategoryController(IRepository<Category> categoryRepository)
+        public CategoryController(IRepository<Models.DataModels.ItemType> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -28,7 +28,7 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
-            var category = new Category() {Name = model.Category.Name};
+            var category = new Models.DataModels.ItemType() { Name = model.Category.Name};
             await _categoryRepository.Create(category);
             return RedirectToAction("Index", "User");
         }
@@ -40,7 +40,7 @@ namespace CourseProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Category category)
+        public async Task<IActionResult> Edit(Models.DataModels.ItemType category)
         {
             await _categoryRepository.Update(category, cat => cat.Id, category.Id);
             return RedirectToAction("Index", "Product");

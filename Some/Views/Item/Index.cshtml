@@ -5,11 +5,10 @@
     ViewData["Title"] = "Main";
 }
 
-<h1>Products</h1>
 
 <div class="row">
-    <div class="treeview col-2">
-        @*no*@
+    <div class="four wide column ">
+        <h1 class="ui header">Послуги</h1>
         <div class="ui link list">
             @foreach (var cat in Model.Categories)
             {
@@ -37,38 +36,35 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12">
+                <div class="eight wide column">
                     <form>
                         <input type="hidden" name="min-value" value="">
                         <input type="hidden" name="max-value" value="">
                     </form>
                 </div>
+                
+                    <a class="ui basic button" id="btnPrice">Показати</a>
+                
+                
             </div>
-            <a class="btn btn-primary" asp-action="GetByPrice" asp-route-minPrice="25" asp-route-maxPrice="450">|_|</a>
-            <a class="btn btn-primary" id="btnPrice">alo</a>
+           
         </div>
-        
+
         <div class="ui compact menu">
             <div class="ui simple dropdown item">
                 За ціною
                 <i class="dropdown icon"></i>
                 <div class="menu">
-                    <div class="item">
-                        <a class="link-dark" asp-action="Index">За замовчуванням</a>
-                    </div>
-                    <div class="item">
-                        <a class="link-dark" asp-action="Index" asp-route-sortOrder="@("price_asc")">Ціна вниз</a>
-                    </div>
-                    <div class="item">
-                        <a class="link-dark" asp-action="Index" asp-route-sortOrder="@("price_desc")">Ціна вверх</a>
-                    </div>
+                    <a class="item" asp-action="Index">За замовчуванням</a>
+                    <a class="item" asp-action="Index" asp-route-sortOrder="@("price_asc")">Ціна вниз</a>
+                    <a class="item" asp-action="Index" asp-route-sortOrder="@("price_desc")">Ціна вверх</a>
                 </div>
             </div>
         </div>
-        
+
     </div>
-    <div class="col-6">
-        <div class="ui special cards">
+    <div class="twelve wide column ">
+        <div class="ui special cards ui d-flex justify-content-start align-items-center flex-wrap">
             @foreach (var item in Model.Items)
             {
                 <div class="card">
@@ -102,7 +98,7 @@
                     <div class="extra content">
                         <a>
                             @*<i class="users icon"></i>
-                            2 Members*@
+                                2 Members*@
                         </a>
                         <span>
                             Price:@item.Price

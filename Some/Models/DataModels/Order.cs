@@ -21,14 +21,9 @@ namespace CourseProject.Models.DataModels
 
         public DateTime Date { get; set; }
 
-        [ForeignKey("provider_id")] public DeliveryProvider DeliveryProvider { get; set; }
-
-        [ForeignKey("type_id")] public DeliveryType DeliveryType { get; set; }
 
         public Order()
         {
-            DeliveryProvider = new DeliveryProvider();
-            DeliveryType = new DeliveryType();
             User = new User();
             Items = new List<OrderItem>();
             Status = new Status();

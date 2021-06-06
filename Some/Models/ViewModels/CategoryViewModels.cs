@@ -32,7 +32,7 @@ namespace CourseProject.Models.ViewModels
         {
         }
 
-        public CategoryCreateViewModel(IEnumerable<Category> flatCategories)
+        public CategoryCreateViewModel(IEnumerable<DataModels.ItemType> flatCategories)
         {
             var categories = (from fc in flatCategories
                 select new CategoryViewModel()
