@@ -45,23 +45,6 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Index(int id)
         {
             var orders = await _orderRepository.GetMany(order => order.User.Id, id);
-            //foreach (var order in orders)
-            //{
-            //    for(var i = 0; i < order.Products.Count; i++)
-            //    {
-            //        var orderProduct = await _productRepository.GetById(order.Products[i].Id);
-            //        order.Products[i] = new OrderProduct()
-            //        {
-            //            Id = orderProduct.Id, 
-            //            Name = orderProduct.Name, 
-            //            Category = orderProduct.Category, 
-            //            Description = orderProduct.Description, 
-            //            Image = orderProduct.Image,
-            //            Quantity = order.Products[i].Quantity,
-            //            Price =  order.Products[i].Price
-            //        };
-            //    }
-            //}
             return View(orders);
         }
 
@@ -156,7 +139,8 @@ namespace CourseProject.Controllers
                 Status = order.Status,
                 User = order.User
             };
-            return View("Details", model);
+            var delivery = await _deliveryRepository.Get(del => del.Order.Id, model.Id);
+            return View("Details", new OrderViewModel { Order = model, Delivery = delivery});
         }
 
         public CartViewModel GetCart()

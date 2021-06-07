@@ -86,7 +86,7 @@ namespace CourseProject.Data.Repositories
         {
             var selectCommand = !_tableInfo.IsTransitional
                 ? $"SELECT {_tableInfo.TableColumnsDefinition} FROM \"{_tableInfo.TableName}\""
-                : $"SELECT {_tableInfo.TransitionalTableColumnsDefinition} FROM \"{_tableInfo.TableName}\" " +
+                : $"SELECT {_tableInfo.TableColumnsDefinition} FROM \"{_tableInfo.TableName}\" " +
                   $"JOIN {_tableInfo.RelatedTableName} " +
                   $"ON {_tableInfo.RelatedTableName}.Id = {_tableInfo.TableName}.{_tableInfo.RelatedEntityName}_Id " +
                   $"WHERE {_tableInfo.MasterEntityName}_Id='{masterId}'";
@@ -266,11 +266,7 @@ namespace CourseProject.Data.Repositories
                 var resultEntity = new TEntity();
 
 
-                for (var i = 0;
-                    i < (_tableInfo.IsTransitional
-                        ? _tableInfo.TransitionalTableColumns.Length
-                        : _tableInfo.TableColumns.Length);
-                    i++)
+                for (var i = 0; i < _tableInfo.TableColumns.Length; i++)
                 {
                     var propertyValue = reader.GetValue(i);
                     if (propertyValue.GetType() == typeof(DBNull))

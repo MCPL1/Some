@@ -8,13 +8,13 @@ namespace CourseProject.Models.DataModels
     [TransitionTableName("Order_products")]
     public class OrderProduct: Product
     {
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
+        public int Quantity_ { get; set; }
+        public decimal CurrPrice { get; set; }
 
         public OrderProduct(int quantity, decimal price)
         {
-            Quantity = quantity;
-            Price = price;
+            Quantity_ = quantity;
+            CurrPrice = price;
         }
 
         public OrderProduct()

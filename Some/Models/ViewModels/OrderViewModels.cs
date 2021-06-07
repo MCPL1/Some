@@ -15,4 +15,18 @@ namespace CourseProject.Models.ViewModels
         public List<Order> Orders { get; set; }
         public List<Status> StatusList { get; set; }
     }
+
+
+    public class OrderViewModel
+    {
+        public Order Order { get; set; }
+
+        public Delivery Delivery { get; set; }
+
+    }
+
+    public class OrderProductUpdateModel
+    {
+
+    }
 }
