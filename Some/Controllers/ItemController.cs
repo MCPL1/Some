@@ -126,8 +126,9 @@ namespace CourseProject.Controllers
 
         [Authorize(Roles = Const.Admin)]
         [HttpPost]
-        public async Task<IActionResult> Edit(ItemUpdateViewModel model)
+        public async Task<IActionResult> Edit1(ItemUpdateViewModel model)
         {
+            if (!ModelState.IsValid) return RedirectToAction("Create");
             if (model.Image != null)
             {
                 var path = "/Images/" + model.Image.FileName;

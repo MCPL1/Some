@@ -20,7 +20,7 @@
                                 <div class="center">
                                     <div class="ui inverted button">
                                         <a asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">
-                                            Add To Cart
+                                            До кошика
                                         </a>
                                     </div>
                                 </div>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="content">
                         <a asp-controller="Item" asp-action="Details" asp-route-id="@item.Id" class="header">
-                            Details
+                            @item.Name
                         </a>
                         <div class="meta">
                             <span class="date">@item.Type.Name</span>

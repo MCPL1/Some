@@ -19,10 +19,16 @@ namespace CourseProject.Models.ViewModels
         }
     }
 
-    public class ItemUpdateViewModel : ItemCreateViewModel
+    public class ItemUpdateViewModel 
     {
-        public ItemUpdateViewModel() : base()
+        public Item Item { get; set; }
+        public IFormFile Image { get; set; }
+        public List<ItemType> Types { get; set; }
+
+        public ItemUpdateViewModel()
         {
+            Item = new Item();
+            Types = new List<ItemType>();
         }
     }
 

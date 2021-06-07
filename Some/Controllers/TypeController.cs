@@ -40,10 +40,10 @@ namespace CourseProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Models.DataModels.ItemType category)
+        public async Task<IActionResult> Edit(Models.DataModels.ItemType type)
         {
-            await _categoryRepository.Update(category, cat => cat.Id, category.Id);
-            return RedirectToAction("Index", "Product");
+            await _categoryRepository.Update(type, cat => cat.Id, type.Id);
+            return RedirectToAction("Index", "Item");
         }
     }
 }

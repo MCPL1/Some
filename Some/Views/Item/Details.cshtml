@@ -5,56 +5,64 @@
 @{
     ViewData["Title"] = "Details";
 }
+<div class="row">
+    <div class="eight wide column">
 
-<h1>Product details</h1>
+        <h1 class="ui header">Деталі послуги</h1>
+        <img class="ui medium image" src="@Model.ImageLink" alt="Alternate Text"/>
+        <dl class="container">
 
-<div>
-    @Html.ActionLink("Add To Cart", "AddItem", "Cart", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    @if (User.IsInRole(Const.Admin))
-    {
-        <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
-    }
-</div>
-    <div class="d-flex align-items-center justify-content-around">
-        <img class="image" src="@Model.ImageLink" alt="Alternate Text" />
-        <div class="d-flex flex-column ml-5">
-            <dl class="row">
-                <dt class="col-sm-2">
-                    Title:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Description):
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
-                <dt class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Price):
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Price)
-                </dd>
-                <dt class="col-sm-2">
-                    Category:
-                </dt>
-                <dd class="col-sm-10">
-                    @Html.DisplayFor(model => model.Type.Name)
-                </dd>
-            </dl>
-
-            <div>
-                @Html.ActionLink("Add To Cart", "AddItem", "Cart", new { id = Model.Id }, new { @class = "btn btn-danger" })
-                @if (User.IsInRole("anon"))
-                {
-                    <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
-                }
-            </div>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description):
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Price):
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Price)
+            </dd>
+            <dt>
+                Category:
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Type.Name)
+            </dd>
+        </dl>
+        <div>
+            @Html.ActionLink("До кошика", "AddItem", "Cart", new {id = Model.Id}, new {@class = "ui button"})
+            @if (User.IsInRole("admin"))
+            {
+                <a class="ui button" asp-controller="Item" asp-action="Edit"asp-route-id="@Model.Id">Редагувати</a>
+            }
         </div>
     </div>
+    @if(Model.Description.Contains('|'))
+    {
+        <div class="eight wide column">
+            <table class="ui celled table">
+                <thead>
+                <tr>
+                    <th>Кількість</th>
+                    <th>Ціна</th>
+                </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.MaxQuantity; i++)
+                {
+                    <tr>
+                        <td data-label="Name">@(Model.Description.Substring(Model.Description.LastIndexOf('|') + 1) + (i + 1))</td>
+                        <td data-label="Price">@(Model.PriceModifier * (i + 1))</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    
 </div>
-
-
-

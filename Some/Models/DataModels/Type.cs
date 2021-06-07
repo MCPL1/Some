@@ -7,7 +7,7 @@ namespace CourseProject.Models.DataModels
     [TableName("Type")]
     public class ItemType : Entity
     {
-        [DisplayName("Категорія")] 
+        [DisplayName("Тип")] 
         public string Name { get; set; }
     }
 }

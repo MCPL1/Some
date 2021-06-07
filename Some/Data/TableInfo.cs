@@ -130,7 +130,7 @@ namespace CourseProject.Data
                     propertyValue = value.ToString();
                 }
 
-                values[i] = $"\"{NonReadOnlyTableColumns[i]}\"='{propertyValue}'";
+                values[i] = $"\"{NonReadOnlyTableColumns[i]}\"=N'{propertyValue}'";
             }
 
             return values;
@@ -163,7 +163,7 @@ namespace CourseProject.Data
                     propertyValue = value.ToString();
                 }
 
-                values[i] = $"'{propertyValue}'";
+                values[i] = $"N'{propertyValue}'";
             }
 
             return values;
