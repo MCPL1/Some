@@ -18,12 +18,13 @@ namespace CourseProject.Controllers
     public class ItemController : Controller
     {
         private readonly IRepository<Item> _itemRepository;
-        private readonly IRepository<Models.DataModels.ItemType> _typeRepository;
+        private readonly IRepository<Models.DataModels.Type> _typeRepository;
 
 
         IWebHostEnvironment _appEnvironment;
 
-        public ItemController(IRepository<Item> itemRepository, IRepository<Models.DataModels.ItemType> typeRepository, IWebHostEnvironment appEnvironment)
+        public ItemController(IRepository<Item> itemRepository, IRepository<Models.DataModels.Type> typeRepository,
+            IWebHostEnvironment appEnvironment)
         {
             _itemRepository = itemRepository;
             _typeRepository = typeRepository;
@@ -122,6 +123,12 @@ namespace CourseProject.Controllers
                 Types = categories.ToList()
             };
             return View(model);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _itemRepository.Delete(i => i.Id, id);
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = Const.Admin)]

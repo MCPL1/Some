@@ -10,12 +10,12 @@ namespace CourseProject.Models.ViewModels
     {
         public Item Item { get; set; }
         public IFormFile Image { get; set; }
-        public List<ItemType> Types { get; set; }
+        public List<Type> Types { get; set; }
 
         public ItemCreateViewModel()
         {
             Item = new Item();
-            Types = new List<ItemType>();
+            Types = new List<Type>();
         }
     }
 
@@ -23,12 +23,12 @@ namespace CourseProject.Models.ViewModels
     {
         public Item Item { get; set; }
         public IFormFile Image { get; set; }
-        public List<ItemType> Types { get; set; }
+        public List<Type> Types { get; set; }
 
         public ItemUpdateViewModel()
         {
             Item = new Item();
-            Types = new List<ItemType>();
+            Types = new List<Type>();
         }
     }
 
@@ -38,7 +38,7 @@ namespace CourseProject.Models.ViewModels
         public List<Item> Items { get; set; }
         public List<CategoryViewModel> Categories { get; }
 
-        public ItemIndexViewModel(IEnumerable<ItemType> flatCategories)
+        public ItemIndexViewModel(IEnumerable<Type> flatCategories)
         {
             var categories = (from fc in flatCategories
                 select new CategoryViewModel()

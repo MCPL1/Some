@@ -15,8 +15,9 @@ namespace CourseProject.Data
 
         public const string Admin = "admin";
         public const string User = "user";
+        public const string Manager = "manager";
 
-        public const string All = "admin, user";
+        public const string All = "admin, user, manager";
 
         public Const()
         {

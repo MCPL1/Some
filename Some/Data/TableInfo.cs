@@ -8,6 +8,7 @@ using CourseProject.Attributes;
 using CourseProject.Models;
 using CourseProject.Models.DataModels;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Type = System.Type;
 
 namespace CourseProject.Data
 {

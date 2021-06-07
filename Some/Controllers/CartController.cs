@@ -34,8 +34,9 @@ namespace CourseProject.Controllers
             var data = GetModel();
             if (data.Items.Any(x => x.Item.Id == id))
             {
-                data.Items.First(x => x.Item.Id == id).Quantity++;
-                data.Amount += data.Items.First(x => x.Item.Id == id).Item.Price;
+                var i = data.Items.First(x => x.Item.Id == id).Quantity++;
+                data.Amount = i* data.Items.First(x => x.Item.Id == id).Item.Price
+                               * data.Items.First(x => x.Item.Id == id).Item.PriceModifier;
             }
             else
                 data?.AddItem(new CartItemViewModel(await _repository.GetById(id)));
@@ -60,7 +61,7 @@ namespace CourseProject.Controllers
         public ActionResult Add(int position)
         {
             var data = GetModel();
-            data.Amount += data.Items[position].Item.Price;
+            data.Amount =data.Items[position].Quantity*  data.Items[position].Item.Price* data.Items[position].Item.PriceModifier;
             data.Items[position].Quantity++;
             SetModel(data, 30);
             return RedirectToAction("Index");

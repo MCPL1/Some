@@ -2,7 +2,7 @@
 
 namespace CourseProject.Models.DataModels
 {
-    [RelatedTableName("Items")]
+    [RelatedTableName("Item")]
     [RelatedEntityType("Item")]
     [MasterEntityName("Order")]
     [TransitionTableName("Order_products")]

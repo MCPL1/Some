@@ -12,9 +12,9 @@ namespace CourseProject.Controllers
     public class TypeController : Controller
     {
 
-        private readonly IRepository<Models.DataModels.ItemType> _categoryRepository;
+        private readonly IRepository<Models.DataModels.Type> _categoryRepository;
 
-        public TypeController(IRepository<Models.DataModels.ItemType> categoryRepository)
+        public TypeController(IRepository<Models.DataModels.Type> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -28,7 +28,7 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CategoryCreateViewModel model)
         {
-            var category = new Models.DataModels.ItemType() { Name = model.Category.Name};
+            var category = new Models.DataModels.Type() { Name = model.Category.Name};
             await _categoryRepository.Create(category);
             return RedirectToAction("Index", "User");
         }
@@ -40,7 +40,7 @@ namespace CourseProject.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Models.DataModels.ItemType type)
+        public async Task<IActionResult> Edit(Models.DataModels.Type type)
         {
             await _categoryRepository.Update(type, cat => cat.Id, type.Id);
             return RedirectToAction("Index", "Item");

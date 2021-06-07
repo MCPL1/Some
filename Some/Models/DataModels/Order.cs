@@ -14,10 +14,9 @@ namespace CourseProject.Models.DataModels
 
         [ForeignKey("status_id")] public Status Status { get; set; }
 
-        [Required]
         [DisplayName("Дата виконання")]
         [DataType(DataType.DateTime)]
-        public DateTime CheckoutDate { get; set; }
+        public string CheckoutDate { get; set; }
 
         [ForeignKeyToMany("Item")] public List<OrderItem> Items { get; set; }
 
@@ -25,7 +24,7 @@ namespace CourseProject.Models.DataModels
         [DisplayName("Адреса доставки")] 
         public string Address { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
 
         public Order()

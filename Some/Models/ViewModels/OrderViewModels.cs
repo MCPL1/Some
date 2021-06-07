@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CourseProject.Models.DataModels;
 
 namespace CourseProject.Models.ViewModels
@@ -6,6 +7,7 @@ namespace CourseProject.Models.ViewModels
     public class OrderCreateViewModel
     {
         public Order Order { get; set; }
+        public DateTime DDate { get; set; }
     }
 
     public class OrderConfirmViewModel

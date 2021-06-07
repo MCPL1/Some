@@ -27,7 +27,7 @@ namespace CourseProject.Models.DataModels
         [Required]
         [DisplayName("Тип")]
         [ForeignKey("type_id")] 
-        public ItemType Type { get; set; }
+        public Type Type { get; set; }
 
         [Required]
         [DisplayName("Акційна послуга")]
@@ -44,7 +44,7 @@ namespace CourseProject.Models.DataModels
 
         public Item()
         {
-            Type = new ItemType();
+            Type = new Type();
         }
 
     }

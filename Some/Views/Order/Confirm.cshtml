@@ -4,61 +4,57 @@
 @model CourseProject.Models.ViewModels.OrderConfirmViewModel
 @inject UserManager<User> _userManager;
 
-@foreach (var status in Model.StatusList)
-{
-    <a class="btn btn-outline-warning"
-       asp-controller="Order" asp-action="ConfirmIndex" asp-route-id="@status.Id">
-        @status.Name
-    </a>
-}
-<div id="msgform" class="form-popup" style="display: none; position: fixed; bottom: 0; right: 15px; border: 3px solid #f1f1f1; z-index: 9;" id="myForm">
-    <form class="form-container">
+<div class="row">
+    <div class="twelve wide column">
+        @foreach (var status in Model.StatusList)
+        {
+            <a class="ui button"
+               asp-controller="Order" asp-action="ConfirmIndex" asp-route-id="@status.Id">
+                @status.Name
+            </a>
+        }
+        <style></style>
+        
+        <table class="ui table ">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Сума</th>
+                    <th scope="col">Управление</th>
+                </tr>
+            </thead>
 
-        <label for="msg">
-            <b>Message</b>
-        </label>
-        <input type="text" placeholder="Enter Message" name="msg" required>
-
-        <button type="submit" class="btn" onclick="saveForm()">Save</button>
-        <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
-    </form>
-</div>
-<table class="table details @(@Model.Orders[0].Status.Name == StatusConst.First ? "table-success" : "table-dark")  table-striped table-hover">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">UserUserName</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Manage</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    @for (var i = 0; i < Model.Orders.Count(); i++)
-    {
-        <tr>
-            <th scope="row">@(i + 1)</th>
-            <td>@(Model.Orders[i].User.Name)</td>
-            <td>@Model.Orders[i].Items.Sum(p => (decimal) p.Quantity * p.Price)</td>
-
-            <td>
-                @if (Model.Orders[i].Status.Name == StatusConst.First)
+            <tbody>
+                @for (var i = 0; i < Model.Orders.Count(); i++)
                 {
-                    <a class="btn btn-outline-warning"
-                       asp-controller="Order" asp-action="Confirm" asp-route-id="@Model.Orders[i].Id">
-                        Confirm
-                    </a>
-                    <a class="btn btn-outline-danger"
-                       asp-controller="Order" asp-action="Reject" asp-route-id="@Model.Orders[i].Id">
-                        Reject
-                    </a>
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@(Model.Orders[i].User.Name)</td>
+                    <td>@(Model.Orders[i].User.PhoneNumber)</td>
+                    <td>@Model.Orders[i].Items.Sum(p => (decimal)p.Quantity * p.Price)</td>
+
+                    <td>
+                        @if (Model.Orders[i].Status.Name == StatusConst.First)
+                        {
+                            <a class="btn btn-outline-warning"
+                               asp-controller="Order" asp-action="Confirm" asp-route-id="@Model.Orders[i].Id">
+                                Confirm
+                            </a>
+                            <a class="btn btn-outline-danger"
+                               asp-controller="Order" asp-action="Reject" asp-route-id="@Model.Orders[i].Id">
+                                Reject
+                            </a>
+                        }
+                    </td>
+                </tr>
                 }
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
-<script>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <script>
     function openForm() {
         document.getElementById("msgForm").style.display = "block";
     }
@@ -96,4 +92,4 @@
         ));
         return matches ? decodeURIComponent(matches[1]) : undefined;
     }
-</script>
+    </script>

@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Description):
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Description)
+                @(Model.Description.Substring(0, Model.Description.LastIndexOf('|')<0? Model.Description.Length: Model.Description.LastIndexOf('|')))
             </dd>
             <dt>
                 @Html.DisplayNameFor(model => model.Price):
@@ -35,10 +35,11 @@
             </dd>
         </dl>
         <div>
-            @Html.ActionLink("До кошика", "AddItem", "Cart", new {id = Model.Id}, new {@class = "ui button"})
+            @Html.ActionLink("До кошика", "AddItem", "Cart", new { id = Model.Id }, new { @class = "ui button" })
             @if (User.IsInRole("admin"))
             {
-                <a class="ui button" asp-controller="Item" asp-action="Edit"asp-route-id="@Model.Id">Редагувати</a>
+                <a class="ui button" asp-controller="Item" asp-action="Edit" asp-route-id="@Model.Id">Редагувати</a>
+                <a class="ui button" asp-controller="Item" asp-action="Delete" asp-route-id="@Model.Id">Видалити</a>
             }
         </div>
     </div>
@@ -56,8 +57,8 @@
                 @for (var i = 0; i < Model.MaxQuantity; i++)
                 {
                     <tr>
-                        <td data-label="Name">@(Model.Description.Substring(Model.Description.LastIndexOf('|') + 1) + (i + 1))</td>
-                        <td data-label="Price">@(Model.PriceModifier * (i + 1))</td>
+                        <td data-label="Name">@(Model.Description.Substring(Model.Description.LastIndexOf('|') + 1) +" "+ (i + 1))</td>
+                        <td data-label="Price">@(Model.PriceModifier * (i + 1)*Model.Price)</td>
                     </tr>
                 }
                 </tbody>

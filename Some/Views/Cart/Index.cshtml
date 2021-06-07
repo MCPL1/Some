@@ -21,17 +21,17 @@
                                 <img src="@Model.Items[i].Item.ImageLink">
                             </div>
                             <div class="content">
-                                <a class="header">@Model.Items[i].Item.Name</a>
+                                <a class="header" asp-controller="Item" asp-action="Details" asp-route-id="@Model.Items[i].Item.Id">@Model.Items[i].Item.Name</a>
                             </div>
                             <div class="description">
                                 Ціна: @(Model.Items[i].Item.Price* Model.Items[i].Quantity)
                             </div>
                             <div class="extra content">
                                 <span>Кількість:</span>
-                                <a asp-controller="Cart" asp-action="Delete">
+                                <a asp-controller="Cart" asp-action="Delete" asp-route-position="@i">
                                     <i class="minus square outline icon"></i>
                                 </a>
-                                <a asp-controller="Cart" asp-action="Add">
+                                <a asp-controller="Cart" asp-action="Add" asp-route-position="@i">
                                     <i class="plus square outline icon"></i>
                                 </a>
 

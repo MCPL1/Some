@@ -46,8 +46,8 @@ namespace CourseProject.Controllers
             if (GetCart().Items.Count == 0)
                 return RedirectToAction("Index", "Cart");
             var model = new OrderCreateViewModel()
-            {
-                Order = new Order() { Date = DateTime.Now }
+            {DDate = DateTime.Now
+                
             };
 
             return View(model);
@@ -57,18 +57,18 @@ namespace CourseProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
-            if (model.Order.Date <= DateTime.Now)
+            if (model.DDate <= DateTime.Now)
             {
                 ModelState.AddModelError("CheckoutDate", "Невірно вказано дату");
             }
-            if (ModelState.IsValid)
+            if (/*ModelState.IsValid*/true)
             {
                 var order = new Order
                 {
-                    Status = {Id = 1}, 
+                    Status = {Id = 4}, 
                     User = {Id = int.Parse(_userManager.GetUserId(User))},
-                    CheckoutDate = DateTime.Now,
-                    Date =  model.Order.Date,
+                    CheckoutDate = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
+                    Date =  model.DDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss"),
                     Address = model.Order.Address
                 };
                 var data = GetCart();
@@ -88,11 +88,11 @@ namespace CourseProject.Controllers
                 return RedirectToAction("Index", "User");
             }
 
-            return View("Create",new OrderCreateViewModel(){Order = new Order(){ Date = DateTime.Now}});
+            return View("Create",new OrderCreateViewModel(){DDate = DateTime.Now});
         }
 
         [Authorize(Roles = Const.Admin)]
-        public async Task<IActionResult> ConfirmIndex(int id = 1)
+        public async Task<IActionResult> ConfirmIndex(int id = 4)
         {
             var model = new OrderConfirmViewModel()
             {
@@ -106,7 +106,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Confirm(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 2; //ага, попавсь!
+            order.Status.Id = 5; 
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }
@@ -115,7 +115,7 @@ namespace CourseProject.Controllers
         public async Task<IActionResult> Reject(int id)
         {
             var order = await _orderRepository.GetById(id);
-            order.Status.Id = 3; //ага, попавсь!
+            order.Status.Id = 6; 
             await _orderRepository.Update(order, o => o.Id, id);
             return RedirectToAction("ConfirmIndex");
         }

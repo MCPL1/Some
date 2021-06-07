@@ -26,23 +26,14 @@ namespace CourseProject.Models.ViewModels
     public class CategoryCreateViewModel
     {
         public CategoryViewModel Category { get; set; }
-        public List<CategoryViewModel> ParentCategories { get; set; }
 
         public CategoryCreateViewModel()
         {
         }
 
-        public CategoryCreateViewModel(IEnumerable<DataModels.ItemType> flatCategories)
+        public CategoryCreateViewModel(IEnumerable<DataModels.Type> flatCategories)
         {
-            var categories = (from fc in flatCategories
-                select new CategoryViewModel()
-                {
-                    Id = fc.Id,
-                    Name = fc.Name
-                }).ToList();
-
-
-            ParentCategories = categories.ToList();
+           
         }
     }
 }

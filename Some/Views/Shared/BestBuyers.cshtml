@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CourseProject.Models.ViewModels.UserBestViewModel>
+@{
+    ViewData["Title"] = "BestBuyers";
+}
+
+<div class="row">
+    <div class="eight wide column">
+       
+            <table class="ui celled table">
+                <thead>
+                <tr><th>UserName</th>
+                    <th>PhoneNum</th>
+                    <th>Order quantity</th>
+                </tr></thead>
+                <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td data-label="Name">@user.UserName</td>
+                        <td data-label="PhoneNum">@user.PhoneNumber</td>
+                        <td data-label="Job">@user.OrderQuantity</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        
+    </div>
+</div>
+
