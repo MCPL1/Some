@@ -26,7 +26,7 @@ namespace CourseProject.Controllers
         private readonly IRepository<DeliveryType> _deliveryTypeRepository;
         private readonly IRepository<DeliveryProvider> _deliveryProviderRepository;
         private readonly IRepository<Product> _productRepository;
-
+        private readonly IRepository<OrderProduct> _orderProductRepository;
         public OrderController(UserManager<User> userManager,
             IRepository<Order> orderRepository,
             IRepository<Delivery> deliveryRepository,
@@ -77,14 +77,14 @@ namespace CourseProject.Controllers
             if (data.Items.Count == 0) return RedirectToAction("Index", "Cart");
             foreach (var item in data.Items)
             {
-                order.Products.Add(new OrderProduct(item.Quantity, item.Quantity * item.Product.Price)
+                order.Products.Add(new OrderProduct(item.Quantity, item.Product.Price)
                     {Id = item.Product.Id});
             }
 
             var parcelNum = new Random().Next(10000000, 99999999);
             var delivery = new Delivery
             {
-                Date = DateTime.Now,
+                Date = model.Delivery.Date,
                 DeliveryProvider = model.Delivery.DeliveryProvider,
                 DeliveryType = model.Delivery.DeliveryType,
                 Address = model.Delivery.Address,
@@ -159,6 +159,16 @@ namespace CourseProject.Controllers
             Response.Cookies.Delete("cart");
         }
 
-       
+
+        public IActionResult AddQuantity(int orderId, int productId)
+        {
+            var orderProduct = _orderProductRepository.GetMany(o => o.Name);
+            throw new NotImplementedException();
+        }
+
+        public IActionResult SubtractQuantity(int orderId, int productId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

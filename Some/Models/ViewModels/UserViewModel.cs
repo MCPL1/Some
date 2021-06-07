@@ -9,6 +9,7 @@ namespace CourseProject.Models.ViewModels
         [Required] public string SurName { get; set; }
 
         [Required]
+        [Phone]
         public string PhoneNumber { get; set; }
 
         [Required]

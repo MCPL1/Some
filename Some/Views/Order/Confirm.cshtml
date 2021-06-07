@@ -44,7 +44,7 @@
             <td>@(Model.Orders[i].User.Name)</td>
             <td>@(Model.Orders[i].User.Surname)</td>
             <td>@(Model.Orders[i].User.PhoneNumber)</td>
-            <td>@Model.Orders[i].Products.Sum(p => (decimal)p.Quantity * p.Price)</td>
+            <td>@Model.Orders[i].Products.Sum(p => p.CurrPrice * p.Quantity_)</td>
 
             <td>
                 @if (Model.Orders[i].Status.Name == StatusConst.First)
