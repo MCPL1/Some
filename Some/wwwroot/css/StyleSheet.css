@@ -8,9 +8,6 @@
     max-height: 150px;
 }
 
-body {
-    background: #8cc8ff;
-}
    
 a { 
     text-decoration: none; 
@@ -21,8 +18,12 @@ a {
 }
 
 .filter-box {
-    border-left: 1px solid black;
     list-style: none;
+}
+
+.filter-link:hover {
+    font-weight: 700;
+    color: red;
 }
 
 .filter-box li {

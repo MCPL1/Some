@@ -5,11 +5,29 @@
     ViewData["Title"] = "Main";
 }
 
-<h1>Products</h1>
+<h1>Pizza</h1>
 
 <div class="row">
     <div class="col-2">
 
+        <ul class="filter-box">
+            <p>Category: </p>
+            @foreach (var cat in Model.Categories)
+            {
+                <li class="filter-link">
+                    <a asp-action="GetByCategory" style="font-size: 18px;" asp-route-categoryId="@cat.Id">@cat.Name</a>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a class="font-italic " style="color: red" asp-controller="Category" asp-action="Edit" asp-route-id="@cat.Id">edit</a>
+                    }
+                </li>
+            }
+        </ul>
+
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Filter
+        </button>
         <div class="dropdown-menu">
             <h6 class="dropdown-header">By price</h6>
             <p class="dropdown-item" asp-action="Index">
@@ -23,41 +41,27 @@
             </p>
         </div>
 
-        <ul class="filter-box">
-            @foreach (var cat in Model.Categories)
-            {
-                <li>
-                    <a asp-action="GetByCategory" asp-route-categoryId="@cat.Id">@cat.Name</a>
-                    @if (User.IsInRole("admin"))
-                    {
-                        <a class="alert-danger alert" asp-controller="Category" asp-action="Edit" asp-route-id="@cat.Id">edit</a>
-                    }
-                </li>
-            }
-        </ul>
-
-        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-            Filter
-        </button>
-
-
     </div>
 
     <div class="col-10 d-flex justify-content-start align-items-center flex-wrap">
+
         @foreach (var item in Model.Products)
         {
+
             <div class="card m-4" style="width: 15rem;">
-                <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
-                    <img src="@item.Image" class="card-img-top" alt="...">
-                </a>
-                    <div class="card-body">
-                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
-                        <p class="card-text">Price: @Html.DisplayFor(modelItem => item.Price)</p>
-                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-                    <a class="btn btn-primary" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id">Add To Cart</a>
+                <div class="card-image">
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">
+                        <img src="@item.Image" class="card-img-top" alt="...">
+                    </a>
+                    <span style="font-weight: 700" class="card-title">@Html.DisplayFor(modelItem => item.Title)</span>
+                    <a class="btn-floating halfway-fab waves-effect waves-light red" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Id"><i class="material-icons">add</i></a>
+                </div>
+                <div class="card-content">
+                    <p>Price: @Html.DisplayFor(modelItem => item.Price)</p>
+                    <p>@Html.DisplayFor(modelItem => item.Description)</p>
                 </div>
             </div>
+
         }
     </div>
 </div>

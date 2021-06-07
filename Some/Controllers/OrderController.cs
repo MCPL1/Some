@@ -68,7 +68,7 @@ namespace CourseProject.Controllers
             if (!ModelState.IsValid) return RedirectToAction("Create");
             var order = new Order
             {
-                Status = {Id = 1}, //забыл, да, харе уже!
+                Status = {Id = 1}, 
                 User = {Id = int.Parse(_userManager.GetUserId(User))},
                 Date = DateTime.Now
             };
