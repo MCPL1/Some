@@ -12,10 +12,10 @@
     <hr />
     <p>@Html.DisplayFor(model => model.Order.Date)</p>
     <h3>Delivery</h3>
-    <p>@Html.DisplayFor(model => model.Delivery.Date)</p>
-    <p>@Html.DisplayFor(model => model.Delivery.Address)</p>
-    <p>@Html.DisplayFor(model => model.Delivery.DeliveryProvider.Name)</p>
-    <p>@Html.DisplayFor(model => model.Delivery.DeliveryType.Name)</p>
+    <p>Date: @Html.DisplayFor(model => model.Delivery.Date)</p>
+    <p>To: @Html.DisplayFor(model => model.Delivery.Address)</p>
+    <p>By: @Html.DisplayFor(model => model.Delivery.DeliveryProvider.Name)</p>
+    <p>Type: @Html.DisplayFor(model => model.Delivery.DeliveryType.Name)</p>
     <table class ="table table-info">
     <thead>
         <tr>

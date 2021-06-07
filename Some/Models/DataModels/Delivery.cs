@@ -17,6 +17,7 @@ namespace CourseProject.Models.DataModels
         public string Address { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         public int Parcel_number { get; set; }
