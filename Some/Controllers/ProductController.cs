@@ -109,6 +109,15 @@ namespace CourseProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductUpdateViewModel model)
         {
+            if (model.Image != null)
+            {
+                var path = "/Images/" + model.Image.FileName;
+                await using var fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create);
+                await model.Image.CopyToAsync(fileStream);
+                fileStream.Close();
+                model.Product.Image = path;
+            }
+
             await _productRepository.Update(model.Product, x => x.Id, model.Product.Id);
             return RedirectToAction("Details", model.Product);
         }

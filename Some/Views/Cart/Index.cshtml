@@ -26,20 +26,25 @@
 </div>
 
 
-    <div class="products d-flex justify-content-between flex-wrap">
+<div class="col-12 d-flex justify-content-start align-items-center flex-wrap">
     @for (var i = 0; i < Model.Items.Count; i++)
     {
-        <div class="card mb-3" style="width: 15rem;">
-            <img src="@Model.Items[i].Product.Image" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">@Model.Items[i].Product.Title</h5>
-                <p class="card-text">Price: @Model.Items[i].Product.Price</p>
-                <p class="card-text">Quantity: @Model.Items[i].Quantity</p>
+
+        <div class="box horizontal d-flex" style="display: flex; justify-content: space-around; width: 100%">
+            <div class="card-image">
+                    <img src="@Model.Items[i].Product.Image" class="card-img-top" alt="...">
+
+            </div>
+            <div class="card-content">
+                <p style="font-size: 32px;">@Model.Items[i].Product.Title</p>
+                <p>Price: @Model.Items[i].Product.Price</p>
+                <p>Quantity: @Model.Items[i].Quantity</p>
                 <a class="btn btn-danger" asp-controller="Cart" asp-action="Delete" asp-route-position="@i">Delete Item</a>
             </div>
         </div>
+
     }
-    </div>
+</div>
 }
 else
 {

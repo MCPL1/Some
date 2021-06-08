@@ -5,7 +5,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-center mt-5">Create product</h1>
+<h1 class="mt-5">Add</h1>
 
 <div class="row">
     <div class="col-md-4 m-auto">
@@ -42,7 +42,7 @@
             <div class="form-group">
                 <input type="file" class="form-control-file" asp-for="Image" />
             </div>
-            
+
             <div class="form-group ">
                 <button type="submit" style="width: 100%;" class="btn btn-primary">Create</button>
             </div>
@@ -51,9 +51,10 @@
             </div>
         </form>
     </div>
+    <div class="col-md-8"></div>
 </div>
 
-<div class="text-center">
+<div>
     <a asp-action="Index">Back</a>
 </div>
 @section Scripts {

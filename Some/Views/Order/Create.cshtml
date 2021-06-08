@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-center mb-3">Create order</h1>
+<h1 class="mb-3">Create</h1>
 
 <div class="row">
     <div class="col-md-6 m-auto">
@@ -21,7 +21,7 @@
                 
             </select>
             <div class="form-group">
-                <label asp-for="Delivery.Address" class="control-label"></label>
+                <label asp-for="Delivery.Address" class="control-label">Address</label>
                 <input asp-for="Delivery.Address" class="form-control" />
                 <span asp-validation-for="Delivery.Address" class="text-danger"></span>
             </div>
@@ -37,6 +37,7 @@
             </div>
         </form>
     </div>
+    <div class="col-md-6"></div>
 </div>
 
 @section Scripts {

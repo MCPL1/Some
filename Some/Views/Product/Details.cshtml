@@ -8,7 +8,7 @@
 <h1>Product details</h1>
 
 <div>
-    @if (User.IsInRole("administrator"))
+    @if (User.IsInRole("admin"))
     {
         <a asp-action="Edit" class="btn btn-danger" asp-route-id="@Model.Id">Edit</a>
     }
@@ -52,7 +52,7 @@
             </div>
         </div>
     </div>
-</div>
+
 
 
 
