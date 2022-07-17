@@ -8,7 +8,7 @@ using CourseProject.Models.DataModels;
 namespace CourseProject.Models.DataModels
 {
 
-    [TableName("Delivery_type")]
+    [TableName("DeliveryType")]
     public class DeliveryType : Entity
     {
         public string Name { get; set; }

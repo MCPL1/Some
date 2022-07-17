@@ -5,7 +5,7 @@ namespace CourseProject.Models.DataModels
     [RelatedTableName("Product")]
     [RelatedEntityType("Product")]
     [MasterEntityName("Order")]
-    [TransitionTableName("Order_products")]
+    [TransitionTableName("OrderProduct")]
     public class OrderProduct: Product
     {
         public int _Quantity { get; set; }
